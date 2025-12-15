@@ -26,9 +26,9 @@ export default function Footer() {
           ],
           connectHeading: "Get in Touch",
           connect: [
-            { type: "address", value: "Kathmandu, Nepal" },
+            { type: "address", value: "Baneshwor-10, Kathmandu, Nepal" },
             { type: "email", value: "info@ninjainfosys.com" },
-            { type: "mobile", value: "+977-9858042433, +977-9858042647, 01-5922361" },
+            { type: "mobile", value: "+977-9851343348, +977-9858042433, +977-9858042647, 01-5922361" },
           ],
           legalLinks: [
             { label: "Privacy Policy", href: "/privacy" },
@@ -52,9 +52,9 @@ export default function Footer() {
           ],
           connectHeading: "हामीसँग जडान हुनुहोस्",
           connect: [
-            { type: "address", value: "काठमाडौं, नेपाल" },
+            { type: "address", value: "बानेश्वर–१०, काठमाडौं, नेपाल" },
             { type: "email", value: "info@ninjainfosys.com" },
-            { type: "mobile", value: "+977-9858042433, +977-9858042647, 01-5922361" },
+            { type: "mobile", value: "+९७७-९८५१३४३३४८, +९७७-९८५८०४२४३३, +९७७-९८५८०४२६४७, ०१-५९२२३६१" },
           ],
           legalLinks: [
             { label: "गोपनीयता नीति", href: "/privacy" },
