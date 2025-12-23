@@ -63,6 +63,8 @@ export const metadata: Metadata = {
   authors: [{ name: "NinjaInfosys", url: "https://ninjainfosys.com" }],
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function SolutionsPage() {
   const [bannerUrlRaw, cards]: [string | null, SolutionCard[]] =
     await Promise.all([
