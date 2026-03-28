@@ -6,7 +6,9 @@ import { getAllPostsMeta } from "@/lib/posts";
 
 import { getBannerByImgName } from "@/lib/banners";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
+// Or use revalidation:
+// export const revalidate = 60; // Revalidate every 60 seconds
 
 export default async function BlogsPage() {
   const posts = await getAllPostsMeta();

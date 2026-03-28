@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -11,6 +10,6 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
-}
+};
 
-export default nextConfig
+export default nextConfig;

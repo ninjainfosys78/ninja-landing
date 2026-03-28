@@ -6,12 +6,7 @@ import Link from "next/link";
 import BlogPostBody from "@/components/blog-post-body";
 import { getAllPostsMeta, getPostBySlug } from "@/lib/posts";
 
-export async function generateStaticParams() {
-  const posts = await getAllPostsMeta();
-  return posts.map((p) => ({
-    slug: encodeURIComponent(p.slug),
-  }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const decodedSlug = decodeURIComponent(params.slug);
@@ -71,7 +66,6 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
       <main className="bg-black text-white">
         <div className="mx-auto max-w-3xl px-6 py-12">
-
           {meta.image && (
             <div className="mb-8 w-full overflow-hidden bg-black">
               <img
