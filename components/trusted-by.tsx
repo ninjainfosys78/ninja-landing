@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/components/LanguageProvider";
 import { fetchTrustedLogos, TrustedLogoRecord } from "@/lib/trustedby";
+import { Reveal } from "@/components/ui/reveal";
 
 interface TrustedByProps {
   initialLogos?: TrustedLogoRecord[];
@@ -44,16 +45,26 @@ export default function TrustedBy({ initialLogos = [] }: TrustedByProps) {
   return (
     <section
       id="partners"
-      className="py-12 relative z-[5]"
-      style={{ backgroundColor: '#0e0c0cff', borderBottom: '1px solid rgba(11,13,18,0.05)' }}
+      className="py-12 relative z-[5] overflow-hidden"
+      style={{ backgroundColor: '#f2f4fa', borderTop: '1px solid rgba(11,13,18,0.06)', borderBottom: '1px solid rgba(11,13,18,0.08)' }}
     >
-      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
-        <p
-          className="text-[12px] font-bold uppercase tracking-[0.2em] text-center mb-8"
-          style={{ color: '#f3f3f3' }}
-        >
-          {language === "ne" ? "प्रमुख संस्थाहरूद्वारा विश्वास गरिएको" : "Trusted by leading organizations"}
-        </p>
+      <div
+        className="absolute inset-0 pointer-events-none opacity-60"
+        style={{
+          background:
+            "radial-gradient(circle 500px at 15% 10%, rgba(37,99,235,0.08) 0%, transparent 100%), " +
+            "radial-gradient(circle 500px at 85% 90%, rgba(37,99,235,0.08) 0%, transparent 100%)",
+        }}
+      />
+      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+        <Reveal>
+          <p
+            className="text-[12px] font-bold uppercase tracking-[0.2em] text-center mb-8"
+            style={{ color: 'rgba(11,13,18,0.55)' }}
+          >
+            {language === "ne" ? "प्रमुख संस्थाहरूद्वारा विश्वास गरिएको" : "Trusted by leading organizations"}
+          </p>
+        </Reveal>
         <div
           ref={marqueeRootRef as any}
           className="marquee"
@@ -64,16 +75,19 @@ export default function TrustedBy({ initialLogos = [] }: TrustedByProps) {
             <div className="marquee__group" aria-hidden="true">
               {list.map((item, idx) => (
                 <div className="marquee__item" key={`g1-${item.id}-${idx}`}>
-                  <Image
-                    src={item.logo}
-                    alt={item.logoName}
-                    width={160}
-                    height={64}
-                    className="h-16 w-auto object-contain block brightness-[1.1] contrast-[1.1] invert opacity-80"
-                  />
-                  <div className="trusted-fallback hidden text-[#f3f3f3] text-center font-bold">
-                    {item.logoName}
-                  </div>
+                  {item.logo ? (
+                    <Image
+                      src={item.logo}
+                      alt={item.logoName}
+                      width={160}
+                      height={64}
+                      className="h-16 w-auto object-contain block grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
+                    />
+                  ) : (
+                    <div className="text-[#0b0d12]/50 text-center font-bold text-lg tracking-wide whitespace-nowrap">
+                      {item.logoName}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -81,16 +95,19 @@ export default function TrustedBy({ initialLogos = [] }: TrustedByProps) {
             <div className="marquee__group" aria-hidden="true">
               {list.map((item, idx) => (
                 <div className="marquee__item" key={`g2-${item.id}-${idx}`}>
-                  <Image
-                    src={item.logo}
-                    alt={item.logoName}
-                    width={160}
-                    height={64}
-                    className="h-16 w-auto object-contain block brightness-[1.1] contrast-[1.1] invert opacity-80"
-                  />
-                  <div className="trusted-fallback hidden text-[#f3f3f3] text-center font-bold">
-                    {item.logoName}
-                  </div>
+                  {item.logo ? (
+                    <Image
+                      src={item.logo}
+                      alt={item.logoName}
+                      width={160}
+                      height={64}
+                      className="h-16 w-auto object-contain block grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
+                    />
+                  ) : (
+                    <div className="text-[#0b0d12]/50 text-center font-bold text-lg tracking-wide whitespace-nowrap">
+                      {item.logoName}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

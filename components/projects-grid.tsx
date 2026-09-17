@@ -98,7 +98,7 @@ export default function ProjectsGrid({
           className={
             isWork
               ? "font-semibold text-[32px]"
-              : "text-2xl font-semibold text-white"
+              : "text-2xl font-semibold text-[#0b0d12]"
           }
         >
           {title}
@@ -114,13 +114,13 @@ export default function ProjectsGrid({
               isWork
                 ? `px-4 py-2 text-sm font-medium border transition-colors ${
                     projActive === "All"
-                      ? "border-[#e3e3e3] text-[#e3e3e3]"
-                      : "border-[#000000]/20 text-[#e3e3e3] hover:border-[#e3e3e3]/60"
+                      ? "border-[#0b0d12] text-[#0b0d12]"
+                      : "border-[#0b0d12]/20 text-[#0b0d12] hover:border-[#0b0d12]/60"
                   }`
                 : `px-4 py-2 text-sm font-medium border rounded-[4px] transition-colors ${
                     projActive === "All"
-                      ? "border-white text-white"
-                      : "border-white/30 text-white hover:border-white/60"
+                      ? "border-[#0b0d12] text-[#0b0d12]"
+                      : "border-[#0b0d12]/20 text-[#0b0d12] hover:border-[#0b0d12]/60"
                   }`
             }
           >
@@ -133,7 +133,7 @@ export default function ProjectsGrid({
             className={
               isWork
                 ? "px-4 py-2 text-sm font-medium border inline-flex items-center gap-1"
-                : "px-4 py-2 text-sm font-medium border border-white/30 text-white hover:border-white/60 inline-flex items-center gap-1 rounded-[4px]"
+                : "px-4 py-2 text-sm font-medium border border-[#0b0d12]/20 text-[#0b0d12] hover:border-[#0b0d12]/60 inline-flex items-center gap-1 rounded-[4px]"
             }
           >
             {language === "en" ? "Filter" : "फिल्टर"}
@@ -150,8 +150,8 @@ export default function ProjectsGrid({
               role="menu"
               className={
                 isWork
-                  ? "absolute right-0 top-12 w-56 border border-black/10 bg-[#000000] shadow-xl ring-1 ring-black/5 p-2 z-20"
-                  : "absolute right-0 top-12 w-56 border border-white/20 bg-black text-white shadow-xl ring-1 ring-white/10 p-2 z-20 rounded-[4px]"
+                  ? "absolute right-0 top-12 w-56 border border-[#0b0d12]/10 bg-white shadow-xl ring-1 ring-black/5 p-2 z-20"
+                  : "absolute right-0 top-12 w-56 border border-[#0b0d12]/10 bg-white text-[#0b0d12] shadow-xl ring-1 ring-black/5 p-2 z-20 rounded-[4px]"
               }
             >
               {filters
@@ -170,12 +170,12 @@ export default function ProjectsGrid({
                         ? `w-full cursor-pointer text-left px-3 py-2 text-sm transition-colors ${
                             projActive === c
                               ? "text-[#141414] font-medium bg-ni-paper"
-                              : "text-[#e3e3e3]/90"
-                          } hover:bg-[#141414] hover:text-[#e3e3e3] hover:border hover:border-white focus:outline-none focus:ring-2 focus:ring-white/30`
+                              : "text-[#0b0d12]/90"
+                          } hover:bg-[#0b0d12]/5 hover:text-[#0b0d12] hover:border hover:border-[#0b0d12]/30 focus:outline-none focus:ring-2 focus:ring-[#0b0d12]/30`
                         : `w-full cursor-pointer text-left px-3 py-2 rounded-[4px] text-sm transition-colors ${
                             projActive === c
-                              ? "bg-white text-black"
-                              : "hover:bg-white hover:text-black"
+                              ? "bg-[#0b0d12]/[0.06] text-[#0b0d12] font-medium"
+                              : "text-[#0b0d12]/80 hover:bg-[#0b0d12]/[0.06] hover:text-[#0b0d12]"
                           }`
                     }
                   >
@@ -201,15 +201,15 @@ export default function ProjectsGrid({
               key={p.id}
               className={
                 isWork
-                  ? "group relative block select-none overflow-hidden border border-[#e3e3e3] bg-[#000000] p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
-                  : "group relative block select-none overflow-hidden border border-white/15 bg-black p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:border-white"
+                  ? "group relative block select-none overflow-hidden border border-[#0b0d12]/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+                  : "group relative block select-none overflow-hidden border border-[#0b0d12]/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:border-[#0b0d12]/30"
               }
             >
               <div
                 className={
                   isWork
                     ? "relative aspect-[16/10] bg-ni-paper/60 flex items-center justify-center text-ni-slate overflow-hidden"
-                    : "relative aspect-[16/10] bg-black flex items-center justify-center text-white/60 overflow-hidden"
+                    : "relative aspect-[16/10] bg-[#0b0d12]/5 flex items-center justify-center text-[#0b0d12]/40 overflow-hidden"
                 }
               >
                 <img
@@ -227,8 +227,8 @@ export default function ProjectsGrid({
                 <div
                   className={
                     isWork
-                      ? "text-xs font-semibold tracking-wide text-[#e3e3e3]/80"
-                      : "text-xs font-semibold tracking-wide text-white/80"
+                      ? "text-xs font-semibold tracking-wide text-[#0b0d12]/80"
+                      : "text-xs font-semibold tracking-wide text-[#0b0d12]/80"
                   }
                 >
                   {categoryLabel}
@@ -238,7 +238,7 @@ export default function ProjectsGrid({
                 </h3>
                 <p
                   className={
-                    isWork ? "mt-2 text-[#e3e3e3]/80" : "mt-2 text-white/80"
+                    isWork ? "mt-2 text-[#0b0d12]/80" : "mt-2 text-[#0b0d12]/80"
                   }
                 >
                   {blurbText}

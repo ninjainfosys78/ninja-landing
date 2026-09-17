@@ -24,8 +24,40 @@ interface BlogsClientProps {
   initialLanguage?: "en" | "ne";
 }
 
+// Temporary placeholder content — swap out once the CMS feed is wired up.
+const DUMMY_POSTS: (ClientPost & { title_ne?: string; excerpt_ne?: string })[] = [
+  {
+    slug: "smart-manufacturing",
+    title: "The Future of Smart Manufacturing",
+    title_ne: "स्मार्ट उत्पादनको भविष्य",
+    excerpt: "How AI and IoT are redefining the factory floor for the next decade of production.",
+    excerpt_ne: "AI र IoT ले उत्पादनको अर्को दशकको लागि कारखानाको स्वरुपलाई कसरी पुनः परिभाषित गर्दैछन्।",
+    readTime: "7 min",
+    image: "/digital-infrastructure-network-city.jpg",
+  },
+  {
+    slug: "net-zero",
+    title: "Accelerating the Net-Zero Transition",
+    title_ne: "नेट-जिरो संक्रमणलाई गति दिँदै",
+    excerpt: "Strategic frameworks for organizations to achieve carbon neutrality while maintaining growth.",
+    excerpt_ne: "विकास कायम राख्दै कार्बन तटस्थता हासिल गर्न संस्थाहरूको लागि रणनीतिक ढाँचाहरू।",
+    readTime: "8 min",
+    image: "/sustainability-construction.jpg",
+  },
+  {
+    slug: "metaverse-value",
+    title: "Unlocking Value in the Metaverse",
+    title_ne: "मेटाभर्समा मूल्य अनलक गर्दै",
+    excerpt: "Exploring the commercial potential and social implications of persistent virtual environments.",
+    excerpt_ne: "स्थायी भर्चुअल वातावरणको व्यावसायिक सम्भावना र सामाजिक प्रभावहरूको अन्वेषण गर्दै।",
+    readTime: "7 min",
+    image: "/assets/insights/metaverse.jpeg",
+  },
+];
+
 export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
   const { language } = useLanguage();
+  const safePosts: Post[] = posts.length > 0 ? posts : DUMMY_POSTS;
 
   const labels = {
     insights: language === "en" ? "Insights" : "अन्तर्दृष्टि",
@@ -45,12 +77,12 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
             }}
           />
 
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-[#0b0d12]/60" />
           <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
             <div className="max-w-[1200px] text-left">
               <nav
                 aria-label="Breadcrumb"
-                className="mt-4 text-sm text-foreground/50"
+                className="mt-4 text-sm text-white/50"
               >
                 <ol className="flex items-center gap-3">
                   <li>
@@ -63,7 +95,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
                   </li>
                   <li
                     aria-hidden
-                    className="inline-flex items-center text-foreground/30"
+                    className="inline-flex items-center text-white/30"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -92,7 +124,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
       <section className="py-10 lg:py-12">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-8 md:grid-cols-3">
-            {posts.map((post) => {
+            {safePosts.map((post) => {
               const p = post as any;
               const displayTitle = language === "ne" ? (p.title_ne || p.title) : p.title;
               const displayExcerpt = language === "ne" ? (p.excerpt_ne || p.excerpt) : p.excerpt;
@@ -100,7 +132,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
               return (
                 <div
                   key={p.slug}
-                  className="group flex h-full flex-col border border-foreground/10 bg-card transition-all duration-300 hover:border-red-600/50 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
+                  className="group flex h-full flex-col border border-foreground/10 bg-card transition-all duration-300 hover:border-[#2563EB]/50 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
                 >
                   {/* Image */}
                   <div className="w-full overflow-hidden bg-muted">
@@ -122,7 +154,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
 
                   {/* Meta & Deck */}
                   <div className="flex-1 px-6 py-5">
-                    <h3 className="mb-2 line-clamp-2 font-heading text-xl font-semibold text-foreground hover:text-red-600 transition-colors">
+                    <h3 className="mb-2 line-clamp-2 font-heading text-xl font-semibold text-foreground hover:text-[#2563EB] transition-colors">
                       <Link href={`/blogs/${p.slug}`}>{displayTitle}</Link>
                     </h3>
 
@@ -145,7 +177,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
                   <div className="px-6 pb-6">
                     <Link
                       href={`/blogs/${p.slug}`}
-                      className="inline-flex items-center gap-2 bg-red-600 px-4 py-2 text-sm font-medium text-white cursor-pointer hover:bg-red-700 transition"
+                      className="inline-flex items-center gap-2 bg-[#E31B23] px-4 py-2 text-sm font-medium text-white cursor-pointer hover:brightness-110 transition"
                     >
                       {labels.readMore}
                       <svg

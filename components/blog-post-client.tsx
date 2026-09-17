@@ -26,22 +26,22 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
   };
 
   return (
-    <main className="bg-black text-white min-h-screen">
+    <main className="bg-background text-foreground min-h-screen">
       {/* Title Hero */}
-      <section className="relative z-10 bg-black text-white">
+      <section className="relative z-10 bg-background text-foreground">
         <div className="relative min-h-[44vh] pt-24 lg:pt-28">
           <div
             className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60"
             style={{ backgroundImage: "url('/insights.jpg')" }}
           />
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-[#0b0d12]/60" />
 
           <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="max-w-[1200px] text-left">
               <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/80">
                 <ol className="flex items-center gap-3">
                   <li>
-                    <Link href="/" className="font-medium tracking-wide hover:text-gray-200">
+                    <Link href="/" className="font-medium tracking-wide hover:text-white/80">
                       {labels.home}
                     </Link>
                   </li>
@@ -57,7 +57,7 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
                     </svg>
                   </li>
                   <li>
-                    <Link href="/blogs" className="font-medium tracking-wide hover:text-gray-200">
+                    <Link href="/blogs" className="font-medium tracking-wide hover:text-white/80">
                       {labels.insights}
                     </Link>
                   </li>
@@ -76,7 +76,7 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
       <section>
         <div className="mx-auto max-w-3xl px-6 py-12">
           {meta.image && (
-            <div className="mb-8 w-full overflow-hidden bg-black">
+            <div className="mb-8 w-full overflow-hidden bg-muted">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={meta.image}
@@ -90,16 +90,16 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
             {displayTitle}
           </h2>
 
-          <div className="text-sm text-white/60 mb-6 font-semibold uppercase tracking-wider">
+          <div className="text-sm text-foreground/60 mb-6 font-semibold uppercase tracking-wider">
             {meta.date} {meta.readTime && `• ${meta.readTime}`}
           </div>
 
           <BlogPostBody source={displayContent} />
 
-          <div className="mt-12 pt-8 border-t border-white/10">
+          <div className="mt-12 pt-8 border-t border-foreground/10">
             <Link
               href="/blogs"
-              className="text-sm font-semibold uppercase tracking-widest text-white/60 hover:text-red-600 transition"
+              className="text-sm font-semibold uppercase tracking-widest text-foreground/60 hover:text-[#2563EB] transition"
             >
               {labels.back}
             </Link>

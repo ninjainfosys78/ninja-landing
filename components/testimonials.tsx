@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { useLanguage } from "@/components/LanguageProvider"
 import { fetchTestimonials, TestimonialRecord } from "@/lib/testimonials"
+import { Reveal } from "@/components/ui/reveal"
 
 interface Testimonial {
   name: string
@@ -108,15 +109,17 @@ export default function Testimonials() {
   return (
     <section
       aria-label="Testimonials"
-      className="relative pt-20 pb-16"
-      style={{ backgroundColor: '#000000', color: '#ffffff' }}
+      className="relative pt-20 pb-16 border-t"
+      style={{ backgroundColor: '#f7f7f8', color: '#0b0d12', borderColor: 'rgba(11,13,18,0.06)' }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
-        <h3 className="text-[32px] md:text-[48px] font-bold text-left mb-10" style={{ color: '#ffffff' }}>
-          {language === "en" ? "What our clients say" : "हाम्रा ग्राहकहरूले के भन्छन्"}
-        </h3>
+      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+        <Reveal>
+          <h3 className="text-[32px] md:text-[48px] font-bold text-left mb-10" style={{ color: '#0b0d12' }}>
+            {language === "en" ? "What our clients say" : "हाम्रा ग्राहकहरूले के भन्छन्"}
+          </h3>
+        </Reveal>
 
         <div className="relative">
           <div className="overflow-hidden">
@@ -144,14 +147,14 @@ export default function Testimonials() {
                     {group.map((item, idx) => (
                       <article
                         key={`${slideIndex}-${idx}-${item.name}`}
-                        className="p-8 min-h-[200px] flex gap-5 items-start"
-                        style={{ backgroundColor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)' }}
+                        className="p-8 min-h-[200px] flex gap-5 items-start shadow-sm"
+                        style={{ backgroundColor: '#ffffff', border: '1px solid rgba(11,13,18,0.08)' }}
                         aria-label={item.name}
                       >
                         <div
                           aria-hidden
                           className="w-14 h-14 rounded-full flex items-center justify-center overflow-hidden flex-none font-bold text-lg"
-                          style={{ backgroundColor: 'rgba(255,255,255,0.25)', color: '#ffffff' }}
+                          style={{ backgroundColor: 'rgba(37,99,235,0.12)', color: '#2563EB' }}
                         >
                           {item.image ? (
                             <img
@@ -168,14 +171,14 @@ export default function Testimonials() {
                           <div className="flex items-start justify-between">
                             <div
                               className="font-bold text-[16px]"
-                              style={{ color: '#ffffff' }}
+                              style={{ color: '#0b0d12' }}
                             >
                               {item.name}
                             </div>
                             <div
                               aria-hidden
                               className="text-[40px] leading-[1] select-none"
-                              style={{ color: 'rgba(255,255,255,0.35)' }}
+                              style={{ color: 'rgba(11,13,18,0.15)' }}
                             >
                               "
                             </div>
@@ -183,7 +186,7 @@ export default function Testimonials() {
 
                           <p
                             className="mt-3 text-[15px] leading-[1.75] italic"
-                            style={{ color: 'rgba(255,255,255,0.92)' }}
+                            style={{ color: 'rgba(11,13,18,0.7)' }}
                           >
                             {item.quote}
                           </p>
@@ -217,8 +220,8 @@ export default function Testimonials() {
                       /* Visually small dot inside */
                       before:absolute before:rounded-full before:transition-all before:duration-200
                       ${i === page
-                        ? "before:bg-[var(--color-foreground,#f3f3f3)] before:w-3 before:h-3"
-                        : "before:bg-[rgba(255,255,255,0.12)] before:w-2 before:h-2"
+                        ? "before:bg-[#2563EB] before:w-3 before:h-3"
+                        : "before:bg-[rgba(11,13,18,0.15)] before:w-2 before:h-2"
                       }
                     `}
                   >

@@ -130,7 +130,7 @@ useEffect(() => {
     <>
       <Header />
 
-      <main className="relative bg-[#000000] text-[#e3e3e3]">
+      <main className="relative bg-[#f7f7f8] text-[#0b0d12]/80">
         <section className="relative z-10">
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
              <div
@@ -188,37 +188,37 @@ useEffect(() => {
           </div>
         </section>
 
-        <section className="border-t border-ni-graphite/10 bg-[#000000] py-12 sm:py-16">
+        <section className="border-t border-[#0b0d12]/10 bg-[#f7f7f8] py-12 sm:py-16">
           <div className="mx-auto max-w-[1450px] w-full px-6 sm:px-10">
-            <h2 className="font-semibold text-white text-[32px]">
+            <h2 className="font-semibold text-[#0b0d12] text-[32px]">
               {t.featuredTitle}
             </h2>
             <div className="mt-6 grid gap-6 md:grid-cols-2">
               {featured.map((cs) => (
                 <article
                   key={cs.title}
-                  className="group border border-white/10 bg-white/5 p-6 text-white rounded-none transition-all hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#141414] hover:text-[#e3e3e3]"
+                  className="group border border-[#0b0d12]/10 bg-white p-6 text-[#0b0d12] rounded-none transition-all hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#f0f0f2] hover:text-[#0b0d12]"
                 >
                   <div className="text-[12px] font-semibold tracking-wider">
                     {cs.eyebrow}
                   </div>
-                  <h3 className="mt-1 text-xl pt-1 font-semibold text-white transition-colors group-hover:text-[#e3e3e3]">
+                  <h3 className="mt-1 text-xl pt-1 font-semibold text-[#0b0d12] transition-colors group-hover:text-[#0b0d12]">
                     {cs.title}
                   </h3>
-                  <div className="mt-3 grid gap-3 text-white/85">
+                  <div className="mt-3 grid gap-3 text-[#0b0d12]/85">
                     <p>
-                      <span className="font-semibold text-white transition-colors group-hover:text-[#e3e3e3]">
+                      <span className="font-semibold text-[#0b0d12] transition-colors group-hover:text-[#0b0d12]">
                         {language === "en" ? "Problem:" : "समस्या:"}{" "}
                       </span>
-                      <span className="ml-1 text-white/85 transition-colors group-hover:text-[#e3e3e3]">
+                      <span className="ml-1 text-[#0b0d12]/85 transition-colors group-hover:text-[#0b0d12]">
                         {cs.problem}
                       </span>
                     </p>
                     <p>
-                      <span className="font-semibold text-white transition-colors group-hover:text-[#e3e3e3]">
+                      <span className="font-semibold text-[#0b0d12] transition-colors group-hover:text-[#0b0d12]">
                         {language === "en" ? "Approach:" : "दृष्टिकोण:"}{" "}
                       </span>
-                      <span className="ml-1 text-white/85 transition-colors group-hover:text-[#e3e3e3]">
+                      <span className="ml-1 text-[#0b0d12]/85 transition-colors group-hover:text-[#0b0d12]">
                         {cs.approach}
                       </span>
                     </p>
@@ -229,9 +229,9 @@ useEffect(() => {
           </div>
         </section>
 
-        <section className="border border-ni-graphite/10 py-12 sm:py-16 bg-[#000000]">
+        <section className="border border-[#0b0d12]/10 py-12 sm:py-16 bg-[#f7f7f8]">
           <div className="mx-auto max-w-[1450px] w-full px-6 sm:px-10">
-            <h3 className="font-semibold text-white text-[32px]">
+            <h3 className="font-semibold text-[#0b0d12] text-[32px]">
               {t.processTitle}
             </h3>
             <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -259,17 +259,17 @@ useEffect(() => {
               ].map((s) => (
                 <li
                   key={s.t}
-                  className="group border border-ni-graphite/15 bg-transparent p-5 transition-transform hover:-translate-y-0.5 hover:bg-gray-500/5 hover:border-white/30"
+                  className="group border border-[#0b0d12]/15 bg-transparent p-5 transition-transform hover:-translate-y-0.5 hover:bg-gray-500/5 hover:border-[#0b0d12]/30"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="h-9 w-9 flex items-center justify-center bg-white/5 text-white">
+                    <div className="h-9 w-9 flex items-center justify-center bg-[#0b0d12]/5 text-[#0b0d12]">
                       {s.Icon ? (
                         <s.Icon size={16} className="text-current" />
                       ) : null}
                     </div>
                     <div>
                       <div className="text-sm font-semibold">{s.t}</div>
-                      <p className="mt-1 text-white/85">{s.d}</p>
+                      <p className="mt-1 text-[#0b0d12]/85">{s.d}</p>
                     </div>
                   </div>
                 </li>

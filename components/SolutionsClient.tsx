@@ -245,29 +245,27 @@ export default function SolutionsClient({
 
   return (
     <>
-      <main className="relative bg-black text-white">
+      <main className="relative bg-background text-foreground">
         <section className="relative z-10">
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
             <div className="absolute inset-0 grayscale">
-              {bannerUrl && (
-                <Image
-                  src={bannerUrl}
-                  alt="Banner"
-                  fill
-                  priority
-                  fetchPriority="high"
-                  quality={70}
-                  className="object-cover object-center"
-                />
-              )}
+              <Image
+                src={bannerUrl || "/digital-infrastructure-network-city.jpg"}
+                alt="Banner"
+                fill
+                priority
+                fetchPriority="high"
+                quality={70}
+                className="object-cover object-center"
+              />
             </div>
 
-            <div className="absolute inset-0 bg-black/70" />
+            <div className="absolute inset-0 bg-[#0b0d12]/70" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
               <div className="max-w-[1200px] text-left">
                 <nav
                   aria-label="Breadcrumb"
-                  className="mt-0 text-sm text:white/80"
+                  className="mt-0 text-sm text-white/80"
                 >
                   <ol className="flex items-center gap-3">
                     <li>
@@ -332,14 +330,14 @@ export default function SolutionsClient({
         </section>
 
         {!active && cards.length > 0 && (
-          <section className="py-14 relative overflow-hidden bg-black">
+          <section className="py-14 relative overflow-hidden bg-background">
             <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12">
               <div className="grid gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
                 {cards.map((card) => (
                   <Link
                     href={`/solutions/${card.id}`}
                     key={card.id}
-                    className="solutions-card text-left group relative block select-none overflow-hidden w-full h-full rounded-none transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)] hover:ring-1 hover:ring-white/20 border border-white/5 flex flex-col"
+                    className="solutions-card text-left group relative block select-none overflow-hidden w-full h-full rounded-none transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)] hover:ring-1 hover:ring-foreground/20 border border-foreground/10 flex flex-col"
                   >
                     <div className="relative aspect-[16/10] w-full flex-none overflow-hidden">
                       {card.imageUrl && (
@@ -356,30 +354,30 @@ export default function SolutionsClient({
                           className="object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
                         />
                       )}
-                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors" />
+                      <div className="absolute inset-0 bg-[#0b0d12]/40 group-hover:bg-[#0b0d12]/10 transition-colors" />
                     </div>
 
-                    <div className="p-6 sm:p-7 bg-black transition-colors duration-500 group-hover:bg-[#111] overflow-hidden flex-1 flex flex-col">
+                    <div className="p-6 sm:p-7 bg-background transition-colors duration-500 group-hover:bg-card overflow-hidden flex-1 flex flex-col">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-xl sm:text-2xl pb-2 font-heading font-semibold text-white group-hover:text-[#d52020] transition-colors">
+                        <h3 className="text-xl sm:text-2xl pb-2 font-heading font-semibold text-foreground group-hover:text-[#2563EB] transition-colors line-clamp-2 min-h-[3.5rem] sm:min-h-[4.5rem]">
                           {language === "en"
                             ? card.title_en
                             : card.title_ne || card.title_en}
                         </h3>
-                        <div className="h-10 w-10 border border-white/10 flex items-center justify-center -mr-2 group-hover:border-[#d52020] transition-colors">
-                          <svg viewBox="0 0 24 24" className="h-5 w-5 text-white/50 group-hover:text-[#d52020]" fill="none" stroke="currentColor" strokeWidth="2">
+                        <div className="h-10 w-10 border border-foreground/10 flex items-center justify-center -mr-2 group-hover:border-[#2563EB] transition-colors">
+                          <svg viewBox="0 0 24 24" className="h-5 w-5 text-foreground/50 group-hover:text-[#2563EB]" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M5 12h14M12 5l7 7-7 7" />
                           </svg>
                         </div>
                       </div>
-                      <p className="mt-3 text-base leading-relaxed text-white/60 transition-colors duration-300 group-hover:text-white/80 flex-1">
+                      <p className="mt-3 text-base leading-relaxed text-foreground/60 transition-colors duration-300 group-hover:text-foreground/80 flex-1">
                         {language === "en"
                           ? card.description_en
                           : card.description_ne || card.description_en}
                       </p>
-                      
+
                       <div className="mt-8 flex items-center gap-2">
-                        <span className="text-xs font-bold uppercase tracking-widest text-[#d52020] opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0">
+                        <span className="text-xs font-bold uppercase tracking-widest text-[#2563EB] opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0">
                           {language === "en" ? "Explore Solution" : "विवरण हेर्नुहोस्"}
                         </span>
                       </div>
@@ -393,7 +391,7 @@ export default function SolutionsClient({
 
         {active && detail && (
           <>
-            <section className="py-12 sm:py-16 bg-black text-white">
+            <section className="py-12 sm:py-16 bg-background text-foreground">
               <div className="mx-auto max-w-[1200px] w-full px-6 sm:px-10">
                 <div className="grid gap-10 lg:grid-cols-12">
                   <aside className="lg:col-span-4 xl:col-span-3">
@@ -402,16 +400,16 @@ export default function SolutionsClient({
                         <button
                           key={item.key}
                           onClick={() => activate(item.key)}
-                          className={`w-full text-left flex items-center justify-between border border-white/20 bg-black px-5 py-5 text-[18px] font-medium transition-colors ${
-                            item.key === active ? "ring-1 ring-white" : ""
+                          className={`w-full text-left flex items-center justify-between border border-foreground/20 bg-background px-5 py-5 text-[18px] font-medium transition-colors ${
+                            item.key === active ? "ring-1 ring-foreground" : ""
                           }`}
                         >
-                          <span className="text-white">
+                          <span className="text-foreground">
                             {item.label[language as Lang]}
                           </span>
                           <svg
                             viewBox="0 0 24 24"
-                            className="h-5 w-5 text-white/70"
+                            className="h-5 w-5 text-foreground/70"
                             fill="none"
                             stroke="currentColor"
                             strokeWidth="2"
@@ -427,17 +425,17 @@ export default function SolutionsClient({
                   <div className="lg:col-span-8 xl:col-span-9">
                     <header className="max-w-3xl">
                       <div className="mb-4">
-                        <h2 className="text-3xl sm:text-4xl font-heading font-semibold text-white">
+                        <h2 className="text-3xl sm:text-4xl font-heading font-semibold text-foreground">
                           {detail.pageTitle}
                         </h2>
                       </div>
-                      <p className="mt-3 text-[17px] leading-7 text-white/80">
+                      <p className="mt-3 text-[17px] leading-7 text-foreground/80">
                         {detail.lead}
                       </p>
                     </header>
 
                     <div className="mt-8">
-                      <h3 className="mt-8 text-2xl font-semibold text:white">
+                      <h3 className="mt-8 text-2xl font-semibold text-foreground">
                         {language === "en"
                           ? "What we deliver"
                           : "हामीले के प्रदान गर्छौँ"}
@@ -455,7 +453,7 @@ export default function SolutionsClient({
                               >
                                 <svg
                                   viewBox="0 0 24 24"
-                                  className="mt-[3px] h-5 w-5 flex-none text-white/80"
+                                  className="mt-[3px] h-5 w-5 flex-none text-foreground/80"
                                   fill="none"
                                   stroke="currentColor"
                                   strokeWidth="2"
@@ -465,7 +463,7 @@ export default function SolutionsClient({
                                   <path d="M5 12h14" />
                                   <path d="M13 5l7 7-7 7" />
                                 </svg>
-                                <span className="text-[16px] leading-7 text-white/85">
+                                <span className="text-[16px] leading-7 text-foreground/85">
                                   {line}
                                 </span>
                               </li>
@@ -479,7 +477,7 @@ export default function SolutionsClient({
               </div>
             </section>
 
-            <section className="border-t border-white/10 py-12 sm:py-16 bg-black">
+            <section className="border-t border-foreground/10 py-12 sm:py-16 bg-background">
               <div className="mx-auto max-w-[1200px] w-full px-6 sm:px-10">
                 <ProjectsGrid
                   language={language as Lang}

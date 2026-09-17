@@ -98,11 +98,11 @@ export default function BookingForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-4">{t.title}</h3>
-        <p className="text-white/60 mb-8">{message}</p>
+        <h3 className="text-2xl font-bold text-[#0b0d12] mb-4">{t.title}</h3>
+        <p className="text-[#0b0d12]/60 mb-8">{message}</p>
         <button 
           onClick={() => setStatus("idle")}
-          className="px-8 py-3 bg-[#c0152a] text-white font-bold rounded hover:bg-[#a01222] transition-colors"
+          className="px-8 py-3 bg-[#E31B23] text-white font-bold rounded hover:brightness-110 transition-colors"
         >
           {t.bookAnother}
         </button>
@@ -114,26 +114,26 @@ export default function BookingForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">{t.fullName}</label>
+          <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.fullName}</label>
           <input
             type="text"
             name="name"
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors"
+            className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors"
             placeholder="John Doe"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">{t.email}</label>
+          <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.email}</label>
           <input
             type="email"
             name="email"
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors"
+            className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors"
             placeholder="john@example.com"
           />
         </div>
@@ -141,39 +141,39 @@ export default function BookingForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">{t.phone}</label>
+          <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.phone}</label>
           <input
             type="tel"
             name="phone"
             required
             value={formData.phone}
             onChange={handleChange}
-            className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors"
+            className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors"
             placeholder="+977-98XXXXXXXX"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">{t.preferredDate}</label>
+          <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.preferredDate}</label>
           <input
             type="date"
             name="preferred_date"
             required
             value={formData.preferred_date}
             onChange={handleChange}
-            className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors [color-scheme:dark]"
+            className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors [color-scheme:light]"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-white/70 mb-2">{t.projectDesc}</label>
+        <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.projectDesc}</label>
         <textarea
           name="project_description"
           required
           rows={4}
           value={formData.project_description}
           onChange={handleChange}
-          className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors resize-none"
+          className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors resize-none"
           placeholder={t.projectPlaceholder}
         />
       </div>
@@ -183,7 +183,7 @@ export default function BookingForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full py-4 bg-[#c0152a] text-white font-bold rounded hover:bg-[#a01222] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-4 bg-[#E31B23] text-white font-bold rounded hover:brightness-110 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === "loading" ? t.processing : t.submit}
       </button>

@@ -47,16 +47,16 @@ export default function LocationsPage() {
   return (
     <>
       <Header />
-      <main className="bg-[#0d0d0d] pt-32 pb-24 min-h-screen">
+      <main className="bg-[#f7f7f8] pt-32 pb-24 min-h-screen">
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="mb-16">
-            <h1 className="text-5xl font-heading font-bold text-white mb-4">{t.heading}</h1>
-            <p className="text-xl text-white/50 max-w-2xl">{t.subheading}</p>
+            <h1 className="text-5xl font-heading font-bold text-[#0b0d12] mb-4">{t.heading}</h1>
+            <p className="text-xl text-[#0b0d12]/60 max-w-2xl">{t.subheading}</p>
           </div>
 
           <div className="grid grid-cols-1 max-w-2xl gap-12">
             {offices.map((office, idx) => (
-              <div key={idx} className="bg-white/5 border border-white/10 rounded-lg overflow-hidden group hover:border-[#c0152a]/50 transition-all duration-300">
+              <div key={idx} className="bg-white border border-[#0b0d12]/10 rounded-lg overflow-hidden group hover:border-[#2563EB]/50 transition-all duration-300">
                 <div className="h-64 grayscale group-hover:grayscale-0 transition-all duration-500">
                   <iframe
                     src={office.mapUrl}
@@ -69,21 +69,21 @@ export default function LocationsPage() {
                   />
                 </div>
                 <div className="p-8">
-                  <h2 className="text-3xl font-heading font-bold text-white mb-10 underline decoration-[#c0152a] decoration-4 underline-offset-8">
+                  <h2 className="text-3xl font-heading font-bold text-[#0b0d12] mb-10 underline decoration-[#2563EB] decoration-4 underline-offset-8">
                     {office.city}
                   </h2>
                   <div className="space-y-4">
-                    <div className="flex items-start gap-4 text-white/70">
-                      <MapPin size={20} className="text-[#c0152a] mt-1 shrink-0" />
+                    <div className="flex items-start gap-4 text-[#0b0d12]/70">
+                      <MapPin size={20} className="text-[#2563EB] mt-1 shrink-0" />
                       <span>{office.address}</span>
                     </div>
-                    <div className="flex items-start gap-4 text-white/70">
-                      <Phone size={20} className="text-[#c0152a] mt-1 shrink-0" />
+                    <div className="flex items-start gap-4 text-[#0b0d12]/70">
+                      <Phone size={20} className="text-[#2563EB] mt-1 shrink-0" />
                       <span>{office.phone}</span>
                     </div>
-                    <div className="flex items-start gap-4 text-white/70">
-                      <Mail size={20} className="text-[#c0152a] mt-1 shrink-0" />
-                      <a href={`mailto:${office.email}`} className="hover:text-white transition-colors">
+                    <div className="flex items-start gap-4 text-[#0b0d12]/70">
+                      <Mail size={20} className="text-[#2563EB] mt-1 shrink-0" />
+                      <a href={`mailto:${office.email}`} className="hover:text-[#2563EB] transition-colors">
                         {office.email}
                       </a>
                     </div>

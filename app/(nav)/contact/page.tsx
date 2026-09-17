@@ -19,7 +19,6 @@ export default function ContactPage() {
   const t =
     language === "en"
       ? {
-          title: "Ninja Infosys",
           formTitle: "Interested in Learning More?",
           firstName: "First name",
           lastName: "Last name",
@@ -37,7 +36,6 @@ export default function ContactPage() {
           mapCaption: "Ninja Infosys, Anamnagar, Kathmandu, Nepal",
         }
       : {
-          title: "निन्जा इन्फोसिस",
           formTitle: "थप जानकारी चाहनुहुन्छ?",
           firstName: "पहिलो नाम",
           lastName: "थर",
@@ -133,7 +131,7 @@ export default function ContactPage() {
     <>
       <Header />
 
-      <section className="relative min-h-screen bg-black text-[#e3e3e3] pt-16" aria-label="Contact section">
+      <section className="relative min-h-screen bg-[#f7f7f8] text-[#0b0d12]/80 pt-16" aria-label="Contact section">
         {/* measured container: left padding set so the form starts under the logo */}
         <div
           ref={containerRef}
@@ -143,45 +141,41 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-[560px_1fr] items-stretch gap-0">
             <div className="pr-8 flex flex-col h-[620px]">
               <div className="max-w-[560px] flex flex-col h-full pt-10">
-                <div className="mb-6 text-[20px] leading-[1] text-[--color-foreground]">
-                  {t.title}
-                </div>
-
-                <h2 className="font-heading text-white leading-tight mb-8 font-source-serif">
+                <h2 className="font-heading text-[#0b0d12] leading-tight mb-8 font-source-serif">
                   <span className="block text-[40px] md:text-[64px] leading-[0.95]">{t.formTitle}</span>
                 </h2>
 
-                <div className="w-24 h-px bg-white/20 mb-8" />
+                <div className="w-24 h-px bg-[#0b0d12]/15 mb-8" />
 
                 <form onSubmit={onSubmit} className="flex flex-col gap-4 h-full">
                   <div className="grid grid-cols-2 gap-x-6">
                     <label className="block">
-                      <span className="block text-sm text-gray-300 mb-2">{t.firstName} <span className="text-[#d52020]">*</span></span>
+                      <span className="block text-sm text-[#0b0d12]/60 mb-2">{t.firstName} <span className="text-[#2563EB]">*</span></span>
                       <input name="firstName" type="text" required placeholder={t.firstName}
-                        className="w-full bg-transparent text-white placeholder:text-ni-paper/60 outline-none border-b border-white/20 py-2" />
+                        className="w-full bg-transparent text-[#0b0d12] placeholder:text-[#0b0d12]/40 outline-none border-b border-[#0b0d12]/20 py-2" />
                     </label>
 
                     <label className="block">
-                      <span className="block text-sm text-gray-300 mb-2">{t.lastName} <span className="text-[#d52020]">*</span></span>
+                      <span className="block text-sm text-[#0b0d12]/60 mb-2">{t.lastName} <span className="text-[#2563EB]">*</span></span>
                       <input name="lastName" type="text" required placeholder={t.lastName}
-                        className="w-full bg-transparent text-white placeholder:text-ni-paper/60 outline-none border-b border-white/20 py-2" />
+                        className="w-full bg-transparent text-[#0b0d12] placeholder:text-[#0b0d12]/40 outline-none border-b border-[#0b0d12]/20 py-2" />
                     </label>
                   </div>
 
                   <label className="block">
-                    <span className="block text-sm text-gray-300 mb-2">{t.email} <span className="text-[#d52020]">*</span></span>
+                    <span className="block text-sm text-[#0b0d12]/60 mb-2">{t.email} <span className="text-[#2563EB]">*</span></span>
                     <input name="email" type="email" required placeholder="you@example.com"
-                      className="w-full bg-transparent text-white placeholder:text-ni-paper/60 outline-none border-b border-white/20 py-2" />
+                      className="w-full bg-transparent text-[#0b0d12] placeholder:text-[#0b0d12]/40 outline-none border-b border-[#0b0d12]/20 py-2" />
                   </label>
 
                   <label className="block">
-                    <span className="block text-sm text-gray-300 mb-2">{t.message}</span>
+                    <span className="block text-sm text-[#0b0d12]/60 mb-2">{t.message}</span>
                     <textarea name="message" rows={3} placeholder={t.message}
-                      className="w-full bg-transparent text-white placeholder:text-ni-paper/60 outline-none border-b border-white/20 py-2 resize-none h-20" />
+                      className="w-full bg-transparent text-[#0b0d12] placeholder:text-[#0b0d12]/40 outline-none border-b border-[#0b0d12]/20 py-2 resize-none h-20" />
                   </label>
 
-                  <label className="flex items-start gap-3 text-sm text-gray-300">
-                    <input name="consent" type="checkbox" className="w-4 h-4 accent-[#d52020] mt-1" />
+                  <label className="flex items-start gap-3 text-sm text-[#0b0d12]/60">
+                    <input name="consent" type="checkbox" className="w-4 h-4 accent-[#2563EB] mt-1" />
                     <span className="text-sm">{t.agreeLabel}</span>
                   </label>
 
@@ -191,7 +185,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="mt-auto">
-                    <button disabled={loading} type="submit" className="inline-flex items-center justify-center bg-[#d52020] px-6 py-3 font-semibold text-white hover:opacity-95 transition disabled:opacity-50">
+                    <button disabled={loading} type="submit" className="inline-flex items-center justify-center bg-[#E31B23] px-6 py-3 font-semibold text-white hover:opacity-95 transition disabled:opacity-50">
                       {loading ? (language === "en" ? "Sending..." : "पठाउँदै...") : t.send}
                     </button>
                   </div>
@@ -208,14 +202,14 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="mt-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-semibold text-white mb-2">{t.locationHeading}</h2>
-            <p className="text-sm text-gray-400 mb-6">{t.mapCaption || "Ninja Infosys, Anamnagar, Kathmandu, Nepal"}</p>
+          <div className="mt-20 pt-16 pb-16 md:mt-28 md:pt-20 md:pb-20 border-t border-[#0b0d12]/10">
+            <h2 className="text-3xl md:text-4xl font-heading font-semibold text-[#0b0d12] mb-2">{t.locationHeading}</h2>
+            <p className="text-sm text-[#0b0d12]/60 mb-6">{t.mapCaption || "Ninja Infosys, Anamnagar, Kathmandu, Nepal"}</p>
 
             <div className="mb-6">
               <Link
                 href="https://www.google.com/maps?q=Anamnagar%20Kathmandu%20Nepal"
-                className="inline-flex items-center gap-2 text-sm text-white/90"
+                className="inline-flex items-center gap-2 text-sm text-[#2563EB] hover:underline"
               >
                 <span>{t.getDirection}</span>
               </Link>

@@ -116,7 +116,7 @@ export default function FeaturedCarousel() {
               <div className={`max-w-2xl transform transition-transform duration-1000 ${
                 idx === current ? "translate-y-0" : "translate-y-10"
               }`}>
-                <div className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#006FB7] mb-4">
+                <div className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#2563EB] mb-4">
                   {category}
                 </div>
                 <h2 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 leading-tight">
@@ -129,7 +129,7 @@ export default function FeaturedCarousel() {
                   href={item.link}
                   className="inline-flex items-center gap-3 text-white font-bold group/btn"
                 >
-                  <span className="text-lg underline underline-offset-8 decoration-2 decoration-[#006FB7] group-hover/btn:decoration-white transition-colors">
+                  <span className="text-lg underline underline-offset-8 decoration-2 decoration-[#2563EB] group-hover/btn:decoration-white transition-colors">
                     {labels.readMore}
                   </span>
                   <ArrowRight className="mt-1 transition-transform group-hover/btn:translate-x-2" />
@@ -164,7 +164,7 @@ export default function FeaturedCarousel() {
               key={idx}
               onClick={() => setCurrent(idx)}
               className={`h-[2px] transition-all duration-500 ${
-                idx === current ? "w-12 bg-[#006FB7]" : "w-6 bg-white/30"
+                idx === current ? "w-12 bg-[#2563EB]" : "w-6 bg-white/30"
               }`}
             />
           ))}

@@ -47,10 +47,6 @@ const AboutUsSection = dynamic(() => import("@/components/about-us-section"), {
   ssr: true,
 });
 
-const Newsletter = dynamic(() => import("@/components/newsletter"), {
-  ssr: true,
-});
-
 interface HomePageClientProps {
   insights: InsightCard[];
   trustedLogos: TrustedLogoRecord[];
@@ -142,8 +138,7 @@ export default function HomePageClient({ insights, trustedLogos }: HomePageClien
         {/* Global Insights */}
         <InsightsRail insights={safeInsights} />
         <Testimonials />
-        <Newsletter />
-        <GlobalCTA 
+        <GlobalCTA
           onOfficesOpen={openOffices} 
           onBookingOpen={openBooking}
           onQuoteOpen={openQuote}

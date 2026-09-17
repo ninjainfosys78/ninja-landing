@@ -103,31 +103,31 @@ const sections = [
 
 export default function TermsPage() {
   return (
-    <main className="bg-black text-white">
+    <main className="bg-[#f7f7f8] text-[#0b0d12]">
       <div className="relative overflow-hidden">
         <div className="relative z-5 mx-auto max-w-6xl px-6 sm:px-10 pt-10 lg:pt-28 pb-20">
-          <Link href="/" className="inline-flex items-center text-sm font-medium text-ni-paper/60 hover:text-ni-paper transition-colors">
+          <Link href="/" className="inline-flex items-center text-sm font-medium text-[#0b0d12]/60 hover:text-[#0b0d12] transition-colors">
             ← Back to home
           </Link>
-          <h1 className="mt-10 text-4xl sm:text-5xl font-heading font-bold text-white">Terms of Service</h1>
-          <p className="mt-5 max-w-2xl text-lg text-white leading-relaxed">
+          <h1 className="mt-10 text-4xl sm:text-5xl font-heading font-bold text-[#0b0d12]">Terms of Service</h1>
+          <p className="mt-5 max-w-2xl text-lg text-[#0b0d12] leading-relaxed">
             Clear expectations on how we operate, what we commit to, and how we partner responsibly with clients,
             collaborators, and visitors to our digital experiences.
           </p>
-          <p className="pt-6 text-sm uppercase tracking-[0.22em] text-white/60">Last updated · {updated}</p>
+          <p className="pt-6 text-sm uppercase tracking-[0.22em] text-[#0b0d12]/60">Last updated · {updated}</p>
         </div>
       </div>
 
       <div className="mx-auto max-w-6xl px-6 sm:px-10 pb-24">
         <div className="grid gap-10 lg:grid-cols-[260px,1fr]">
-          <nav className="top-28 hidden lg:block self-start rounded-none border border-white/40 bg-[#141414] p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white">Navigate</p>
+          <nav className="top-28 hidden lg:block self-start rounded-none border border-[#0b0d12]/15 bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#0b0d12]">Navigate</p>
             <ul className="mt-4 space-y-3 text-sm">
               {sections.map((section: any) => (
                 <li key={section.id}>
                   <a
                     href={`#${section.id}`}
-                    className="block px-3 py-2 text-ni-paper/60 transition-colors hover:bg-transparent hover:text-ni-paper"
+                    className="block px-3 py-2 text-[#0b0d12]/60 transition-colors hover:bg-transparent hover:text-[#0b0d12]"
                   >
                     {section.title}
                   </a>
@@ -141,13 +141,13 @@ export default function TermsPage() {
               <section
                 key={section.id}
                 id={section.id}
-                className="rounded-none border border-white/40 bg-[#141414] p-8 shadow-none"
+                className="rounded-none border border-[#0b0d12]/15 bg-white p-8 shadow-none"
               >
-                <h2 className="text-2xl font-heading font-semibold text-white">{section.title}</h2>
+                <h2 className="text-2xl font-heading font-semibold text-[#0b0d12]">{section.title}</h2>
 
                 {section.bullets ? (
                   <div className="mt-4 grid gap-6 lg:grid-cols-[1fr,420px] items-start">
-                    <div className="space-y-4 text-base leading-relaxed text-white">
+                    <div className="space-y-4 text-base leading-relaxed text-[#0b0d12]">
                       {section.paragraphs.map((paragraph: any) => (
                         <p key={paragraph}>{paragraph}</p>
                       ))}
@@ -158,10 +158,10 @@ export default function TermsPage() {
                             <Link
                               key={action.href}
                               href={action.href}
-                              className="inline-flex items-center gap-2 text-sm font-semibold text-ni-paper/60 transition-colors hover:text-ni-paper group"
+                              className="inline-flex items-center gap-2 text-sm font-semibold text-[#0b0d12]/60 transition-colors hover:text-[#0b0d12] group"
                             >
                               <span>{action.label}</span>
-                              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1 text-ni-paper/60" />
+                              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1 text-[#0b0d12]/60" />
                             </Link>
                           ))}
                         </div>
@@ -169,10 +169,10 @@ export default function TermsPage() {
                     </div>
 
                     <div>
-                      <ul className="space-y-2 bg-[#141414] p-4">
+                      <ul className="space-y-2 bg-[#f7f7f8] p-4">
                         {section.bullets.map((item: any) => (
-                          <li key={item} className="pl-5 text-sm text-white" style={{ textIndent: "-1.25rem" }}>
-                            <span className="mr-2 text-[#d52020]">•</span>
+                          <li key={item} className="pl-5 text-sm text-[#0b0d12]" style={{ textIndent: "-1.25rem" }}>
+                            <span className="mr-2 text-[#2563EB]">•</span>
                             {item}
                           </li>
                         ))}
@@ -180,7 +180,7 @@ export default function TermsPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="mt-4 space-y-4 text-base leading-relaxed text-white">
+                  <div className="mt-4 space-y-4 text-base leading-relaxed text-[#0b0d12]">
                     {section.paragraphs.map((paragraph: any) => (
                       <p key={paragraph}>{paragraph}</p>
                     ))}
@@ -191,10 +191,10 @@ export default function TermsPage() {
                           <Link
                             key={action.href}
                             href={action.href}
-                            className="inline-flex items-center gap-2 text-sm font-semibold text-ni-paper/60 transition-colors hover:text-ni-paper group"
+                            className="inline-flex items-center gap-2 text-sm font-semibold text-[#0b0d12]/60 transition-colors hover:text-[#0b0d12] group"
                           >
                             <span>{action.label}</span>
-                            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1 text-ni-paper/60" />
+                            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1 text-[#0b0d12]/60" />
                           </Link>
                         ))}
                       </div>

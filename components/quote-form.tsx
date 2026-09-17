@@ -121,11 +121,11 @@ export default function QuoteForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-4">{t.successTitle}</h3>
-        <p className="text-white/60 mb-8">{message}</p>
+        <h3 className="text-2xl font-bold text-[#0b0d12] mb-4">{t.successTitle}</h3>
+        <p className="text-[#0b0d12]/60 mb-8">{message}</p>
         <button 
           onClick={() => setStatus("idle")}
-          className="px-8 py-3 bg-[#c0152a] text-white font-bold rounded hover:bg-[#a01222] transition-colors"
+          className="px-8 py-3 bg-[#E31B23] text-white font-bold rounded hover:brightness-110 transition-colors"
         >
           {t.requestAnother}
         </button>
@@ -137,26 +137,26 @@ export default function QuoteForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">{t.fullName}</label>
+          <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.fullName}</label>
           <input
             type="text"
             name="name"
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors"
+            className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors"
             placeholder="Jane Smith"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">{t.workEmail}</label>
+          <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.workEmail}</label>
           <input
             type="email"
             name="email"
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors"
+            className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors"
             placeholder="jane@company.com"
           />
         </div>
@@ -164,55 +164,55 @@ export default function QuoteForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">{t.companyName}</label>
+          <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.companyName}</label>
           <input
             type="text"
             name="company"
             required
             value={formData.company}
             onChange={handleChange}
-            className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors"
+            className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors"
             placeholder="Acme Corp"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white/70 mb-2">{t.serviceType}</label>
+          <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.serviceType}</label>
           <select
             name="service_type"
             value={formData.service_type}
             onChange={handleChange}
-            className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors appearance-none"
+            className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors appearance-none"
           >
             {SERVICE_TYPES.map(type => (
-              <option key={type} value={type} className="bg-[#0d0d0d]">{type}</option>
+              <option key={type} value={type} className="bg-white text-[#0b0d12]">{type}</option>
             ))}
           </select>
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-white/70 mb-2">{t.budgetRange}</label>
+        <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.budgetRange}</label>
         <select
           name="budget_range"
           value={formData.budget_range}
           onChange={handleChange}
-          className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors appearance-none"
+          className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors appearance-none"
         >
           {BUDGET_RANGES.map(range => (
-            <option key={range} value={range} className="bg-[#0d0d0d]">{range}</option>
+            <option key={range} value={range} className="bg-white text-[#0b0d12]">{range}</option>
           ))}
         </select>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-white/70 mb-2">{t.projectDetails}</label>
+        <label className="block text-sm font-medium text-[#0b0d12]/70 mb-2">{t.projectDetails}</label>
         <textarea
           name="project_details"
           required
           rows={4}
           value={formData.project_details}
           onChange={handleChange}
-          className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-[#c0152a] transition-colors resize-none"
+          className="w-full bg-[#0b0d12]/[0.03] border border-[#0b0d12]/15 rounded px-4 py-3 text-[#0b0d12] focus:outline-none focus:border-[#2563EB] transition-colors resize-none"
           placeholder={t.projectPlaceholder}
         />
       </div>
@@ -222,7 +222,7 @@ export default function QuoteForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full py-4 bg-[#c0152a] text-white font-bold rounded hover:bg-[#a01222] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-4 bg-[#E31B23] text-white font-bold rounded hover:brightness-110 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === "loading" ? t.processing : t.submit}
       </button>

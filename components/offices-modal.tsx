@@ -67,7 +67,7 @@ export default function OfficesModal({ isOpen, onClose }: OfficesModalProps) {
                   <p className="text-sm text-ni-slate mb-3">{office.label}</p>
                   <a
                     href={`mailto:${office.email}`}
-                    className="inline-flex items-center gap-2 text-sm text-ni-accent hover:text-ni-accent-2 transition-colors"
+                    className="inline-flex items-center gap-2 text-sm text-ni-accent hover:text-[#1D4ED8] transition-colors"
                   >
                     <Mail size={16} />
                     {office.email}

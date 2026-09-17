@@ -41,23 +41,23 @@ export default function CookieBanner() {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 bg-[#000000] text-ni-paper"
+      className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#0b0d12]/10 text-ni-ink shadow-[0_-4px_20px_rgba(11,13,18,0.08)]"
       role="region"
       aria-label={language === "en" ? "Cookie consent" : "कुकी सहमति"}
     >
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 py-4 flex items-center justify-between gap-4">
-        <p className="text-sm text-ni-paper/80 flex-1 mr-4">{content.message}</p>
+        <p className="text-sm text-ni-ink/80 flex-1 mr-4">{content.message}</p>
         <div className="flex items-center gap-3">
           <button
             onClick={handleDecline}
-            className="px-4 py-2 border bg-[#141414] border-ni-paper/20 text-ni-paper text-sm font-medium"
+            className="px-4 py-2 border bg-[#0b0d12]/[0.03] border-ni-ink/15 text-ni-ink text-sm font-medium"
             style={{ minHeight: 40 }}
           >
             {content.decline}
           </button>
           <button
             onClick={handleAccept}
-            className="px-4 py-2 bg-[#d52027] text-white text-sm font-medium"
+            className="px-4 py-2 bg-[#E31B23] text-white text-sm font-medium"
             style={{ minHeight: 40 }}
           >
             {content.accept}

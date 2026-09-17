@@ -102,10 +102,9 @@ export default function CookiesPage() {
   return (
     <main className="bg-ni-paper text-ni-ink">
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-ni-accent/10 via-transparent to-ni-accent-2/10" />
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-ni-accent via-ni-accent-2 to-ni-accent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-ni-accent/10 via-transparent to-ni-accent/5" />
         <div className="relative z-10 mx-auto max-w-4xl px-6 sm:px-10 pt-28 pb-20">
-          <Link href="/" className="inline-flex items-center text-sm font-medium text-ni-accent hover:text-ni-accent-2 transition-colors">
+          <Link href="/" className="inline-flex items-center text-sm font-medium text-ni-accent hover:text-[#2563EB] transition-colors">
             ← Back to home
           </Link>
           <h1 className="mt-10 text-4xl sm:text-5xl font-heading font-bold text-balance">Cookie Policy</h1>
@@ -178,7 +177,7 @@ export default function CookiesPage() {
                         <Link
                           key={action.href}
                           href={action.href}
-                          className="inline-flex items-center justify-center rounded-lg border border-ni-graphite/15 px-4 py-2 text-sm font-semibold text-ni-accent transition-colors hover:border-ni-accent hover:text-ni-accent-2"
+                          className="inline-flex items-center justify-center rounded-lg border border-ni-graphite/15 px-4 py-2 text-sm font-semibold text-ni-accent transition-colors hover:border-ni-accent hover:text-[#2563EB]"
                         >
                           {action.label}
                         </Link>

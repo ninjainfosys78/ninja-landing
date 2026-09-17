@@ -24,7 +24,7 @@ export default function CareersTeaser({ language }: CareersTeaserProps) {
   return (
     <section
       className="py-20 md:py-28"
-      style={{ backgroundColor: '#0b0d12', color: '#f3f3f3' }}
+      style={{ backgroundColor: '#f7f7f8', color: '#0b0d12' }}
       aria-labelledby="careers-title"
     >
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
@@ -32,20 +32,20 @@ export default function CareersTeaser({ language }: CareersTeaserProps) {
           <h2
             id="careers-title"
             className="text-4xl md:text-5xl font-heading font-bold mb-6 text-balance"
-            style={{ color: '#ffffff' }}
+            style={{ color: '#0b0d12' }}
           >
             {content.title}
           </h2>
           <p
             className="text-xl pt-4 pb-3 leading-relaxed text-pretty"
-            style={{ color: 'rgba(243,243,243,0.7)' }}
+            style={{ color: 'rgba(11,13,18,0.7)' }}
           >
             {content.body}
           </p>
           <Link
             href="/careers"
             className="inline-flex items-center gap-2 font-medium transition-colors group mt-2"
-            style={{ color: '#006FB7' }}
+            style={{ color: '#2563EB' }}
           >
             {content.cta}
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />

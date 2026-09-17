@@ -12,15 +12,15 @@ export default {
           paper: "#ffffff",
           graphite: "#1f2430",
           slate: "#2c3242",
-          accent: "#006FB7",
-          "accent-2": "#d52020",
+          accent: "#2563EB",
+          "accent-2": "#E31B23",
         },
         // Brand tokens used by new McKinsey-style components
         brand: {
-          blue:      "#006FB7",
-          red:       "#d52020",
+          blue:      "#2563EB",
+          red:       "#E31B23",
           navy:      "#0b0d12",
-          vividBlue: "#006FB7",
+          vividBlue: "#2563EB",
         },
       },
       fontFamily: {

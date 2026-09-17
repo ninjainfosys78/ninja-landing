@@ -58,18 +58,17 @@ export default function CareersPage() {
   return (
     <>
       <Header />
-      <main className="relative bg-black text-white">
+      <main className="relative bg-background text-foreground">
         <section className="relative z-10">
           <div className="relative min-h-[70vh]">
             <div
               className="absolute inset-0 bg-center bg-fixed grayscale"
-              style={
-                bannerUrl
-                  ? { backgroundImage: `url('${bannerUrl}')`, backgroundSize: "cover" }
-                  : {}
-              }
+              style={{
+                backgroundImage: `url('${bannerUrl || "/careers.png"}')`,
+                backgroundSize: "cover",
+              }}
             />
-            <div className="absolute inset-0 bg-black/65" />
+            <div className="absolute inset-0 bg-[#0b0d12]/65" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12 flex items-center min-h-[70vh]">
               <div className="max-w-[1200px] text-left">
                 <nav aria-label="Breadcrumb" className="mt-0 text-sm text-white/80">
@@ -102,15 +101,15 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <section className="border-t border-white/10">
+        <section className="border-t border-foreground/10">
           <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="py-12 sm:py-16">
               <div className="max-w-3xl">
                 <div className="flex flex-col items-start gap-4">
-                  <div className="flex h-11 w-11 items-center justify-center border border-white/30 bg-white/10">
+                  <div className="flex h-11 w-11 items-center justify-center border border-foreground/20 bg-foreground/5">
                     <svg
                       viewBox="0 0 24 24"
-                      className="h-5 w-5 text-white/90"
+                      className="h-5 w-5 text-foreground/90"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
@@ -120,8 +119,8 @@ export default function CareersPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-white/90">{t.body.noOpenings}</p>
-                    <p className="mt-2 text-white/70 text-sm">{t.body.stayTuned}</p>
+                    <p className="text-foreground/90">{t.body.noOpenings}</p>
+                    <p className="mt-2 text-foreground/70 text-sm">{t.body.stayTuned}</p>
                   </div>
                 </div>
               </div>
