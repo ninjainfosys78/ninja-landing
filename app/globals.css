@@ -4,8 +4,8 @@
 
 /* ─── Design tokens ────────────────────────────────────────────────── */
 :root {
-  /* Base palette — light-first, no dark/black sections */
-  --background:  #f7f7f8;
+  /* Base palette — Paper/Paper-2/Ink background system */
+  --background:  #F7F6F2; /* Paper */
   --foreground:  #0b0d12;
   --card:        #ffffff;
   --card-foreground: #0b0d12;
@@ -19,18 +19,20 @@
   --brand-blue:       #2563EB;
   --brand-red:        #E31B23;
   --brand-navy:       #0b0d12;
+  --brand-ink:        #14171C;
+  --brand-steel:      #2E3A4E;
 
   /* Supporting */
-  --secondary:        #eef0f3;
+  --secondary:        #EFEDE7; /* Paper-2 */
   --secondary-foreground: #0b0d12;
-  --muted:            #eef0f3;
+  --muted:            #EFEDE7; /* Paper-2 */
   --muted-foreground: #5b6472;
-  --accent:           #eef0f3;
+  --accent:           #EFEDE7; /* Paper-2 */
   --accent-foreground:#0b0d12;
   --destructive:      #7f1d1d;
   --destructive-foreground: #ffffff;
   --border:           #e2e4e8;
-  --input:            #eef0f3;
+  --input:            #EFEDE7;
   --ring:             #2563EB;
   --radius:           0rem;
 
@@ -39,7 +41,7 @@
   --font-body:    'IBM Plex Sans', sans-serif;
 
   /* Aliases kept for old code */
-  --color-background: #f7f7f8;
+  --color-background: #F7F6F2;
   --color-foreground: #0b0d12;
   --color-accent:     #2563EB;
 }
@@ -48,7 +50,7 @@
    kept in sync with :root anyway so it can't silently regress to dark if
    ever wired up later. */
 .dark {
-  --background:  #f7f7f8;
+  --background:  #F7F6F2;
   --foreground:  #0b0d12;
   --card:        #ffffff;
   --card-foreground: #0b0d12;
@@ -56,18 +58,18 @@
   --popover-foreground: #0b0d12;
   --primary:     #E31B23;
   --primary-foreground: #ffffff;
-  --secondary:   #eef0f3;
+  --secondary:   #EFEDE7;
   --secondary-foreground: #0b0d12;
-  --muted:       #eef0f3;
+  --muted:       #EFEDE7;
   --muted-foreground: #5b6472;
-  --accent:      #eef0f3;
+  --accent:      #EFEDE7;
   --accent-foreground: #0b0d12;
   --destructive: #7f1d1d;
   --destructive-foreground: #ffffff;
   --border:      #e2e4e8;
-  --input:       #eef0f3;
+  --input:       #EFEDE7;
   --ring:        #2563EB;
-  --color-background: #f7f7f8;
+  --color-background: #F7F6F2;
   --color-foreground: #0b0d12;
   --color-accent:     #2563EB;
 }
@@ -76,7 +78,6 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: var(--font-body);

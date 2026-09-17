@@ -73,7 +73,7 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
           </Link>
           
           <div className="max-w-4xl">
-            <h1 className="text-5xl lg:text-8xl font-heading font-bold text-white leading-tight tracking-tighter mb-8">
+            <h1 className="text-5xl sm:text-6xl font-heading font-bold text-white leading-tight tracking-tighter mb-8">
               {title}
             </h1>
             <p className="text-xl lg:text-3xl text-white/70 font-light leading-relaxed max-w-2xl">
@@ -84,7 +84,7 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
       </section>
 
       {/* Main Content */}
-      <section className="py-24 border-t border-foreground/10">
+      <section className="py-24 border-t border-foreground/10" style={{ backgroundColor: "#EFEDE7" }}>
         <div className="mx-auto max-w-[1600px] px-6 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
             <div className="space-y-12">

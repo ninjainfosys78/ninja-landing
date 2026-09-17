@@ -34,23 +34,24 @@ export default function OfficesModal({ isOpen, onClose }: OfficesModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] bg-ni-ink/80 backdrop-blur-sm flex items-center justify-center p-6 animate-fadeIn"
+      className="fixed inset-0 z-[100] backdrop-blur-sm flex items-center justify-center p-6 animate-fadeIn"
+      style={{ backgroundColor: "rgba(20,23,28,0.8)" }}
       role="dialog"
       aria-modal="true"
       aria-label="Office locations"
       onClick={onClose}
     >
-      <div className="bg-ni-paper rounded-lg max-w-2xl w-full p-8 relative" onClick={(e) => e.stopPropagation()}>
+      <div className="rounded-lg max-w-2xl w-full p-8 relative" style={{ backgroundColor: "#F7F6F2" }} onClick={(e) => e.stopPropagation()}>
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 text-ni-slate hover:text-ni-ink transition-colors"
+          className="absolute top-6 right-6 text-[#0b0d12]/60 hover:text-[#0b0d12] transition-colors"
           aria-label="Close modal"
           style={{ minWidth: "44px", minHeight: "44px" }}
         >
           <X size={24} />
         </button>
 
-        <h2 className="text-3xl font-heading font-bold text-ni-ink mb-8">
+        <h2 className="text-3xl font-heading font-bold text-[#0b0d12] mb-8">
           {language === "en" ? "Our Offices" : "हाम्रा कार्यालयहरू"}
         </h2>
 
@@ -58,16 +59,17 @@ export default function OfficesModal({ isOpen, onClose }: OfficesModalProps) {
           {offices.map((office) => (
             <div
               key={office.city}
-              className="p-6 border border-ni-graphite/10 rounded-lg hover:border-ni-accent/30 transition-colors"
+              className="p-6 border border-[#0b0d12]/10 rounded-lg hover:border-[#2563EB]/30 transition-colors"
+              style={{ backgroundColor: "#EFEDE7" }}
             >
               <div className="flex items-start gap-4">
-                <MapPin className="text-ni-accent mt-1 flex-shrink-0" size={24} />
+                <MapPin className="text-[#2563EB] mt-1 flex-shrink-0" size={24} />
                 <div className="flex-1">
-                  <h3 className="text-xl font-heading font-semibold text-ni-ink mb-1">{office.city}</h3>
-                  <p className="text-sm text-ni-slate mb-3">{office.label}</p>
+                  <h3 className="text-xl font-heading font-semibold text-[#0b0d12] mb-1">{office.city}</h3>
+                  <p className="text-sm text-[#0b0d12]/60 mb-3">{office.label}</p>
                   <a
                     href={`mailto:${office.email}`}
-                    className="inline-flex items-center gap-2 text-sm text-ni-accent hover:text-[#1D4ED8] transition-colors"
+                    className="inline-flex items-center gap-2 text-sm text-[#2563EB] hover:text-[#1D4ED8] transition-colors"
                   >
                     <Mail size={16} />
                     {office.email}

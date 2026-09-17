@@ -1,7 +1,5 @@
 import "server-only";
 import { notFound } from "next/navigation";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import BlogPostClient from "@/components/blog-post-client";
 import { getAllPostsMeta, getPostBySlug } from "@/lib/posts";
 
@@ -25,11 +23,5 @@ export default async function BlogPostPage({
 
   const { meta, content, content_ne } = post;
 
-  return (
-    <>
-      <Header />
-      <BlogPostClient meta={meta} content={content} content_ne={content_ne} />
-      <Footer />
-    </>
-  );
+  return <BlogPostClient meta={meta} content={content} content_ne={content_ne} />;
 }

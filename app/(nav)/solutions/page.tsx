@@ -1,9 +1,5 @@
 import { Metadata } from "next";
-import { getBannerByImgName } from "@/lib/banners";
-import { getSolutionsCards, SolutionCard } from "@/lib/solutions";
 import SolutionsClient from "@/components/SolutionsClient";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Solutions — NinjaInfosys | Custom Web & App Development",
@@ -63,20 +59,6 @@ export const metadata: Metadata = {
   authors: [{ name: "NinjaInfosys", url: "https://ninjainfosys.com" }],
 };
 
-export default async function SolutionsPage() {
-  const [bannerUrlRaw, cards]: [string | null, SolutionCard[]] =
-    await Promise.all([
-      getBannerByImgName("solutions"),
-      getSolutionsCards(),
-    ]);
-
-  const bannerUrl = bannerUrlRaw || null;
-
-  return (
-    <>
-      <Header />
-      <SolutionsClient bannerUrl={bannerUrl} cards={cards} />
-      <Footer />
-    </>
-  );
+export default function SolutionsPage() {
+  return <SolutionsClient />;
 }

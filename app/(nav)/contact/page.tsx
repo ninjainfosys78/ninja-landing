@@ -5,8 +5,6 @@ import { useLanguage } from "@/components/LanguageProvider"
 import Link from "next/link"
 import { toast } from "sonner"
 
-import Header from "@/components/header"
-import Footer from "@/components/footer"
 import SearchOverlay from "@/components/search-overlay"
 
 
@@ -129,9 +127,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <Header />
-
-      <section className="relative min-h-screen bg-[#f7f7f8] text-[#0b0d12]/80 pt-16" aria-label="Contact section">
+      <section className="relative min-h-screen text-[#0b0d12]/80 pt-32" style={{ backgroundColor: "#F7F6F2" }} aria-label="Contact section">
         {/* measured container: left padding set so the form starts under the logo */}
         <div
           ref={containerRef}
@@ -228,7 +224,6 @@ export default function ContactPage() {
       </section>
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      <Footer />
     </>
   )
 }

@@ -68,11 +68,11 @@ export default function Header() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         style={{
-          backgroundColor: isScrolled ? 'rgba(247,247,248,0.96)' : 'rgba(238,242,248,0.4)',
+          backgroundColor: isScrolled || pathname !== "/" ? '#F7F6F2' : 'rgba(247,246,242,0.35)',
           backdropFilter: 'blur(14px)',
           padding: isScrolled ? '0 1.5rem' : '0 2rem',
-          borderRadius: isScrolled ? '0.5rem' : '1rem',
-          border: isScrolled ? '1px solid rgba(11,13,18,0.08)' : '1px solid rgba(255,255,255,0.5)',
+          borderRadius: '0.5rem',
+          border: isScrolled || pathname !== "/" ? '1px solid rgba(11,13,18,0.08)' : '1px solid rgba(255,255,255,0.4)',
           boxShadow: isScrolled ? '0 10px 30px -10px rgba(11,13,18,0.15)' : 'none'
         }}
       >
@@ -114,7 +114,7 @@ export default function Header() {
 
             {/* Mega Dropdown */}
             <div className="absolute top-full left-0 pt-4 opacity-0 invisible translate-y-2 group-hover/about:opacity-100 group-hover/about:visible group-hover/about:translate-y-0 transition-all duration-300">
-              <div className="bg-[#f7f7f8] border border-[#0b0d12]/10 p-6 min-w-[240px] shadow-2xl flex flex-col gap-4">
+              <div className="bg-white border border-[#0b0d12]/10 p-6 min-w-[240px] shadow-2xl flex flex-col gap-4">
                 {[
                   { label: 'Who we are', labelNe: 'हामी को हौं', href: '/about#who-we-are' },
                   { label: 'Our Core', labelNe: 'हाम्रो मूल', href: '/about#our-core' },
@@ -147,7 +147,7 @@ export default function Header() {
 
             {/* Solutions Mega Dropdown */}
             <div className="absolute top-full left-0 pt-4 opacity-0 invisible translate-y-2 group-hover/solutions:opacity-100 group-hover/solutions:visible group-hover/solutions:translate-y-0 transition-all duration-300">
-              <div className="bg-[#f7f7f8] border border-[#0b0d12]/10 p-6 min-w-[280px] shadow-2xl flex flex-col gap-4">
+              <div className="bg-white border border-[#0b0d12]/10 p-6 min-w-[280px] shadow-2xl flex flex-col gap-4">
                 {[
                   { label: 'Government & Municipality', labelNe: 'सरकार तथा नगरपालिका', href: '/solutions?cat=gov' },
                   { label: 'Education', labelNe: 'शिक्षा', href: '/solutions?cat=edu' },
@@ -222,7 +222,7 @@ export default function Header() {
         {mobileOpen && (
           <motion.div
             className="lg:hidden fixed inset-0 top-20 z-40 overflow-y-auto pt-10"
-            style={{ backgroundColor: '#f7f7f8' }}
+            style={{ backgroundColor: '#F7F6F2' }}
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}

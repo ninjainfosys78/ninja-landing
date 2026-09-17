@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import GlobalCTA from "@/components/global-cta";
 import ContactModals from "@/components/contact-modals";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
@@ -71,13 +69,12 @@ export default function PartnersPage() {
 
   return (
     <>
-      <Header />
-      <main className="bg-[#f7f7f8] pt-32 pb-24">
+      <main className="pt-32 pb-24" style={{ backgroundColor: "#EFEDE7" }}>
         <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
 
           {/* Hero Area */}
           <div className="max-w-4xl mb-24">
-            <h1 className="text-5xl sm:text-7xl font-heading font-bold text-[#0b0d12] mb-8 leading-tight">
+            <h1 className="text-5xl sm:text-6xl font-heading font-bold text-[#0b0d12] mb-8 leading-tight">
               {content.title}
             </h1>
             <p className="text-2xl text-[#0b0d12]/60 leading-relaxed">
@@ -157,7 +154,6 @@ export default function PartnersPage() {
         quoteOpen={quoteOpen}
         onQuoteClose={closeQuote}
       />
-      <Footer />
     </>
   );
 }

@@ -1,8 +1,6 @@
 import { Metadata } from "next";
 import { getSolutionById, getSolutionsCards } from "@/lib/solutions";
 import { getBannerByImgName } from "@/lib/banners";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import SolutionDetailClient from "@/components/SolutionDetailClient";
 import { notFound } from "next/navigation";
 
@@ -41,12 +39,6 @@ export default async function SolutionDetailPage({ params }: { params: Promise<{
     notFound();
   }
 
-  return (
-    <>
-      <Header />
-      <SolutionDetailClient solution={solution} bannerUrl={bannerUrlRaw || null} />
-      <Footer />
-    </>
-  );
+  return <SolutionDetailClient solution={solution} bannerUrl={bannerUrlRaw || null} />;
 }
 

@@ -79,7 +79,7 @@ export default function InsightsRail({
     <section
       id="insights"
       className="py-16 md:py-24 relative overflow-hidden"
-      style={{ backgroundColor: '#ffffff', color: '#0b0d12' }}
+      style={{ backgroundColor: '#F7F6F2', color: '#0b0d12' }}
       aria-labelledby="insights-title"
     >
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
@@ -129,7 +129,7 @@ export default function InsightsRail({
                     alt={insight.title}
                     fill
                     sizes={idx === 0 ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 100vw, 33vw"}
-                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover object-top grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
                   />
                 </div>
 

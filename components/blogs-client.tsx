@@ -1,9 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
 import type { PostMeta } from "@/lib/posts";
+import { getAllPostsMetaClient } from "@/lib/posts-client";
+import { getBannerByImgName } from "@/lib/banners";
 
 // Use a minimal client-side post shape to avoid importing server-only modules
 type ClientPost = {
@@ -19,8 +21,6 @@ type ClientPost = {
 type Post = ClientPost | PostMeta;
 
 interface BlogsClientProps {
-  posts: Post[];
-  bannerUrl?: string;
   initialLanguage?: "en" | "ne";
 }
 
@@ -55,8 +55,21 @@ const DUMMY_POSTS: (ClientPost & { title_ne?: string; excerpt_ne?: string })[] =
   },
 ];
 
-export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
+export default function BlogsClient({}: BlogsClientProps) {
   const { language } = useLanguage();
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [bannerUrl, setBannerUrl] = useState<string | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([getAllPostsMetaClient(), getBannerByImgName("insights")])
+      .then(([postsData, bannerUrlRaw]) => {
+        setPosts(postsData);
+        setBannerUrl(bannerUrlRaw || undefined);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   const safePosts: Post[] = posts.length > 0 ? posts : DUMMY_POSTS;
 
   const labels = {
@@ -123,6 +136,11 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
       {/* Blog Cards */}
       <section className="py-10 lg:py-12">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+          {loading ? (
+            <div className="flex items-center justify-center py-32">
+              <div className="w-8 h-8 border-2 border-[#2563EB] border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : (
           <div className="grid gap-8 md:grid-cols-3">
             {safePosts.map((post) => {
               const p = post as any;
@@ -196,6 +214,7 @@ export default function BlogsClient({ posts, bannerUrl }: BlogsClientProps) {
               );
             })}
           </div>
+          )}
         </div>
       </section>
     </main>

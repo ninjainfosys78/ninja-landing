@@ -92,16 +92,8 @@ export default function GlobalCTA({ onOfficesOpen, onBookingOpen, onQuoteOpen }:
     <section
       id="contact"
       className="relative overflow-hidden pt-24 pb-36 sm:pb-44 border-t border-[#0b0d12]/8"
-      style={{ backgroundColor: '#f2f4fa' }}
+      style={{ backgroundColor: '#F7F6F2' }}
     >
-      <div
-        className="absolute inset-0 pointer-events-none opacity-60"
-        style={{
-          background:
-            "radial-gradient(circle 500px at 15% 10%, rgba(37,99,235,0.08) 0%, transparent 100%), " +
-            "radial-gradient(circle 500px at 85% 90%, rgba(37,99,235,0.08) 0%, transparent 100%)",
-        }}
-      />
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
 
         {/* Header Area */}

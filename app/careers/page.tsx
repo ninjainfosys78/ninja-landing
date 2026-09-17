@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import SearchOverlay from "@/components/search-overlay";
 import Link from "next/link";
 import GlobalCTA from "@/components/global-cta";
@@ -57,7 +55,6 @@ export default function CareersPage() {
 
   return (
     <>
-      <Header />
       <main className="relative bg-background text-foreground">
         <section className="relative z-10">
           <div className="relative min-h-[70vh]">
@@ -93,7 +90,7 @@ export default function CareersPage() {
                   </ol>
                 </nav>
 
-                <h1 className="pt-4 text-4xl sm:text-6xl font-heading font-semibold text-white">
+                <h1 className="pt-4 text-5xl sm:text-6xl font-heading font-semibold text-white">
                   {t.hero.title}
                 </h1>
               </div>
@@ -101,7 +98,7 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <section className="border-t border-foreground/10">
+        <section className="border-t border-foreground/10" style={{ backgroundColor: "#EFEDE7" }}>
           <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="py-12 sm:py-16">
               <div className="max-w-3xl">
@@ -130,7 +127,6 @@ export default function CareersPage() {
       </main>
 
       <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
-      <Footer />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} />
     </>

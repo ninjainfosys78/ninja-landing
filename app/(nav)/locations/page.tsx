@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
 
@@ -46,11 +44,10 @@ export default function LocationsPage() {
 
   return (
     <>
-      <Header />
-      <main className="bg-[#f7f7f8] pt-32 pb-24 min-h-screen">
+      <main className="pt-32 pb-24 min-h-screen" style={{ backgroundColor: "#F7F6F2" }}>
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="mb-16">
-            <h1 className="text-5xl font-heading font-bold text-[#0b0d12] mb-4">{t.heading}</h1>
+            <h1 className="text-5xl sm:text-6xl font-heading font-bold text-[#0b0d12] mb-4">{t.heading}</h1>
             <p className="text-xl text-[#0b0d12]/60 max-w-2xl">{t.subheading}</p>
           </div>
 
@@ -94,7 +91,6 @@ export default function LocationsPage() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

@@ -113,7 +113,7 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <main className="bg-[#f7f7f8] text-[#0b0d12]">
+    <main style={{ backgroundColor: "#F7F6F2", color: "#0b0d12" }}>
       <div className="relative overflow-hidden">
   <div className="relative z-5 mx-auto max-w-6xl px-6 sm:px-10 pt-10 lg:pt-28 pb-20">
           <Link href="/" className="inline-flex items-center text-sm font-medium text-[#0b0d12]/60 hover:text-[#0b0d12] transition-colors">
@@ -128,7 +128,8 @@ export default function PrivacyPage() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 pb-24">
+      <div style={{ backgroundColor: "#EFEDE7" }}>
+      <div className="mx-auto max-w-6xl px-6 sm:px-10 py-24">
         <div className="grid gap-10 lg:grid-cols-[260px,1fr]">
           <nav className="top-28 hidden lg:block self-start rounded-none border border-[#0b0d12]/15 bg-white p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#0b0d12]">Navigate</p>
@@ -180,7 +181,7 @@ export default function PrivacyPage() {
                     </div>
 
                     <div>
-                      <ul className="space-y-2 bg-[#f7f7f8] p-4">
+                      <ul className="space-y-2 p-4" style={{ backgroundColor: "#F7F6F2" }}>
                         {section.bullets.map((item: any) => (
                           <li key={item} className="pl-5 text-sm text-[#0b0d12]" style={{ textIndent: "-1.25rem" }}>
                             <span className="mr-2 text-[#2563EB]">•</span>
@@ -216,6 +217,7 @@ export default function PrivacyPage() {
             ))}
           </article>
         </div>
+      </div>
       </div>
     </main>
   )

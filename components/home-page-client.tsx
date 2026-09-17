@@ -4,9 +4,7 @@ import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 
-import Header from "@/components/header";
 import Hero from "@/components/hero";
-import Footer from "@/components/footer";
 import SearchOverlay from "@/components/search-overlay";
 import CookieBanner from "@/components/cookie-banner";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -117,8 +115,6 @@ export default function HomePageClient({ insights, trustedLogos }: HomePageClien
         <meta name="robots" content="index, follow" />
       </Head>
 
-      <Header />
-
       <main id="main-content" className="sharp-edges">
         {/* Above-the-fold: keep fast */}
         <Hero />
@@ -144,8 +140,6 @@ export default function HomePageClient({ insights, trustedLogos }: HomePageClien
           onQuoteOpen={openQuote}
         />
       </main>
-
-      <Footer />
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       <ContactModals 

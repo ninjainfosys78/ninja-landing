@@ -59,6 +59,14 @@ const FALLBACK_SOLUTIONS: SolutionCard[] = [
     description_ne: "इन्टरप्राइज रिसोर्स प्लानिङ र अनुकूलन व्यवसाय कार्यप्रवाह स्वचालन।",
     imageUrl: "/insights.jpg",
   },
+  {
+    id: "fb-telecom",
+    title_en: "Telecom",
+    title_ne: "टेलिकम",
+    description_en: "Network infrastructure and service platforms for modern telecommunications providers.",
+    description_ne: "आधुनिक दूरसञ्चार प्रदायकहरूको लागि नेटवर्क पूर्वाधार र सेवा प्लेटफर्महरू।",
+    imageUrl: "/insights.jpg",
+  },
 ];
 
 export async function getSolutionsCards(): Promise<SolutionCard[]> {

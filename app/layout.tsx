@@ -5,6 +5,8 @@ import { IBM_Plex_Sans, Source_Serif_4 } from "next/font/google"
 import { LanguageProvider } from "@/components/LanguageProvider"
 import { ThemeProvider } from "@/components/theme-provider"
 import CookieConsent from "@/components/cookie-consent"
+import Header from "@/components/header"
+import Footer from "@/components/footer"
 import { Toaster } from "sonner"
 
 const ibm = IBM_Plex_Sans({
@@ -51,7 +53,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${ibm.variable} ${serif.variable}`}>
         <ThemeProvider attribute="class" forcedTheme="dark" enableSystem={false}>
           <LanguageProvider>
+            <Header />
             {children}
+            <Footer />
             <CookieConsent />
           </LanguageProvider>
           <Toaster theme="dark" position="bottom-right" />

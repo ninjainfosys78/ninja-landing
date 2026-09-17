@@ -46,16 +46,8 @@ export default function TrustedBy({ initialLogos = [] }: TrustedByProps) {
     <section
       id="partners"
       className="py-12 relative z-[5] overflow-hidden"
-      style={{ backgroundColor: '#f2f4fa', borderTop: '1px solid rgba(11,13,18,0.06)', borderBottom: '1px solid rgba(11,13,18,0.08)' }}
+      style={{ backgroundColor: '#EFEDE7', borderTop: '1px solid rgba(11,13,18,0.06)', borderBottom: '1px solid rgba(11,13,18,0.08)' }}
     >
-      <div
-        className="absolute inset-0 pointer-events-none opacity-60"
-        style={{
-          background:
-            "radial-gradient(circle 500px at 15% 10%, rgba(37,99,235,0.08) 0%, transparent 100%), " +
-            "radial-gradient(circle 500px at 85% 90%, rgba(37,99,235,0.08) 0%, transparent 100%)",
-        }}
-      />
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         <Reveal>
           <p

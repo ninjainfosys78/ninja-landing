@@ -110,7 +110,7 @@ export default function Testimonials() {
     <section
       aria-label="Testimonials"
       className="relative pt-20 pb-16 border-t"
-      style={{ backgroundColor: '#f7f7f8', color: '#0b0d12', borderColor: 'rgba(11,13,18,0.06)' }}
+      style={{ backgroundColor: '#EFEDE7', color: '#0b0d12', borderColor: 'rgba(11,13,18,0.06)' }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -154,7 +154,7 @@ export default function Testimonials() {
                         <div
                           aria-hidden
                           className="w-14 h-14 rounded-full flex items-center justify-center overflow-hidden flex-none font-bold text-lg"
-                          style={{ backgroundColor: 'rgba(37,99,235,0.12)', color: '#2563EB' }}
+                          style={{ backgroundColor: '#2E3A4E', color: '#ffffff' }}
                         >
                           {item.image ? (
                             <img

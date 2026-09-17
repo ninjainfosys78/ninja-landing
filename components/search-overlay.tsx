@@ -41,19 +41,19 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     >
       <div className="w-full max-w-3xl px-6">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-ni-ink/40" size={24} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0b0d12]/40" size={24} />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={placeholder}
-            className="w-full pl-14 pr-14 py-6 bg-ni-ink/[0.04] border border-ni-ink/15 rounded-lg text-2xl text-ni-ink placeholder:text-ni-ink/40 focus:outline-none focus:border-ni-accent"
+            className="w-full pl-14 pr-14 py-6 bg-[#0b0d12]/[0.04] border border-[#0b0d12]/15 rounded-lg text-2xl text-[#0b0d12] placeholder:text-[#0b0d12]/40 focus:outline-none focus:border-[#2563EB]"
             aria-label="Search input"
           />
           <button
             onClick={onClose}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-ni-ink/60 hover:text-ni-ink transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-[#0b0d12]/60 hover:text-[#0b0d12] transition-colors"
             aria-label="Close search"
             style={{ minWidth: "44px", minHeight: "44px" }}
           >
@@ -62,7 +62,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
         </div>
 
         {query && (
-          <div className="mt-8 text-ni-ink/60 text-center">
+          <div className="mt-8 text-[#0b0d12]/60 text-center">
             <p className="text-sm">
               {language === "en"
                 ? "Search functionality would filter insights, practices, and case studies here."

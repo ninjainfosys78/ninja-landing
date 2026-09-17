@@ -37,16 +37,8 @@ export default function SustainabilitySection() {
   return (
     <section
       className="relative overflow-hidden py-12 lg:py-16 border-t"
-      style={{ background: 'linear-gradient(180deg, #f6f8fc 0%, #eef1f8 100%)', borderColor: "rgba(11,13,18,0.06)" }}
+      style={{ backgroundColor: "#F7F6F2", borderColor: "rgba(11,13,18,0.06)" }}
     >
-      <div
-        className="absolute inset-0 pointer-events-none opacity-60"
-        style={{
-          background:
-            "radial-gradient(circle at 15% 10%, rgba(37,99,235,0.08) 0%, transparent 50%), " +
-            "radial-gradient(circle at 85% 90%, rgba(37,99,235,0.08) 0%, transparent 50%)",
-        }}
-      />
 
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-32 items-center">

@@ -169,7 +169,7 @@ export default function ProjectsGrid({
                       isWork
                         ? `w-full cursor-pointer text-left px-3 py-2 text-sm transition-colors ${
                             projActive === c
-                              ? "text-[#141414] font-medium bg-ni-paper"
+                              ? "text-[#141414] font-medium bg-[#F7F6F2]"
                               : "text-[#0b0d12]/90"
                           } hover:bg-[#0b0d12]/5 hover:text-[#0b0d12] hover:border hover:border-[#0b0d12]/30 focus:outline-none focus:ring-2 focus:ring-[#0b0d12]/30`
                         : `w-full cursor-pointer text-left px-3 py-2 rounded-[4px] text-sm transition-colors ${
@@ -208,7 +208,7 @@ export default function ProjectsGrid({
               <div
                 className={
                   isWork
-                    ? "relative aspect-[16/10] bg-ni-paper/60 flex items-center justify-center text-ni-slate overflow-hidden"
+                    ? "relative aspect-[16/10] bg-[#F7F6F2]/60 flex items-center justify-center text-[#0b0d12]/50 overflow-hidden"
                     : "relative aspect-[16/10] bg-[#0b0d12]/5 flex items-center justify-center text-[#0b0d12]/40 overflow-hidden"
                 }
               >

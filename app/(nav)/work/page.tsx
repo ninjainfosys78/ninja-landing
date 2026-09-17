@@ -6,11 +6,9 @@ import { Search, PenTool, Code, RefreshCw } from "lucide-react";
 import { getBannerByImgName } from "@/lib/banners";
 
 
-import Header from "@/components/header";
 import GlobalCTA from "@/components/global-cta";
 import SearchOverlay from "@/components/search-overlay";
 import OfficesModal from "@/components/offices-modal";
-import Footer from "@/components/footer";
 import { useLanguage } from "@/components/LanguageProvider";
 import ProjectsGrid from "@/components/projects-grid";
 
@@ -128,9 +126,7 @@ useEffect(() => {
 
   return (
     <>
-      <Header />
-
-      <main className="relative bg-[#f7f7f8] text-[#0b0d12]/80">
+      <main className="relative text-[#0b0d12]/80" style={{ backgroundColor: "#EFEDE7" }}>
         <section className="relative z-10">
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
              <div
@@ -188,7 +184,7 @@ useEffect(() => {
           </div>
         </section>
 
-        <section className="border-t border-[#0b0d12]/10 bg-[#f7f7f8] py-12 sm:py-16">
+        <section className="border-t border-[#0b0d12]/10 py-12 sm:py-16" style={{ backgroundColor: "#F7F6F2" }}>
           <div className="mx-auto max-w-[1450px] w-full px-6 sm:px-10">
             <h2 className="font-semibold text-[#0b0d12] text-[32px]">
               {t.featuredTitle}
@@ -229,7 +225,7 @@ useEffect(() => {
           </div>
         </section>
 
-        <section className="border border-[#0b0d12]/10 py-12 sm:py-16 bg-[#f7f7f8]">
+        <section className="border border-[#0b0d12]/10 py-12 sm:py-16" style={{ backgroundColor: "#EFEDE7" }}>
           <div className="mx-auto max-w-[1450px] w-full px-6 sm:px-10">
             <h3 className="font-semibold text-[#0b0d12] text-[32px]">
               {t.processTitle}
@@ -286,7 +282,6 @@ useEffect(() => {
         isOpen={officesOpen}
         onClose={() => setOfficesOpen(false)}
       />
-      <Footer />
     </>
   );
 }

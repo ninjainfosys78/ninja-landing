@@ -58,7 +58,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{
         paddingTop: "80px",
-        background: "linear-gradient(180deg, #f6f8fc 0%, #eef1f8 100%)",
+        backgroundColor: "#F7F6F2",
       }}
       aria-label="Hero section"
     >
@@ -83,14 +83,11 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
               className="object-cover"
               priority
             />
-            {/* Light tinted wash so the photo carries the palette while staying legible */}
+            {/* Keeps text legible against the darker left portion while the photo shows through clearly past ~75% width */}
             <div
               className="absolute inset-0"
               style={{
-                background:
-                  "radial-gradient(circle at 15% 25%, rgba(37,99,235,0.14) 0%, transparent 55%), " +
-                  "radial-gradient(circle at 85% 75%, rgba(37,99,235,0.1) 0%, transparent 55%), " +
-                  "linear-gradient(100deg, rgba(246,248,252,0.94) 0%, rgba(238,241,248,0.8) 38%, rgba(238,241,248,0.45) 65%, rgba(238,241,248,0.3) 100%)",
+                background: "linear-gradient(to right, rgba(20,23,28,0.82) 0%, rgba(20,23,28,0.55) 45%, transparent 78%)",
               }}
             />
           </motion.div>
@@ -132,7 +129,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                 style={{ fontFamily: "'Newsreader', serif" }}
               >
                 <motion.span
-                  className="block font-bold text-[#0b0d12] overflow-hidden"
+                  className="block font-bold text-white overflow-hidden"
                   style={{ fontSize: "clamp(52px, 7vw, 88px)" }}
                   variants={{
                     hidden: { opacity: 0, y: 40 },
@@ -142,7 +139,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                   {content.titleLine1}
                 </motion.span>
                 <motion.span
-                  className="block font-bold text-[#0b0d12] overflow-hidden"
+                  className="block font-bold text-white overflow-hidden"
                   style={{ fontSize: "clamp(52px, 7vw, 88px)" }}
                   variants={{
                     hidden: { opacity: 0, y: 40 },
@@ -171,7 +168,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                 className="mb-12 leading-relaxed"
                 style={{
                   fontSize: "clamp(15px, 1.8vw, 19px)",
-                  color: "rgba(11,13,18,0.6)",
+                  color: "rgba(255,255,255,0.75)",
                   maxWidth: "440px",
                 }}
                 variants={{
@@ -200,10 +197,10 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
 
                 <Link
                   href="/about"
-                  className="inline-flex items-center justify-center px-8 py-4 text-[15px] font-bold transition-all hover:bg-[#0b0d12]/5 hover:scale-[1.03] active:scale-95"
+                  className="inline-flex items-center justify-center px-8 py-4 text-[15px] font-bold transition-all hover:bg-white/10 hover:scale-[1.03] active:scale-95"
                   style={{
-                    color: "rgba(11,13,18,0.85)",
-                    border: "1.5px solid rgba(11,13,18,0.25)",
+                    color: "rgba(255,255,255,0.9)",
+                    border: "1.5px solid rgba(255,255,255,0.35)",
                   }}
                 >
                   {content.cta2}

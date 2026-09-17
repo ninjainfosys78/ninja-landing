@@ -118,23 +118,15 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      style={{ backgroundColor: '#071730', color: '#ffffff' }}
+      style={{ backgroundColor: '#14171C', color: '#ffffff' }}
       className="transition-colors duration-300 border-t border-white/10"
     >
       {/* Newsletter Band */}
-      <div className="relative z-10" style={{ background: 'linear-gradient(160deg, #123163 0%, #0b2450 55%, #071a3a 100%)' }}>
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          style={{
-            background:
-              "radial-gradient(circle at 8% 20%, rgba(37,99,235,0.25) 0%, transparent 45%), " +
-              "radial-gradient(circle at 92% 85%, rgba(37,99,235,0.25) 0%, transparent 45%)",
-          }}
-        />
+      <div className="relative z-10">
         <div className="mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-12 2xl:px-16 pt-16 sm:pt-20 pb-16 sm:pb-20 relative z-10">
           <div
-            className="relative border border-white/15 shadow-[0_25px_70px_-15px_rgba(7,23,48,0.55)] px-8 py-10 sm:px-14 sm:py-14 overflow-hidden"
-            style={{ background: 'linear-gradient(160deg, #16386f 0%, #0d2a56 60%, #091f42 100%)' }}
+            className="relative border border-white/15 px-8 py-10 sm:px-14 sm:py-14 overflow-hidden"
+            style={{ backgroundColor: '#1b1f26' }}
           >
             <div className="relative z-10 flex flex-col md:flex-row items-center md:items-end justify-between gap-10">
               <div className="max-w-xl text-center md:text-left">

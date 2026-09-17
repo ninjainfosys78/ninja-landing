@@ -10,7 +10,8 @@ import GlobalCTA from "@/components/global-cta";
 import ContactModals from "@/components/contact-modals";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
-import type { SolutionCard } from "@/lib/solutions";
+import { getSolutionsCards, type SolutionCard } from "@/lib/solutions";
+import { getBannerByImgName } from "@/lib/banners";
 
 type Lang = "en" | "ne";
 type Key = "gov" | "edu" | "health" | "fin" | "corp";
@@ -194,25 +195,29 @@ const LEFT_NAV = [
   },
 ];
 
-interface SolutionsClientProps {
-  bannerUrl: string | null;
-  cards: SolutionCard[];
-}
-
-export default function SolutionsClient({
-  bannerUrl,
-  cards,
-}: SolutionsClientProps) {
+export default function SolutionsClient() {
   const { language } = useLanguage();
-  const { 
+  const {
     officesOpen, openOffices, closeOffices,
     bookingOpen, openBooking, closeBooking,
-    quoteOpen, openQuote, closeQuote 
+    quoteOpen, openQuote, closeQuote
   } = useContactModals();
   const [searchOpen, setSearchOpen] = useState(false);
   const [active, setActive] = useState<Key | null>(null);
+  const [cards, setCards] = useState<SolutionCard[]>([]);
+  const [bannerUrl, setBannerUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
   const params = useSearchParams();
+
+  useEffect(() => {
+    Promise.all([getBannerByImgName("solutions"), getSolutionsCards()])
+      .then(([bannerUrlRaw, cardsData]) => {
+        setBannerUrl(bannerUrlRaw || null);
+        setCards(cardsData);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     const cat = (params.get("cat") || "").toLowerCase() as Key;
@@ -329,15 +334,21 @@ export default function SolutionsClient({
           </div>
         </section>
 
-        {!active && cards.length > 0 && (
-          <section className="py-14 relative overflow-hidden bg-background">
+        {!active && loading && (
+          <section className="py-32 relative flex items-center justify-center" style={{ backgroundColor: "#EFEDE7" }}>
+            <div className="w-8 h-8 border-2 border-[#2563EB] border-t-transparent rounded-full animate-spin" />
+          </section>
+        )}
+
+        {!active && !loading && cards.length > 0 && (
+          <section className="py-14 relative" style={{ backgroundColor: "#EFEDE7" }}>
             <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12">
               <div className="grid gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
                 {cards.map((card) => (
                   <Link
                     href={`/solutions/${card.id}`}
                     key={card.id}
-                    className="solutions-card text-left group relative block select-none overflow-hidden w-full h-full rounded-none transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)] hover:ring-1 hover:ring-foreground/20 border border-foreground/10 flex flex-col"
+                    className="solutions-card text-left group relative block select-none w-full h-full rounded-none transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)] hover:ring-1 hover:ring-foreground/20 border border-foreground/10 flex flex-col"
                   >
                     <div className="relative aspect-[16/10] w-full flex-none overflow-hidden">
                       {card.imageUrl && (
@@ -357,14 +368,14 @@ export default function SolutionsClient({
                       <div className="absolute inset-0 bg-[#0b0d12]/40 group-hover:bg-[#0b0d12]/10 transition-colors" />
                     </div>
 
-                    <div className="p-6 sm:p-7 bg-background transition-colors duration-500 group-hover:bg-card overflow-hidden flex-1 flex flex-col">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-xl sm:text-2xl pb-2 font-heading font-semibold text-foreground group-hover:text-[#2563EB] transition-colors line-clamp-2 min-h-[3.5rem] sm:min-h-[4.5rem]">
+                    <div className="p-6 sm:p-7 bg-background transition-colors duration-500 group-hover:bg-card flex-1 flex flex-col">
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="text-xl sm:text-2xl pb-2 font-heading font-semibold text-foreground group-hover:text-[#2563EB] transition-colors line-clamp-2 min-h-[3.5rem] sm:min-h-[4.5rem] flex-1">
                           {language === "en"
                             ? card.title_en
                             : card.title_ne || card.title_en}
                         </h3>
-                        <div className="h-10 w-10 border border-foreground/10 flex items-center justify-center -mr-2 group-hover:border-[#2563EB] transition-colors">
+                        <div className="flex-none h-10 w-10 border border-foreground/10 flex items-center justify-center group-hover:border-[#2563EB] transition-colors">
                           <svg viewBox="0 0 24 24" className="h-5 w-5 text-foreground/50 group-hover:text-[#2563EB]" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M5 12h14M12 5l7 7-7 7" />
                           </svg>
@@ -377,7 +388,7 @@ export default function SolutionsClient({
                       </p>
 
                       <div className="mt-8 flex items-center gap-2">
-                        <span className="text-xs font-bold uppercase tracking-widest text-[#2563EB] opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0">
+                        <span className="text-xs font-bold uppercase tracking-widest text-[#2563EB]">
                           {language === "en" ? "Explore Solution" : "विवरण हेर्नुहोस्"}
                         </span>
                       </div>
@@ -477,7 +488,7 @@ export default function SolutionsClient({
               </div>
             </section>
 
-            <section className="border-t border-foreground/10 py-12 sm:py-16 bg-background">
+            <section className="border-t border-foreground/10 py-12 sm:py-16" style={{ backgroundColor: "#EFEDE7" }}>
               <div className="mx-auto max-w-[1200px] w-full px-6 sm:px-10">
                 <ProjectsGrid
                   language={language as Lang}

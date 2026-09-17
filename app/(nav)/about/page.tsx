@@ -21,8 +21,6 @@ import {
 } from "lucide-react";
 import { motion, useScroll, useTransform, useSpring, Variants } from "framer-motion";
 import Link from "next/link";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import GlobalCTA from "@/components/global-cta";
 import ContactModals from "@/components/contact-modals";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
@@ -331,8 +329,6 @@ export default function AboutPage() {
 
   return (
     <>
-      <Header />
-
       <main className="relative bg-background text-foreground transition-colors duration-300">
         <section className="relative z-10">
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
@@ -385,7 +381,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section id="who-we-are" className="relative isolate overflow-hidden" style={{ backgroundColor: "#f7f7f8" }}>
+        <section id="who-we-are" className="relative isolate overflow-hidden" style={{ backgroundColor: "#EFEDE7" }}>
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-16 lg:py-24">
             <div className="grid gap-12 md:grid-cols-12 items-center">
               <div className="md:col-span-6">
@@ -401,7 +397,6 @@ export default function AboutPage() {
                 </div>
               </div>
               <div className="md:col-span-6 flex flex-col justify-center gap-6">
-                <div className="h-[2px] w-12 bg-gradient-to-r from-[#E31B23] to-[#2563EB]" />
                 <h2 className="text-[32px] lg:text-[40px] font-heading font-bold text-left text-[#0b0d12] leading-tight">
                   {content.who}
                 </h2>
@@ -625,7 +620,8 @@ export default function AboutPage() {
         <section
           id="our-story"
           ref={sectionRef}
-          className="relative z-10 scroll-mt-28 bg-background overflow-hidden border-t border-foreground/5"
+          className="relative z-10 scroll-mt-28 overflow-hidden border-t border-foreground/5"
+          style={{ backgroundColor: "#EFEDE7" }}
         >
           <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-32">
@@ -702,8 +698,6 @@ export default function AboutPage() {
         quoteOpen={quoteOpen}
         onQuoteClose={closeQuote}
       />
-
-      <Footer />
     </>
   );
 }

@@ -67,18 +67,7 @@ export default function AboutUsSection() {
         };
 
   return (
-    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: "#ffffff" }}>
-      {/* Technological Background Elements */}
-      <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(11,13,18,0.05) 1px, transparent 0)`,
-          backgroundSize: '40px 40px'
-        }} />
-        <div className="absolute top-0 left-0 w-full h-full" style={{
-          background: 'radial-gradient(circle at 50% 50%, rgba(227,27,35,0.05) 0%, transparent 70%)'
-        }} />
-      </div>
-
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: "#EFEDE7" }}>
       <div className="relative z-10 max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
         {/* Centered Header */}
         <Reveal className="max-w-4xl mx-auto text-center mb-20">
