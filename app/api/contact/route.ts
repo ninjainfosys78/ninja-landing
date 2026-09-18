@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendEmailNotification } from "@/lib/mail";
+import { submitDcmContact } from "@/lib/dcm-client";
 import { z } from "zod";
 
 // Define a schema for input validation
@@ -50,8 +51,18 @@ export async function POST(request: Request) {
       const text = `New Contact Form Submission\nFirst Name: ${formData.firstName}\nLast Name: ${formData.lastName}\nEmail: ${formData.email}\nConsent Provided: ${formData.consent ? 'Yes' : 'No'}\nMessage: ${formData.message || "N/A"}`;
       
       const emailRes = await sendEmailNotification(subject, text, html);
-      if (!emailRes) {
-        return NextResponse.json({ error: "Failed to send email." }, { status: 500 });
+
+      const dcmMessage = formData.consent
+        ? formData.message || "N/A"
+        : `${formData.message || "N/A"}\n\n(Consent not given)`;
+      const dcmRes = await submitDcmContact({
+        fullName: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        message: dcmMessage,
+      });
+
+      if (!emailRes && !dcmRes) {
+        return NextResponse.json({ error: "Failed to submit contact form." }, { status: 500 });
       }
 
       return NextResponse.json({ success: true });
