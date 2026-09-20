@@ -21,8 +21,8 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
 
   const labels = {
     home: isNe ? "निन्जा इन्फोसिस" : "Ninja Infosys",
-    insights: isNe ? "अन्तर्दृष्टि" : "Insights",
-    back: isNe ? "← अन्तर्दृष्टिमा फर्कनुहोस्" : "← Back to Insights",
+    insights: isNe ? "ब्लगहरू" : "Blogs",
+    back: isNe ? "← ब्लगहरूमा फर्कनुहोस्" : "← Back to Blogs",
   };
 
   return (

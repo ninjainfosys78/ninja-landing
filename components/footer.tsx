@@ -2,7 +2,7 @@
 import React, { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Mail, MapPin, Smartphone, Phone, Linkedin, Facebook, Twitter } from "lucide-react"
+import { Mail, MapPin, Smartphone, Phone, Linkedin, Facebook, Twitter, ChevronRight } from "lucide-react"
 import { useLanguage } from "@/components/LanguageProvider"
 import { StaggerWords } from "@/components/ui/reveal"
 
@@ -16,7 +16,7 @@ export default function Footer() {
         quickHeading: "Explore",
         quickLinks: [
           { label: "Solutions", href: "/solutions" },
-          { label: "Insights", href: "/blogs" },
+          { label: "Blogs", href: "/blogs" },
           { label: "Partners", href: "/partners" },
           { label: "Careers", href: "/careers" },
           { label: "About Us", href: "/about" },
@@ -43,7 +43,7 @@ export default function Footer() {
         quickHeading: "अन्वेषण गर्नुहोस्",
         quickLinks: [
           { label: "समाधानहरू", href: "/solutions" },
-          { label: "इनसाइट्स", href: "/blogs" },
+          { label: "ब्लगहरू", href: "/blogs" },
           { label: "साझेदारहरू", href: "/partners" },
           { label: "क्यारियर", href: "/careers" },
           { label: "हामीबारे", href: "/about" },
@@ -118,15 +118,15 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      style={{ backgroundColor: '#14171C', color: '#ffffff' }}
+      style={{ backgroundColor: 'var(--footer-bg)', color: '#ffffff' }}
       className="transition-colors duration-300 border-t border-white/10"
     >
       {/* Newsletter Band */}
       <div className="relative z-10">
         <div className="mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-12 2xl:px-16 pt-16 sm:pt-20 pb-16 sm:pb-20 relative z-10">
           <div
-            className="relative border border-white/15 px-8 py-10 sm:px-14 sm:py-14 overflow-hidden"
-            style={{ backgroundColor: '#1b1f26' }}
+            className="relative rounded-3xl border border-white/15 px-8 py-10 sm:px-14 sm:py-14 overflow-hidden shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]"
+            style={{ backgroundColor: 'var(--footer-bg-raised)' }}
           >
             <div className="relative z-10 flex flex-col md:flex-row items-center md:items-end justify-between gap-10">
               <div className="max-w-xl text-center md:text-left">
@@ -155,7 +155,7 @@ export default function Footer() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={language === 'en' ? 'Enter your email' : 'इमेल हाल्नुहोस्'}
-                      className="flex-1 sm:w-72 px-5 py-4 text-[15px] bg-white text-[#0b0d12] placeholder-black/35 border border-white/20 outline-none focus:border-[#173C80] transition-colors disabled:opacity-50"
+                      className="flex-1 sm:w-72 px-5 py-4 text-[15px] bg-white text-[#0b0d12] placeholder-black/55 border border-white/20 outline-none focus:border-[#173C80] transition-colors disabled:opacity-50"
                     />
                     <button
                       type="submit"
@@ -195,7 +195,7 @@ export default function Footer() {
               </div>
               <span className="text-2xl font-bold text-white">NINJA INFOSYS</span>
             </Link>
-            <p className="max-w-md text-pretty font-normal text-white/55">
+            <p className="max-w-md text-pretty font-normal text-white/75">
               {language === "en"
                 ? "Turning intent into infrastructure — building reliable, scalable, and impactful digital systems for modern organizations."
                 : "इरादालाई पूर्वाधारमा रूपान्तरण गर्दै - आधुनिक संस्थाहरूका लागि विश्वसनीय, मापनयोग्य, र प्रभावकारी डिजिटल प्रणालीहरू निर्माण गर्दै।"}
@@ -205,15 +205,17 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row gap-12 mt-8 lg:mt-0">
             <div className="w-max md:mr-40">
               <div className="mb-5">
-                <h3 className="font-semibold text-lg text-white">{content.quickHeading}</h3>
+                <h3 className="font-semibold text-lg text-white mb-3">{content.quickHeading}</h3>
+                <div className="h-[3px] w-10 bg-[#7DB2FF]" />
               </div>
               <ul className="space-y-2">
                 {content.quickLinks.map((link: any) => (
                   <li key={String(link.label)}>
                     <Link
                       href={link.href}
-                      className="font-normal transition-colors hover:text-white text-white/55"
+                      className="group inline-flex items-center gap-1.5 font-normal transition-colors hover:text-white text-white/75"
                     >
+                      <ChevronRight size={14} className="text-[#E31B23] transition-transform group-hover:translate-x-1" />
                       {link.label}
                     </Link>
                   </li>
@@ -223,9 +225,10 @@ export default function Footer() {
 
             <div className="w-max md:mr-25">
               <div className="mb-5">
-                <h3 className="font-semibold text-lg mb-4 text-white">{content.connectHeading}</h3>
+                <h3 className="font-semibold text-lg text-white mb-3">{content.connectHeading}</h3>
+                <div className="h-[3px] w-10 bg-[#E31B23]" />
               </div>
-              <div className="font-normal space-y-3 text-white/55">
+              <div className="font-normal space-y-3 text-white/75 mt-4">
                 {content.connect.map((c: any, i: number) => {
                   if (c.type === "phone" || c.type === "mobile") {
                     const parts = String(c.value)
@@ -240,13 +243,13 @@ export default function Footer() {
                       <div key={i} className="space-y-2">
                         {mobiles.length > 0 && (
                           <div className="flex items-start gap-3">
-                            <span className="mt-1 text-white/40"><Smartphone size={18} /></span>
+                            <span className="mt-1 text-[#7DB2FF]"><Smartphone size={18} /></span>
                             <div>{mobiles.join(", ")}</div>
                           </div>
                         )}
                         {landlines.map((p: string, idx: number) => (
                           <div className="flex items-start gap-3" key={idx}>
-                            <span className="mt-1 text-white/40"><Phone size={18} /></span>
+                            <span className="mt-1 text-[#7DB2FF]"><Phone size={18} /></span>
                             <div>{p}</div>
                           </div>
                         ))}
@@ -256,7 +259,7 @@ export default function Footer() {
 
                   return (
                     <div className="flex items-start gap-3" key={i}>
-                      <span className="mt-1 text-white/40">
+                      <span className="mt-1 text-[#7DB2FF]">
                         {c.type === "email" && <Mail size={18} />}
                         {c.type === "address" && <MapPin size={18} />}
                       </span>
@@ -269,12 +272,14 @@ export default function Footer() {
 
             <div className="w-max">
               <div className="mb-5">
-                <h3 className="font-semibold text-lg text-white">{content.socialLinks}</h3>
+                <h3 className="font-semibold text-lg text-white mb-3">{content.socialLinks}</h3>
+                <div className="h-[3px] w-10 bg-[#7DB2FF]" />
               </div>
-              <ul className="flex flex-row items-center gap-3">
+              <ul className="flex flex-row items-center gap-3 mt-4">
                 {(content.links || []).map((link: any, idx: number) => {
                   const typeOrValue = String(link.type ?? link.value ?? "")
                   const ariaLabel = getSocialAriaLabel(typeOrValue)
+                  const accent = idx % 2 === 0 ? "#2563EB" : "#E31B23"
 
                   return (
                     <li key={String(link.label ?? link.type ?? link.value ?? idx)}>
@@ -283,7 +288,8 @@ export default function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={ariaLabel}
-                        className="inline-flex items-center justify-center w-11 h-11 rounded-full transition-all hover:bg-[#173C80] hover:border-[#173C80] hover:scale-110 group bg-white/5 border border-white/15"
+                        style={{ backgroundColor: accent }}
+                        className="inline-flex items-center justify-center w-11 h-11 rounded-full transition-all hover:brightness-110 hover:scale-110 group"
                       >
                         {typeOrValue === "LinkedIn" || typeOrValue === "लिंक्डइन" ? (
                           <Linkedin size={16} className="text-white" aria-hidden="true" />
@@ -316,7 +322,7 @@ export default function Footer() {
                   <span key={String(link.label)} className="flex items-center">
                     <Link
                       href={link.href}
-                      className="text-sm font-normal transition-colors hover:text-white text-white/55"
+                      className="text-sm font-normal transition-colors hover:text-white text-white/75"
                     >
                       {link.label}
                     </Link>

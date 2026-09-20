@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { sendEmailNotification } from "@/lib/mail";
 import { submitDcmContact } from "@/lib/dcm-client";
 import { z } from "zod";
 
@@ -36,40 +35,26 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true }); 
     }
 
-    console.log("Validated Contact Request:", formData);
-
     try {
-      const subject = `New Contact Form Submission from ${formData.firstName} ${formData.lastName}`;
-      const { buildEmailTemplate } = await import("@/lib/mail");
-      const html = buildEmailTemplate("New Contact Form Submission", {
-        "First Name": formData.firstName,
-        "Last Name": formData.lastName,
-        "Email": formData.email,
-        "Consent Provided": formData.consent ? 'Yes' : 'No',
-        "Message": formData.message || "N/A",
-      });
-      const text = `New Contact Form Submission\nFirst Name: ${formData.firstName}\nLast Name: ${formData.lastName}\nEmail: ${formData.email}\nConsent Provided: ${formData.consent ? 'Yes' : 'No'}\nMessage: ${formData.message || "N/A"}`;
-      
-      const emailRes = await sendEmailNotification(subject, text, html);
-
       const dcmMessage = formData.consent
         ? formData.message || "N/A"
         : `${formData.message || "N/A"}\n\n(Consent not given)`;
+
       const dcmRes = await submitDcmContact({
         fullName: `${formData.firstName} ${formData.lastName}`,
         email: formData.email,
         message: dcmMessage,
       });
 
-      if (!emailRes && !dcmRes) {
+      if (!dcmRes) {
         return NextResponse.json({ error: "Failed to submit contact form." }, { status: 500 });
       }
 
       return NextResponse.json({ success: true });
     } catch (err: any) {
-      console.error("Email Sending Error:", err);
+      console.error("Contact submission error:", err);
       return NextResponse.json(
-        { error: "Internal server error while sending email." },
+        { error: "Internal server error while submitting contact form." },
         { status: 500 }
       );
     }

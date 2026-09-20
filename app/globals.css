@@ -4,8 +4,12 @@
 
 /* ─── Design tokens ────────────────────────────────────────────────── */
 :root {
-  /* Base palette — Paper/Paper-2/Ink background system */
-  --background:  #F7F6F2; /* Paper */
+  /* Base palette — flat white background system (no alternating paper tones) */
+  --background:  #FFFFFF; /* White base, with light blue as the alternating section tone */
+  --page-bg:     #FFFFFF;
+  --page-bg-alt: #F6F9FE;
+  --footer-bg:   #0A1F4D; /* Dark blue footer */
+  --footer-bg-raised: #12306B;
   --foreground:  #0b0d12;
   --card:        #ffffff;
   --card-foreground: #0b0d12;
@@ -23,25 +27,25 @@
   --brand-steel:      #2E3A4E;
 
   /* Supporting */
-  --secondary:        #EFEDE7; /* Paper-2 */
+  --secondary:        #FFFFFF; /* Paper-2 — flattened to white */
   --secondary-foreground: #0b0d12;
-  --muted:            #EFEDE7; /* Paper-2 */
+  --muted:            #F6F9FE; /* Light blue section tone */
   --muted-foreground: #5b6472;
-  --accent:           #EFEDE7; /* Paper-2 */
+  --accent:           #FFFFFF; /* Paper-2 — flattened to white */
   --accent-foreground:#0b0d12;
   --destructive:      #7f1d1d;
   --destructive-foreground: #ffffff;
-  --border:           #e2e4e8;
+  --border:           #D7E4FA;
   --input:            #EFEDE7;
   --ring:             #2563EB;
-  --radius:           0rem;
+  --radius:           0.75rem;
 
   /* Fonts */
-  --font-heading: 'Newsreader', serif;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
   --font-body:    'IBM Plex Sans', sans-serif;
 
   /* Aliases kept for old code */
-  --color-background: #F7F6F2;
+  --color-background: #FFFFFF;
   --color-foreground: #0b0d12;
   --color-accent:     #2563EB;
 }
@@ -50,7 +54,7 @@
    kept in sync with :root anyway so it can't silently regress to dark if
    ever wired up later. */
 .dark {
-  --background:  #F7F6F2;
+  --background:  #FFFFFF;
   --foreground:  #0b0d12;
   --card:        #ffffff;
   --card-foreground: #0b0d12;
@@ -58,26 +62,40 @@
   --popover-foreground: #0b0d12;
   --primary:     #E31B23;
   --primary-foreground: #ffffff;
-  --secondary:   #EFEDE7;
+  --secondary:   #FFFFFF;
   --secondary-foreground: #0b0d12;
-  --muted:       #EFEDE7;
+  --muted:       #F6F9FE;
   --muted-foreground: #5b6472;
-  --accent:      #EFEDE7;
+  --accent:      #FFFFFF;
   --accent-foreground: #0b0d12;
   --destructive: #7f1d1d;
   --destructive-foreground: #ffffff;
-  --border:      #e2e4e8;
+  --border:      #D7E4FA;
   --input:       #EFEDE7;
   --ring:        #2563EB;
-  --color-background: #F7F6F2;
+  --color-background: #FFFFFF;
   --color-foreground: #0b0d12;
   --color-accent:     #2563EB;
+}
+
+/* Registers the tokens as Tailwind colours so utilities like bg-muted,
+   border-foreground/10 and text-foreground exist. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
 }
 
 /* ─── Base ─────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: var(--font-body);
@@ -128,19 +146,19 @@ html {
   and nothing else. BLUE (#2563EB) = the general accent — nav hover
   states, labels, icons, links, focus rings. The thin red→blue gradient
   bars/dividers are a direct reference to the logo's own ribbon. Every
-  section is light (off-white #f7f7f8 or white) with navy (#0b0d12) text
-  — no black/navy section backgrounds anywhere on the site.
+  section is flat white with navy (#0b0d12) text — no alternating
+  paper tones and no black/navy section backgrounds anywhere on the site.
 
   Section layout on homepage:
-  1. Header       — light/white bg, navy text, RED CTA button, blue nav hover
-  2. Hero         — off-white left panel + photo on the right, navy text, red label, red CTA
-  3. About Us     — off-white bg, navy text, red CTA, red/blue alternating pillar icons
-  4. Sustainability — off-white bg, navy text, red CTA, red→blue divider rule
-  5. TrustedBy    — light gray bg, muted grayscale logos
-  6. Insights     — off-white bg, navy text, red→blue accent bars
-  7. Testimonials — off-white bg, navy text, white cards
-  8. GlobalCTA    — off-white bg, navy text, RED "featured" card
-  9. Footer       — off-white bg, navy text, RED CTA button
+  1. Header       — white bg, navy text, RED CTA button, blue nav hover
+  2. Hero         — white left panel + photo on the right, navy text, red label, red CTA
+  3. About Us     — white bg, navy text, red CTA, red/blue alternating pillar icons
+  4. Sustainability — white bg, navy text, red CTA, red→blue divider rule
+  5. TrustedBy    — white bg, muted grayscale logos
+  6. Insights     — white bg, navy text, red→blue accent bars
+  7. Testimonials — white bg, navy text, white cards
+  8. GlobalCTA    — white bg, navy text, RED "featured" card
+  9. Footer       — white bg, navy text, RED CTA button
 */
 
 
@@ -162,6 +180,48 @@ html {
 }
 .skip-to-content:focus { top: 0; }
 
+/* ─── Premium surface system ────────────────────────────────────────
+   Soft rounded surfaces, diffused blue-tinted shadows and filled brand
+   icon tiles — shared by every card so the site reads as one system. */
+.card-premium {
+  position: relative;
+  border: 1px solid #d7e4fa;
+  border-radius: 1.25rem;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(10, 31, 77, 0.04), 0 14px 34px -16px rgba(10, 31, 77, 0.14);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease, border-color 0.45s ease;
+}
+.card-premium:hover {
+  transform: translateY(-6px);
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 2px 4px rgba(10, 31, 77, 0.05), 0 28px 56px -20px rgba(37, 99, 235, 0.38);
+}
+.icon-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.875rem;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 22px -10px rgba(37, 99, 235, 0.65);
+}
+.icon-tile-red {
+  background: linear-gradient(135deg, #e31b23 0%, #b91219 100%);
+  box-shadow: 0 10px 22px -10px rgba(227, 27, 35, 0.6);
+}
+
+/* Solid crimson calls-to-action share one rounded, lifted treatment. */
+a[class*="bg-[#E31B23]"], button[class*="bg-[#E31B23]"] {
+  border-radius: 0.75rem;
+  box-shadow: 0 12px 26px -12px rgba(227, 27, 35, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+}
+a[class*="bg-[#E31B23]"]:hover, button[class*="bg-[#E31B23]"]:hover {
+  box-shadow: 0 18px 34px -12px rgba(227, 27, 35, 0.7);
+}
+
+::selection { background: rgba(37, 99, 235, 0.18); }
+
 /* Nav font-size */
 header nav, nav.main-navigation { font-size: 16px; }
 header nav a, nav.main-navigation a { font-size: 16px; line-height: 1.2; }
@@ -176,9 +236,34 @@ header nav a, nav.main-navigation a { font-size: 16px; line-height: 1.2; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes float   { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
+@keyframes ambient-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(4%, 6%) scale(1.08); }
+  66%      { transform: translate(-3%, -4%) scale(0.96); }
+}
+@keyframes ambient-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-5%, 5%) scale(1.1); }
+}
+@keyframes shine-sweep {
+  from { transform: translateX(-150%) skewX(-12deg); }
+  to   { transform: translateX(250%) skewX(-12deg); }
+}
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes progress-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   @keyframes slideUp { from { opacity: 0; } to { opacity: 1; } }
   @keyframes float   { 0%, 100% { transform: none; } }
+  @keyframes ambient-drift-a { 0%, 100% { transform: none; } }
+  @keyframes ambient-drift-b { 0%, 100% { transform: none; } }
+  @keyframes marquee-left { from, to { transform: none; } }
 }
 
 /* Testimonial cards font override */

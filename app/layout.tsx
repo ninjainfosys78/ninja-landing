@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next";
 import "./globals.css"
-import { IBM_Plex_Sans, Source_Serif_4 } from "next/font/google"
+import { IBM_Plex_Sans, Plus_Jakarta_Sans } from "next/font/google"
 import { LanguageProvider } from "@/components/LanguageProvider"
 import { ThemeProvider } from "@/components/theme-provider"
 import CookieConsent from "@/components/cookie-consent"
@@ -16,9 +16,9 @@ const ibm = IBM_Plex_Sans({
   display: "swap",
 });
 
-const serif = Source_Serif_4({
+const heading = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300","400","600"],
+  weight: ["400","500","600","700","800"],
   variable: "--font-heading",
   display: "swap",
 });
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${ibm.variable} ${serif.variable}`}>
+      <body className={`${ibm.variable} ${heading.variable}`} suppressHydrationWarning>
         <ThemeProvider attribute="class" forcedTheme="dark" enableSystem={false}>
           <LanguageProvider>
             <Header />

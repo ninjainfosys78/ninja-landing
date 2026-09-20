@@ -13,25 +13,28 @@ type RevealProps = {
   amount?: number;
 };
 
-// Scroll-linked reveal: progress is driven directly by scroll position
-// (not a fixed timer), so the animation always plays out while the
-// element is actually crossing into view — no matter how fast or slow
-// the user scrolls.
-export function Reveal({ children, className, y = 32 }: RevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 95%", "start 55%"],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const yPos = useTransform(scrollYProgress, [0, 1], [y, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [0.96, 1]);
-  const blurAmt = useTransform(scrollYProgress, [0, 1], [8, 0]);
-  const filter = useTransform(blurAmt, (v) => `blur(${v}px)`);
-
+// Viewport-triggered reveal: plays a fixed-duration animation once the
+// element enters view, so it always reads as a visible animation no
+// matter how fast the user scrolls past it (a scroll-linked version can
+// be blown through in a single wheel/trackpad tick with no perceptible
+// motion at all).
+export function Reveal({
+  children,
+  className,
+  delay = 0,
+  duration = 0.7,
+  y = 32,
+  once = true,
+  amount = 0.2,
+}: RevealProps) {
   return (
-    <motion.div ref={ref} className={className} style={{ opacity, y: yPos, scale, filter }}>
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y, scale: 0.96, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      viewport={{ once, amount, margin: "0px 0px -10% 0px" }}
+      transition={{ duration, delay, ease: [0.16, 1, 0.3, 1] }}
+    >
       {children}
     </motion.div>
   );
@@ -145,6 +148,33 @@ export function StaggerWords({
         </React.Fragment>
       ))}
     </motion.span>
+  );
+}
+
+// Two large, slow-drifting blurred color blobs used as an ambient backdrop
+// for premium sections. Pure CSS (not framer) so it never competes with
+// scroll-triggered motion and costs nothing on the main thread.
+export function AmbientGlow({ className }: { className?: string }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute inset-0 overflow-hidden ${className ?? ""}`}
+    >
+      <div
+        className="absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full blur-[110px]"
+        style={{
+          background: "radial-gradient(circle, rgba(37,99,235,0.10), transparent 70%)",
+          animation: "ambient-drift-a 22s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute -bottom-32 -right-16 w-[480px] h-[480px] rounded-full blur-[120px]"
+        style={{
+          background: "radial-gradient(circle, rgba(227,27,35,0.08), transparent 70%)",
+          animation: "ambient-drift-b 26s ease-in-out infinite",
+        }}
+      />
+    </div>
   );
 }
 

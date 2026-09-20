@@ -1,8 +1,9 @@
 "use client"
 import React, { useEffect, useMemo, useState } from "react"
+import { motion } from "framer-motion"
 import { useLanguage } from "@/components/LanguageProvider"
 import { fetchTestimonials, TestimonialRecord } from "@/lib/testimonials"
-import { Reveal } from "@/components/ui/reveal"
+import { StaggerWords } from "@/components/ui/reveal"
 
 interface Testimonial {
   name: string
@@ -110,16 +111,14 @@ export default function Testimonials() {
     <section
       aria-label="Testimonials"
       className="relative pt-20 pb-16 border-t"
-      style={{ backgroundColor: '#EFEDE7', color: '#0b0d12', borderColor: 'rgba(11,13,18,0.06)' }}
+      style={{ backgroundColor: 'var(--page-bg-alt)', color: '#0b0d12', borderColor: 'rgba(11,13,18,0.06)' }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
-        <Reveal>
-          <h3 className="text-[32px] md:text-[48px] font-bold text-left mb-10" style={{ color: '#0b0d12' }}>
-            {language === "en" ? "What our clients say" : "हाम्रा ग्राहकहरूले के भन्छन्"}
-          </h3>
-        </Reveal>
+        <h3 className="text-[32px] md:text-[48px] font-bold text-left mb-10" style={{ color: '#0b0d12' }}>
+          <StaggerWords text={language === "en" ? "What our clients say" : "हाम्रा ग्राहकहरूले के भन्छन्"} amount={0.6} />
+        </h3>
 
         <div className="relative">
           <div className="overflow-hidden">
@@ -147,13 +146,13 @@ export default function Testimonials() {
                     {group.map((item, idx) => (
                       <article
                         key={`${slideIndex}-${idx}-${item.name}`}
-                        className="p-8 min-h-[200px] flex gap-5 items-start shadow-sm"
+                        className="p-8 min-h-[200px] flex gap-5 items-start shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_-24px_rgba(37,99,235,0.3)] hover:border-[#2563EB]/30"
                         style={{ backgroundColor: '#ffffff', border: '1px solid rgba(11,13,18,0.08)' }}
                         aria-label={item.name}
                       >
                         <div
                           aria-hidden
-                          className="w-14 h-14 rounded-full flex items-center justify-center overflow-hidden flex-none font-bold text-lg"
+                          className="w-14 h-14 rounded-full flex items-center justify-center overflow-hidden flex-none font-bold text-lg ring-2 ring-transparent transition-all duration-500 hover:ring-[#2563EB]/40"
                           style={{ backgroundColor: '#2E3A4E', color: '#ffffff' }}
                         >
                           {item.image ? (
@@ -175,13 +174,16 @@ export default function Testimonials() {
                             >
                               {item.name}
                             </div>
-                            <div
+                            <motion.div
                               aria-hidden
                               className="text-[40px] leading-[1] select-none"
                               style={{ color: 'rgba(11,13,18,0.15)' }}
+                              initial={{ opacity: 0, scale: 0.6 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                             >
                               "
-                            </div>
+                            </motion.div>
                           </div>
 
                           <p
@@ -207,24 +209,21 @@ export default function Testimonials() {
                     key={i}
                     onClick={() => goTo(i)}
                     aria-label={`Go to testimonials page ${i + 1}`}
-                    className={`
-                      relative
-                      inline-flex items-center justify-center
-                      rounded-full
-                      cursor-pointer border-none
-                      transition-all duration-200
-
-                      /* Minimum touch target (44×44) */
-                      w-11 h-11 sm:w-12 sm:h-12
-
-                      /* Visually small dot inside */
-                      before:absolute before:rounded-full before:transition-all before:duration-200
-                      ${i === page
-                        ? "before:bg-[#2563EB] before:w-3 before:h-3"
-                        : "before:bg-[rgba(11,13,18,0.15)] before:w-2 before:h-2"
-                      }
-                    `}
+                    className="relative inline-flex items-center justify-center rounded-full cursor-pointer border-none w-11 h-11 sm:w-12 sm:h-12"
                   >
+                    {i === page ? (
+                      <motion.span
+                        layoutId="testimonial-active-dot"
+                        className="absolute rounded-full w-3 h-3"
+                        style={{ backgroundColor: "#2563EB" }}
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                      />
+                    ) : (
+                      <span
+                        className="absolute rounded-full w-2 h-2 transition-colors duration-200"
+                        style={{ backgroundColor: "rgba(11,13,18,0.15)" }}
+                      />
+                    )}
                   </button>
 
               ))}

@@ -42,7 +42,7 @@ export default function CookieConsent() {
   const t = language === "en" ? content.en : content.ne
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[100] bg-[#14171C] backdrop-blur-md border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.25)] py-4 px-6 sm:px-12 flex flex-col md:flex-row items-center justify-center gap-6 animate-in fade-in slide-in-from-bottom-5 duration-500">
+    <div className="fixed bottom-0 left-0 right-0 z-[100] bg-[#0A1F4D] backdrop-blur-md border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.25)] py-4 px-6 sm:px-12 flex flex-col md:flex-row items-center justify-center gap-6 animate-in fade-in slide-in-from-bottom-5 duration-500">
       <p className="text-sm sm:text-base text-white/75 max-w-3xl text-center md:text-left font-ibm-plex-sans leading-relaxed">
         {t.text}
       </p>

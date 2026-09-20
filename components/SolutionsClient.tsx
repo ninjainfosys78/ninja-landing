@@ -335,13 +335,13 @@ export default function SolutionsClient() {
         </section>
 
         {!active && loading && (
-          <section className="py-32 relative flex items-center justify-center" style={{ backgroundColor: "#EFEDE7" }}>
+          <section className="py-32 relative flex items-center justify-center" style={{ backgroundColor: "var(--page-bg)" }}>
             <div className="w-8 h-8 border-2 border-[#2563EB] border-t-transparent rounded-full animate-spin" />
           </section>
         )}
 
         {!active && !loading && cards.length > 0 && (
-          <section className="py-14 relative" style={{ backgroundColor: "#EFEDE7" }}>
+          <section className="py-14 relative" style={{ backgroundColor: "var(--page-bg-alt)" }}>
             <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12">
               <div className="grid gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
                 {cards.map((card) => (
@@ -488,7 +488,7 @@ export default function SolutionsClient() {
               </div>
             </section>
 
-            <section className="border-t border-foreground/10 py-12 sm:py-16" style={{ backgroundColor: "#EFEDE7" }}>
+            <section className="border-t border-foreground/10 py-12 sm:py-16" style={{ backgroundColor: "var(--page-bg)" }}>
               <div className="mx-auto max-w-[1200px] w-full px-6 sm:px-10">
                 <ProjectsGrid
                   language={language as Lang}

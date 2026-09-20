@@ -84,7 +84,7 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
       </section>
 
       {/* Main Content */}
-      <section className="py-24 border-t border-foreground/10" style={{ backgroundColor: "#EFEDE7" }}>
+      <section className="py-24 border-t border-foreground/10" style={{ backgroundColor: "var(--page-bg)" }}>
         <div className="mx-auto max-w-[1600px] px-6 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
             <div className="space-y-12">

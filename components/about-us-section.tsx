@@ -1,10 +1,103 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Eye, Target, Heart } from "lucide-react";
+import { motion, type Variants } from "framer-motion";
+import { ArrowRight, Eye, Target, Heart, type LucideIcon } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
+import { Reveal, StaggerWords } from "@/components/ui/reveal";
+
+// A deliberately bolder entrance than the shared Reveal/RevealItem primitives —
+// this section's cards should announce themselves, not just fade up gently.
+const cardContainerVariants: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.18, delayChildren: 0.05 } },
+};
+
+const cardItemVariants: Variants = {
+  hidden: { opacity: 0, y: 90, scale: 0.88, rotate: -3, filter: "blur(6px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotate: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+interface Pillar {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+  color: string;
+}
+
+function CapabilityCard({ pillar, index }: { pillar: Pillar; index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const Icon = pillar.icon;
+  const number = String(index + 1).padStart(2, "0");
+
+  // Cursor-tracked spotlight — set as CSS custom properties directly on the
+  // node so the glow follows the pointer without a React re-render per move.
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    cardRef.current!.style.setProperty("--spot-x", `${event.clientX - rect.left}px`);
+    cardRef.current!.style.setProperty("--spot-y", `${event.clientY - rect.top}px`);
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className="group relative h-full overflow-hidden rounded-3xl border border-[#d7e4fa] bg-white p-8 shadow-[0_1px_2px_rgba(10,31,77,0.04),0_18px_40px_-18px_rgba(10,31,77,0.16)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_-24px_rgba(37,99,235,0.4)] sm:p-10"
+      style={{ color: pillar.color }}
+    >
+      {/* Spotlight glow that follows the cursor — the premium hover cue */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(280px circle at var(--spot-x, 50%) var(--spot-y, 50%), ${pillar.color}17, transparent 70%)`,
+        }}
+      />
+
+      {/* Oversized ghost numeral, an editorial marker rather than decoration */}
+      <span
+        aria-hidden="true"
+        className="absolute -top-3 right-5 font-heading font-bold leading-none select-none transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105"
+        style={{ fontSize: "96px", color: pillar.color, opacity: 0.07 }}
+      >
+        {number}
+      </span>
+
+      <div className="relative mb-8">
+        <div
+          className="inline-flex rounded-2xl p-4 text-white transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
+          style={{ backgroundColor: pillar.color, boxShadow: `0 12px 24px -10px ${pillar.color}` }}
+        >
+          <Icon size={28} className="text-white" />
+        </div>
+      </div>
+
+      <h3 className="relative text-2xl font-heading font-bold text-[#0b0d12] mb-4 group-hover:text-current transition-colors">
+        {pillar.title}
+      </h3>
+      <p className="relative text-[#0b0d12]/60 leading-relaxed font-sans text-[16px] mb-8">
+        {pillar.text}
+      </p>
+
+      {/* Accent underline draws in from the left on hover */}
+      <div className="relative h-[2px] w-full bg-[#0b0d12]/10 overflow-hidden">
+        <div
+          className="h-full w-full origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
+          style={{ backgroundColor: pillar.color }}
+        />
+      </div>
+    </div>
+  );
+}
 
 export default function AboutUsSection() {
   const { language } = useLanguage();
@@ -67,52 +160,56 @@ export default function AboutUsSection() {
         };
 
   return (
-    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: "#EFEDE7" }}>
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: "var(--page-bg-alt)" }}>
+      {/* Subtle noise + soft accent glows behind the header, so the section reads as textured rather than flat white */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.035] pointer-events-none"
+        style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-32 left-1/4 h-[420px] w-[420px] rounded-full blur-[120px]"
+        style={{ backgroundColor: "#2563EB0a" }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-32 right-1/4 h-[420px] w-[420px] rounded-full blur-[120px]"
+        style={{ backgroundColor: "#E31B230a" }}
+      />
+
       <div className="relative z-10 max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
         {/* Centered Header */}
-        <Reveal className="max-w-4xl mx-auto text-center mb-20">
-          <div className="text-[12px] font-bold uppercase tracking-[0.3em] text-[#2563EB] mb-6">
-            {content.category}
-          </div>
+        <div className="max-w-4xl mx-auto text-center mb-20">
+          <Reveal>
+            <div className="text-[12px] font-bold uppercase tracking-[0.3em] text-[#2563EB] mb-6">
+              {content.category}
+            </div>
+          </Reveal>
           <h2 className="text-4xl sm:text-5xl lg:text-7xl font-heading font-bold text-[#0b0d12] mb-8 leading-[1.1] tracking-tight">
-            {content.title}
+            <StaggerWords text={content.title} amount={0.6} />
           </h2>
-          <p className="text-xl text-[#0b0d12]/60 leading-relaxed max-w-3xl mx-auto font-sans">
-            {content.description}
-          </p>
-        </Reveal>
+          <Reveal delay={0.15}>
+            <p className="text-xl text-[#0b0d12]/60 leading-relaxed max-w-3xl mx-auto font-sans">
+              {content.description}
+            </p>
+          </Reveal>
+        </div>
 
-        {/* Individual Technological Boxes */}
-        <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {content.pillars.map((p, idx) => {
-            const Icon = p.icon;
-            return (
-              <RevealItem key={idx}>
-                <div
-                  className="group relative p-8 bg-white border border-[#0b0d12]/10 shadow-sm hover:border-current/40 hover:shadow-md transition-all duration-500 hover:-translate-y-2 text-center h-full"
-                  style={{ color: p.color }}
-                >
-                  {/* Corner Accents */}
-                  <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-current opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-current opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                  <div className="mb-8 flex justify-center">
-                     <div className="inline-flex p-4 bg-[#0b0d12]/[0.04] border border-[#0b0d12]/10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
-                      <Icon size={28} className="text-current" />
-                    </div>
-                  </div>
-
-                  <h3 className="text-2xl font-heading font-bold text-[#0b0d12] mb-4 group-hover:text-current transition-colors">
-                    {p.title}
-                  </h3>
-                  <p className="text-[#0b0d12]/60 leading-relaxed font-sans text-[16px]">
-                    {p.text}
-                  </p>
-                </div>
-              </RevealItem>
-            );
-          })}
-        </RevealGroup>
+        {/* Capability cards — numbered, with a cursor-tracked spotlight and a drawn-in accent underline on hover */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2, margin: "0px 0px -10% 0px" }}
+          variants={cardContainerVariants}
+        >
+          {content.pillars.map((pillar, idx) => (
+            <motion.div key={idx} variants={cardItemVariants}>
+              <CapabilityCard pillar={pillar} index={idx} />
+            </motion.div>
+          ))}
+        </motion.div>
 
         {/* Centered CTA */}
         <Reveal className="mt-20 text-center" delay={0.1}>

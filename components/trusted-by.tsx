@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
 import { fetchTrustedLogos, TrustedLogoRecord } from "@/lib/trustedby";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal, AmbientGlow, StaggerWords } from "@/components/ui/reveal";
 
 interface TrustedByProps {
   initialLogos?: TrustedLogoRecord[];
@@ -46,65 +47,92 @@ export default function TrustedBy({ initialLogos = [] }: TrustedByProps) {
     <section
       id="partners"
       className="py-12 relative z-[5] overflow-hidden"
-      style={{ backgroundColor: '#EFEDE7', borderTop: '1px solid rgba(11,13,18,0.06)', borderBottom: '1px solid rgba(11,13,18,0.08)' }}
+      style={{ backgroundColor: 'var(--page-bg-alt)', borderTop: '1px solid rgba(11,13,18,0.06)', borderBottom: '1px solid rgba(11,13,18,0.08)' }}
     >
-      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
-        <Reveal>
-          <p
-            className="text-[12px] font-bold uppercase tracking-[0.2em] text-center mb-8"
-            style={{ color: 'rgba(11,13,18,0.55)' }}
-          >
-            {language === "ne" ? "प्रमुख संस्थाहरूद्वारा विश्वास गरिएको" : "Trusted by leading organizations"}
-          </p>
-        </Reveal>
-        <div
-          ref={marqueeRootRef as any}
-          className="marquee"
-          aria-hidden={false}
-          aria-label={language === "ne" ? "विश्वास गर्ने लोगोहरू" : "Trusted logos"}
-        >
-          <div className="marquee__inner" role="presentation">
-            <div className="marquee__group" aria-hidden="true">
-              {list.map((item, idx) => (
-                <div className="marquee__item" key={`g1-${item.id}-${idx}`}>
-                  {item.logo ? (
-                    <Image
-                      src={item.logo}
-                      alt={item.logoName}
-                      width={160}
-                      height={64}
-                      className="h-16 w-auto object-contain block grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
-                    />
-                  ) : (
-                    <div className="text-[#0b0d12]/50 text-center font-bold text-lg tracking-wide whitespace-nowrap">
-                      {item.logoName}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+      <AmbientGlow />
 
-            <div className="marquee__group" aria-hidden="true">
-              {list.map((item, idx) => (
-                <div className="marquee__item" key={`g2-${item.id}-${idx}`}>
-                  {item.logo ? (
-                    <Image
-                      src={item.logo}
-                      alt={item.logoName}
-                      width={160}
-                      height={64}
-                      className="h-16 w-auto object-contain block grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
-                    />
-                  ) : (
-                    <div className="text-[#0b0d12]/50 text-center font-bold text-lg tracking-wide whitespace-nowrap">
-                      {item.logoName}
-                    </div>
-                  )}
-                </div>
-              ))}
+      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+        <div className="flex flex-col items-center mb-8">
+          <StaggerWords
+            text={language === "ne" ? "प्रमुख संस्थाहरूद्वारा विश्वास गरिएको" : "Trusted by leading organizations"}
+            className="text-[12px] font-bold uppercase tracking-[0.2em] text-center"
+            amount={0.6}
+          />
+          <motion.span
+            aria-hidden="true"
+            className="mt-4 h-[2px] w-16 rounded-full"
+            style={{ background: 'linear-gradient(90deg, #E31B23, #2563EB)', transformOrigin: 'center' }}
+            initial={{ scaleX: 0, opacity: 0 }}
+            whileInView={{ scaleX: 1, opacity: 1 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          />
+        </div>
+
+        <Reveal delay={0.1} className="relative">
+          {/* Edge fade masks so logos scroll in/out instead of clipping abruptly */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 z-20 bg-gradient-to-r from-white to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 z-20 bg-gradient-to-l from-white to-transparent" />
+
+          <div
+            ref={marqueeRootRef as any}
+            className="marquee"
+            aria-hidden={false}
+            aria-label={language === "ne" ? "विश्वास गर्ने लोगोहरू" : "Trusted logos"}
+          >
+            <div className="marquee__inner" role="presentation">
+              <div className="marquee__group" aria-hidden="true">
+                {list.map((item, idx) => (
+                  <motion.div
+                    className="marquee__item"
+                    key={`g1-${item.id}-${idx}`}
+                    whileHover={{ y: -8, scale: 1.08 }}
+                    transition={{ type: "spring", stiffness: 320, damping: 18 }}
+                  >
+                    {item.logo ? (
+                      <Image
+                        src={item.logo}
+                        alt={item.logoName}
+                        width={160}
+                        height={64}
+                        className="h-16 w-auto object-contain block grayscale opacity-60 hover:opacity-100 hover:grayscale-0 hover:drop-shadow-[0_12px_24px_rgba(37,99,235,0.25)] transition-all duration-300"
+                      />
+                    ) : (
+                      <div className="text-[#0b0d12]/50 text-center font-bold text-lg tracking-wide whitespace-nowrap">
+                        {item.logoName}
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="marquee__group" aria-hidden="true">
+                {list.map((item, idx) => (
+                  <motion.div
+                    className="marquee__item"
+                    key={`g2-${item.id}-${idx}`}
+                    whileHover={{ y: -8, scale: 1.08 }}
+                    transition={{ type: "spring", stiffness: 320, damping: 18 }}
+                  >
+                    {item.logo ? (
+                      <Image
+                        src={item.logo}
+                        alt={item.logoName}
+                        width={160}
+                        height={64}
+                        className="h-16 w-auto object-contain block grayscale opacity-60 hover:opacity-100 hover:grayscale-0 hover:drop-shadow-[0_12px_24px_rgba(37,99,235,0.25)] transition-all duration-300"
+                      />
+                    ) : (
+                      <div className="text-[#0b0d12]/50 text-center font-bold text-lg tracking-wide whitespace-nowrap">
+                        {item.logoName}
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        </Reveal>
 
         <div
           id="trusted-by-debug"

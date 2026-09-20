@@ -24,7 +24,7 @@ export default function CareersTeaser({ language }: CareersTeaserProps) {
   return (
     <section
       className="py-20 md:py-28"
-      style={{ backgroundColor: '#f7f7f8', color: '#0b0d12' }}
+      style={{ backgroundColor: 'var(--page-bg-alt)', color: '#0b0d12' }}
       aria-labelledby="careers-title"
     >
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12">

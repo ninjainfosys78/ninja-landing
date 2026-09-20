@@ -51,11 +51,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const isHeroDark = pathname === "/" && !isScrolled;
+
   return (
     <>
     <header
       ref={headerRef}
-      className="fixed top-0 left-0 w-full z-50 px-6 sm:px-8 lg:px-12 2xl:px-16 mt-4"
+      className="fixed top-0 left-0 w-full z-50 px-6 sm:px-8 lg:px-12 2xl:px-16 mt-5 sm:mt-7"
       style={{
         transition: 'all 0.5s cubic-bezier(0.16,1,0.3,1)',
         transform: hidden ? 'translateY(-120%)' : 'translateY(0)',
@@ -68,11 +70,11 @@ export default function Header() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         style={{
-          backgroundColor: isScrolled || pathname !== "/" ? '#F7F6F2' : 'rgba(247,246,242,0.35)',
-          backdropFilter: 'blur(14px)',
+          backgroundColor: isHeroDark ? 'transparent' : '#FFFFFF',
+          backdropFilter: isHeroDark ? 'none' : 'blur(16px)',
           padding: isScrolled ? '0 1.5rem' : '0 2rem',
-          borderRadius: '0.5rem',
-          border: isScrolled || pathname !== "/" ? '1px solid rgba(11,13,18,0.08)' : '1px solid rgba(255,255,255,0.4)',
+          borderRadius: isHeroDark ? '0px' : '999px',
+          border: isHeroDark ? 'none' : '1px solid rgba(11,13,18,0.08)',
           boxShadow: isScrolled ? '0 10px 30px -10px rgba(11,13,18,0.15)' : 'none'
         }}
       >
@@ -92,7 +94,7 @@ export default function Header() {
               priority
             />
           </div>
-          <span className="text-xl font-bold font-heading transition-colors text-[#0b0d12]">
+          <span className={`text-xl font-bold font-heading transition-colors text-[#0b0d12]`}>
             Ninja Infosys
           </span>
         </Link>
@@ -106,7 +108,7 @@ export default function Header() {
           <div className="relative group/about">
             <Link
               href="/about"
-              className="text-[15px] font-semibold transition-colors flex items-center gap-1 hover:text-[#2563EB] text-[#0b0d12]/70"
+              className={`text-[15px] font-semibold transition-colors flex items-center gap-1 hover:text-[#2563EB] text-[#0b0d12]/70`}
             >
               {language === 'en' ? 'About Us' : 'हाम्रो बारेमा'}
               <svg viewBox="0 0 24 24" className="w-4 h-4 transition-transform group-hover/about:rotate-180" fill="none" stroke="currentColor" strokeWidth="3"><path d="M6 9l6 6 6-6" /></svg>
@@ -139,7 +141,7 @@ export default function Header() {
           <div className="relative group/solutions">
             <Link
               href="/solutions"
-              className="text-[15px] font-semibold transition-colors flex items-center gap-1 hover:text-[#2563EB] text-[#0b0d12]/70"
+              className={`text-[15px] font-semibold transition-colors flex items-center gap-1 hover:text-[#2563EB] text-[#0b0d12]/70`}
             >
               {language === 'en' ? 'Solutions' : 'समाधानहरू'}
               <svg viewBox="0 0 24 24" className="w-4 h-4 transition-transform group-hover/solutions:rotate-180" fill="none" stroke="currentColor" strokeWidth="3"><path d="M6 9l6 6 6-6" /></svg>
@@ -169,14 +171,14 @@ export default function Header() {
           </div>
 
           {[
-            { label: 'Insights', labelNe: 'अन्तर्दृष्टि', href: '/blogs' },
+            { label: 'Blogs', labelNe: 'ब्लगहरू', href: '/blogs' },
             { label: 'Partners', labelNe: 'साझेदारहरू', href: '/partners' },
             { label: 'Contact', labelNe: 'सम्पर्क', href: '/contact' }
           ].map((item) => (
-            <Link 
+            <Link
               key={item.label}
               href={item.href}
-              className="text-[15px] font-semibold transition-colors hover:text-[#2563EB] text-[#0b0d12]/70"
+              className={`text-[15px] font-semibold transition-colors hover:text-[#2563EB] text-[#0b0d12]/70`}
             >
               {language === 'en' ? item.label : item.labelNe}
             </Link>
@@ -187,7 +189,7 @@ export default function Header() {
         <div className="flex items-center gap-8">
           <button
             onClick={() => setLanguage(language === "en" ? "ne" : "en")}
-            className="hidden sm:block w-24 shrink-0 text-center text-[13px] font-bold tracking-wider transition-colors uppercase text-[#0b0d12]/40 hover:text-[#0b0d12]"
+            className={`hidden sm:block w-24 shrink-0 text-center text-[13px] font-bold tracking-wider transition-colors uppercase text-[#0b0d12]/40 hover:text-[#0b0d12]`}
           >
             {language === "en" ? "नेपाली" : "English"}
           </button>
@@ -200,7 +202,7 @@ export default function Header() {
                 window.location.href = "/contact";
               }
             }}
-            className="hidden lg:inline-flex items-center gap-2 bg-[#E31B23] text-white px-7 py-3 text-[15px] font-bold transition-all hover:brightness-110 active:scale-95 shadow-sm w-[230px] justify-center shrink-0"
+            className={`hidden lg:inline-flex items-center gap-2 rounded-full px-7 py-3 text-[15px] font-bold transition-all active:scale-95 w-[230px] justify-center shrink-0 ${isHeroDark ? 'text-[#E31B23] hover:brightness-125' : 'bg-[#E31B23] text-white shadow-sm hover:brightness-110'}`}
           >
             <span className="whitespace-nowrap">{language === 'en' ? 'Build with us' : 'हामीसँग निर्माण गर्नुहोस्'}</span>
             <ArrowRight size={16} />
@@ -209,7 +211,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden p-2 transition-colors text-[#0b0d12]"
+            className={`lg:hidden p-2 transition-colors text-[#0b0d12]`}
           >
             {mobileOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
@@ -222,7 +224,7 @@ export default function Header() {
         {mobileOpen && (
           <motion.div
             className="lg:hidden fixed inset-0 top-20 z-40 overflow-y-auto pt-10"
-            style={{ backgroundColor: '#F7F6F2' }}
+            style={{ backgroundColor: '#FFFFFF' }}
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
@@ -242,7 +244,7 @@ export default function Header() {
                   {[
                     { label: 'About Us', href: '/about' },
                     { label: 'Solutions', href: '/solutions' },
-                    { label: 'Insights', href: '/blogs' },
+                    { label: 'Blogs', href: '/blogs' },
                     { label: 'Partners', href: '/partners' },
                     { label: 'Contact', href: '/contact' }
                   ].map((item) => (

@@ -1,6 +1,9 @@
-import pb from "@/lib/pocketbase";
+import { fetchDcmContentList, fetchDcmSubContent } from "@/lib/dcm-client";
 
-const TRUSTED_COLLECTION = "Ninja_trustedby";
+// The "Trusted by leading organizations" logos are authored as sub-content
+// items (one per organization, each with a logo file) under this DCM
+// content slug, inside the tenant's single DCM category (env.DCM_CATEGORY_SLUG).
+const CONTENT_SLUG = "leading-organization";
 
 export interface TrustedLogoRecord {
   id: string;
@@ -21,27 +24,23 @@ export const DUMMY_TRUSTED_LOGOS: TrustedLogoRecord[] = [
 ];
 
 export async function fetchTrustedLogos(): Promise<TrustedLogoRecord[]> {
-  try {
-    const records: any[] = await pb.collection(TRUSTED_COLLECTION).getFullList();
+  const list = await fetchDcmContentList(CONTENT_SLUG);
+  const items = list?.items ?? [];
+  if (items.length === 0) return DUMMY_TRUSTED_LOGOS;
 
-    const list = records
-      .map((r: any) => {
-        const file = r.Logo ?? r.logo ?? null;
-        if (!file) return null;
+  const logos = await Promise.all(
+    items.map(async (item) => {
+      const detail = await fetchDcmSubContent(CONTENT_SLUG, item.slug);
+      const file = detail?.item?.files?.[0];
+      if (!file) return null;
+      return {
+        id: item.id,
+        logo: file.file_url,
+        logoName: item.eng_name || item.name,
+      };
+    })
+  );
 
-        const name = (r.Logo_name ?? r.logo_name ?? r.name ?? "").toString().trim();
-
-        return {
-          id: r.id,
-          logo: pb.files.getURL(r, file),
-          logoName: name,
-        };
-      })
-      .filter((x: TrustedLogoRecord | null): x is TrustedLogoRecord => x !== null);
-
-    return list.length > 0 ? list : DUMMY_TRUSTED_LOGOS;
-  } catch (e) {
-    console.error("Error fetching trusted logos:", e);
-    return DUMMY_TRUSTED_LOGOS;
-  }
+  const resolved = logos.filter((x): x is TrustedLogoRecord => x !== null);
+  return resolved.length > 0 ? resolved : DUMMY_TRUSTED_LOGOS;
 }

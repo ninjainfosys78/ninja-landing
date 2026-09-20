@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import { ArrowRight, Mail, MapPin, Calendar } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
 import Link from "next/link";
-import { Reveal, RevealGroup, RevealItem, StaggerWords } from "@/components/ui/reveal";
+import { Reveal, RevealGroup, RevealItem, StaggerWords, AmbientGlow } from "@/components/ui/reveal";
 
 interface GlobalCTAProps {
   onOfficesOpen: () => void;
@@ -92,8 +93,10 @@ export default function GlobalCTA({ onOfficesOpen, onBookingOpen, onQuoteOpen }:
     <section
       id="contact"
       className="relative overflow-hidden pt-24 pb-36 sm:pb-44 border-t border-[#0b0d12]/8"
-      style={{ backgroundColor: '#F7F6F2' }}
+      style={{ backgroundColor: 'var(--page-bg)' }}
     >
+      <AmbientGlow />
+
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
 
         {/* Header Area */}
@@ -115,18 +118,34 @@ export default function GlobalCTA({ onOfficesOpen, onBookingOpen, onQuoteOpen }:
             const Wrapper = action.isAction ? 'button' : Link;
 
             return (
-              <RevealItem key={idx} className="h-full">
+              <RevealItem key={idx} className="h-full group">
                 <div
-                  className={`p-10 flex flex-col justify-between transition-all duration-300 border h-full hover:-translate-y-1.5 ${
+                  className={`relative overflow-hidden p-10 flex flex-col justify-between transition-all duration-500 border h-full hover:-translate-y-2.5 ${
                     action.primary
-                      ? 'bg-[#E31B23] border-[#E31B23] text-white shadow-xl shadow-[#E31B23]/20'
-                      : 'bg-white border-[#0b0d12]/8 text-[#0b0d12] shadow-[0_10px_30px_-18px_rgba(11,13,18,0.25)] hover:border-[#173C80]/40 hover:shadow-[0_20px_40px_-18px_rgba(23,60,128,0.25)]'
+                      ? 'bg-[#E31B23] border-[#E31B23] text-white shadow-xl shadow-[#E31B23]/20 hover:shadow-2xl hover:shadow-[#E31B23]/30'
+                      : 'bg-white border-[#0b0d12]/8 text-[#0b0d12] shadow-[0_10px_30px_-18px_rgba(11,13,18,0.25)] hover:border-[#173C80]/40 hover:shadow-[0_28px_55px_-18px_rgba(23,60,128,0.3)]'
                   }`}
                 >
-                  <div>
-                    <div className={`mb-6 p-3 inline-block transition-transform duration-500 group-hover:scale-110 ${action.primary ? 'bg-white/20' : 'bg-[#0b0d12]/[0.04]'}`}>
+                  {/* Diagonal shine sweep on hover */}
+                  <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div
+                      className="absolute inset-y-0 -inset-x-full opacity-0 group-hover:opacity-100 group-hover:[animation:shine-sweep_1.1s_ease]"
+                      style={{
+                        background: action.primary
+                          ? "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%)"
+                          : "linear-gradient(115deg, transparent 40%, rgba(37,99,235,0.12) 50%, transparent 60%)",
+                      }}
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <motion.div
+                      className={`mb-6 p-3 inline-block ${action.primary ? 'bg-white/20' : 'bg-[#0b0d12]/[0.04]'}`}
+                      whileHover={{ scale: 1.15, rotate: -6 }}
+                      transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                    >
                       <Icon size={24} />
-                    </div>
+                    </motion.div>
                     <h3 className="text-2xl font-heading font-bold mb-4">{action.title}</h3>
                     <p className={`mb-10 text-[15px] leading-relaxed ${action.primary ? 'text-white/80' : 'text-[#0b0d12]/60'}`}>
                       {action.desc}

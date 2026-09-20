@@ -1,4 +1,6 @@
-import pb from "@/lib/pocketbase";
+import "server-only";
+import { extractLinkedIn } from "@/lib/team-linkedin";
+import { fetchDcmContentList, fetchDcmSubContent, type DcmSubContentDetail } from "@/lib/dcm-client";
 
 export type TeamMember = {
   id: string;
@@ -7,26 +9,24 @@ export type TeamMember = {
   name_ne?: string;
   role_ne?: string;
   imageUrl: string | null;
+  linkedinUrl?: string | null;
   bio_en: string;
   bio_ne: string;
 };
 
-type TeamRecord = {
-  id: string;
-  Name_EN?: string;
-  Position_EN?: string;
-  Description_EN?: string;
-  Name_NE?: string;
-  Position_NE?: string;
-  Description_NE?: string;
-  Image?: string;
-};
-
-const COLLECTION_NAME = "eShasan_leadership";
+// Leadership profiles and the broader team roster are each authored as
+// sub-content items under their own DCM content slug, inside the tenant's
+// single DCM category (env.DCM_CATEGORY_SLUG). DCM's sub-content schema has
+// no dedicated "role" field, so by convention the first line of the
+// (Nepali/English) description is the person's role and everything after it
+// is their bio. "leadership" gets the large individual spotlight treatment
+// on the About page; "team" renders as a grid of everyone else.
+const LEADERSHIP_CONTENT_SLUG = "leadership";
+const TEAM_CONTENT_SLUG = "team";
 
 const FALLBACK_TEAM: TeamMember[] = [
   {
-    id: "fb-ramesh",
+    id: "fallback-ramesh",
     name: "Ramesh Chhetri",
     role: "Founder & CEO",
     name_ne: "रमेश क्षेत्री",
@@ -37,50 +37,57 @@ const FALLBACK_TEAM: TeamMember[] = [
   },
 ];
 
-export async function getTeamMembers(): Promise<TeamMember[]> {
-  try {
-    const records = await pb
-      .collection(COLLECTION_NAME)
-      .getFullList<TeamRecord>({
-        sort: "created",
-      });
+function splitRoleAndBio(description: string | null): { role: string; bio: string } {
+  const text = (description ?? "").trim();
+  if (!text) return { role: "", bio: "" };
 
-    if (records.length === 0) return FALLBACK_TEAM;
+  const newlineIndex = text.indexOf("\n");
+  if (newlineIndex === -1) return { role: text, bio: "" };
 
-    const members = records.map((record) => {
-      const name = record.Name_EN || "";
-      const role = record.Position_EN || "";
-      const name_ne = record.Name_NE || name;
-      const role_ne = record.Position_NE || role;
-      const bio_en = record.Description_EN || "";
-      const bio_ne = record.Description_NE || bio_en;
-      const imageField = record.Image;
-
-      return {
-        id: record.id,
-        name,
-        role,
-        name_ne,
-        role_ne,
-        bio_en,
-        bio_ne,
-        imageUrl: imageField ? pb.files.getURL(record, imageField) : "/insights.jpg",
-      };
-    });
-
-    // Filter out Trilochan Bhusal if he exists in DB
-    const filteredMembers = members.filter(m => !m.name.toLowerCase().includes("trilochan"));
-
-    // Ensure Ramesh Chhetri is always first
-    return filteredMembers.sort((a, b) => {
-      if (a.name.toLowerCase().includes("ramesh")) return -1;
-      if (b.name.toLowerCase().includes("ramesh")) return 1;
-      return 0;
-    });
-  } catch (e) {
-    console.error("Error fetching team members:", e);
-    return FALLBACK_TEAM;
-  }
+  return {
+    role: text.slice(0, newlineIndex).trim(),
+    bio: text.slice(newlineIndex + 1).trim(),
+  };
 }
 
+async function fetchTeamFromDcm(contentSlug: string): Promise<TeamMember[]> {
+  const list = await fetchDcmContentList(contentSlug);
+  const items = list?.items ?? [];
+  if (items.length === 0) return [];
 
+  return Promise.all(
+    items.map(async (item): Promise<TeamMember> => {
+      const detail = await fetchDcmSubContent(contentSlug, item.slug);
+      const resolved: DcmSubContentDetail = detail?.item ?? item;
+
+      const descriptionNe = extractLinkedIn(resolved.description);
+      const descriptionEn = extractLinkedIn(resolved.eng_description);
+      const { role: roleNe, bio: bioNe } = splitRoleAndBio(descriptionNe.text);
+      const { role: roleEn, bio: bioEn } = splitRoleAndBio(descriptionEn.text);
+      const file = resolved.files?.[0];
+
+      return {
+        id: resolved.id,
+        name: resolved.eng_name || resolved.name,
+        name_ne: resolved.name,
+        role: roleEn || roleNe,
+        role_ne: roleNe,
+        bio_en: bioEn || bioNe,
+        bio_ne: bioNe,
+        imageUrl: file?.file_url ?? null,
+        linkedinUrl: descriptionEn.linkedinUrl ?? descriptionNe.linkedinUrl,
+      };
+    })
+  );
+}
+
+/** Founders/execs — rendered as large individual spotlights on the About page. */
+export async function getTeamMembers(): Promise<TeamMember[]> {
+  const members = await fetchTeamFromDcm(LEADERSHIP_CONTENT_SLUG);
+  return members.length > 0 ? members : FALLBACK_TEAM;
+}
+
+/** The rest of the company — rendered as a premium card grid. Empty until authored in DCM. */
+export async function getTeamGridMembers(): Promise<TeamMember[]> {
+  return fetchTeamFromDcm(TEAM_CONTENT_SLUG);
+}

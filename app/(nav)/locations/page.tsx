@@ -44,7 +44,7 @@ export default function LocationsPage() {
 
   return (
     <>
-      <main className="pt-32 pb-24 min-h-screen" style={{ backgroundColor: "#F7F6F2" }}>
+      <main className="pt-32 pb-24 min-h-screen" style={{ backgroundColor: "var(--page-bg)" }}>
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="mb-16">
             <h1 className="text-5xl sm:text-6xl font-heading font-bold text-[#0b0d12] mb-4">{t.heading}</h1>

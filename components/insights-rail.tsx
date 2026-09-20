@@ -4,7 +4,7 @@ import { ArrowRight, Clock } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/components/LanguageProvider";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
+import { Reveal, RevealGroup, RevealItem, StaggerWords } from "@/components/ui/reveal";
 
 export type InsightCard = {
   title: string;
@@ -62,13 +62,13 @@ export default function InsightsRail({
   const content =
     language === "en"
       ? {
-        title: "Insights",
-        viewAll: "View all insights",
+        title: "Blogs",
+        viewAll: "View all blogs",
         readMore: "Read more",
       }
       : {
-        title: "इनसाइट्स",
-        viewAll: "सबै इनसाइट्स हेर्नुहोस्",
+        title: "ब्लगहरू",
+        viewAll: "सबै ब्लगहरू हेर्नुहोस्",
         readMore: "थप पढ्नुहोस्",
       };
 
@@ -79,7 +79,7 @@ export default function InsightsRail({
     <section
       id="insights"
       className="py-16 md:py-24 relative overflow-hidden"
-      style={{ backgroundColor: '#F7F6F2', color: '#0b0d12' }}
+      style={{ backgroundColor: 'var(--page-bg)', color: '#0b0d12' }}
       aria-labelledby="insights-title"
     >
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
@@ -89,7 +89,7 @@ export default function InsightsRail({
             className="text-[38px] md:text-[48px] leading-tight font-bold"
             style={{ color: '#0b0d12' }}
           >
-            {content.title}
+            <StaggerWords text={content.title} amount={0.6} />
           </h2>
 
           <Link
@@ -114,14 +114,27 @@ export default function InsightsRail({
             >
               <Link
                 href={insight.url}
-                className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:-translate-y-1.5 bg-white border border-black/10 hover:border-[#2563EB]/50 hover:shadow-[0_20px_50px_-20px_rgba(37,99,235,0.2)]"
+                className="relative flex flex-col h-full overflow-hidden transition-all duration-500 hover:-translate-y-2.5 bg-white border border-black/10 hover:border-[#2563EB]/50 hover:shadow-[0_28px_60px_-20px_rgba(37,99,235,0.28)]"
               >
                 {/* Top accent bar */}
                 <div className="h-[3px] w-full bg-gradient-to-r from-[#E31B23] to-[#2563EB] opacity-70 group-hover:opacity-100 transition-opacity" />
 
                 {/* Corner Accents on hover */}
-                <div className="absolute top-1 left-0 w-4 h-4 border-t-2 border-l-2 border-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute top-1 left-0 w-4 h-4 border-t-2 border-l-2 border-[#2563EB] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110 pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#2563EB] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110 pointer-events-none" />
+
+                {/* Diagonal shine sweep */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 z-10 pointer-events-none overflow-hidden"
+                >
+                  <div
+                    className="absolute inset-y-0 -inset-x-full opacity-0 group-hover:opacity-100 group-hover:[animation:shine-sweep_1.1s_ease]"
+                    style={{
+                      background: "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%)",
+                    }}
+                  />
+                </div>
 
                 <div className={`relative overflow-hidden ${idx === 0 ? "flex-1 min-h-[350px] md:min-h-[500px]" : "h-[200px] sm:h-[240px]"}`}>
                   <Image
@@ -129,7 +142,7 @@ export default function InsightsRail({
                     alt={insight.title}
                     fill
                     sizes={idx === 0 ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 100vw, 33vw"}
-                    className="object-cover object-top grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
+                    className="object-cover object-top grayscale transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:scale-110"
                   />
                 </div>
 

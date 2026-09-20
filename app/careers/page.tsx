@@ -4,14 +4,19 @@ import { useEffect, useState } from "react";
 import SearchOverlay from "@/components/search-overlay";
 import Link from "next/link";
 import GlobalCTA from "@/components/global-cta";
-import OfficesModal from "@/components/offices-modal";
+import ContactModals from "@/components/contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getBannerByImgName } from "@/lib/banners";
+import { useContactModals } from "@/lib/hooks/use-contact-modals";
 
 export default function CareersPage() {
   const { language } = useLanguage();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [officesOpen, setOfficesOpen] = useState(false);
+  const {
+    officesOpen, openOffices, closeOffices,
+    bookingOpen, openBooking, closeBooking,
+    quoteOpen, openQuote, closeQuote,
+  } = useContactModals();
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
   const content = {
@@ -98,7 +103,7 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <section className="border-t border-foreground/10" style={{ backgroundColor: "#EFEDE7" }}>
+        <section className="border-t border-foreground/10" style={{ backgroundColor: "var(--page-bg)" }}>
           <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="py-12 sm:py-16">
               <div className="max-w-3xl">
@@ -126,9 +131,16 @@ export default function CareersPage() {
         </section>
       </main>
 
-      <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
+      <GlobalCTA onOfficesOpen={openOffices} onBookingOpen={openBooking} onQuoteOpen={openQuote} />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      <OfficesModal isOpen={officesOpen} onClose={() => setOfficesOpen(false)} />
+      <ContactModals
+        officesOpen={officesOpen}
+        onOfficesClose={closeOffices}
+        bookingOpen={bookingOpen}
+        onBookingClose={closeBooking}
+        quoteOpen={quoteOpen}
+        onQuoteClose={closeQuote}
+      />
     </>
   );
 }

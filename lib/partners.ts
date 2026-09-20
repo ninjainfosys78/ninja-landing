@@ -1,4 +1,5 @@
-import pb from "@/lib/pocketbase";
+import "server-only";
+import { fetchDcmContentList, fetchDcmSubContent, type DcmSubContentDetail } from "@/lib/dcm-client";
 
 export type Partner = {
   id: string;
@@ -12,26 +13,15 @@ export type Partner = {
   order: number;
 };
 
-type PartnerRecord = {
-  id: string;
-  collectionId: string;
-  collectionName: string;
-  Name: string;
-  Name_ne?: string;
-  Category: string;
-  Category_ne?: string;
-  Description_en: string;
-  Description_ne: string;
-  Logo?: string;
-  Order?: number;
-};
+// Each partner category is its own DCM "list" content under the tenant's
+// category (env.DCM_CATEGORY_SLUG); the content's own name/eng_name become
+// the category heading shown on the page, in this display order.
+const CATEGORY_CONTENT_SLUGS = ["strategic-partners", "technology-partners", "governance-ngo"];
 
-const COLLECTION = "NinjaLanding_Partners";
-
-// Fallback data
+// Fallback data — shown until each category content has real items.
 const FALLBACK_PARTNERS: Partner[] = [
   {
-    id: "gb6qwroadmoyrwe", // Nepal Telecom Record ID
+    id: "fallback-nepal-telecom",
     name_en: "Nepal Telecom",
     name_ne: "नेपाल टेलिकम",
     category_en: "Strategic Partners",
@@ -42,7 +32,7 @@ const FALLBACK_PARTNERS: Partner[] = [
     order: 1,
   },
   {
-    id: "gc1sipyqhsodcrq", // Ncell Record ID
+    id: "fallback-ncell",
     name_en: "Ncell",
     name_ne: "एनसेल",
     category_en: "Strategic Partners",
@@ -53,7 +43,7 @@ const FALLBACK_PARTNERS: Partner[] = [
     order: 2,
   },
   {
-    id: "edvwoe74ncl9ybg", // WorldLink Record ID
+    id: "fallback-worldlink",
     name_en: "WorldLink",
     name_ne: "वर्ल्डलिङ्क",
     category_en: "Strategic Partners",
@@ -64,7 +54,7 @@ const FALLBACK_PARTNERS: Partner[] = [
     order: 3,
   },
   {
-    id: "gkvrr85q1efijpf", // Prabhu Bank Record ID
+    id: "fallback-prabhu-bank",
     name_en: "Prabhu Bank",
     name_ne: "प्रभु बैंक",
     category_en: "Technology Partners",
@@ -75,7 +65,7 @@ const FALLBACK_PARTNERS: Partner[] = [
     order: 4,
   },
   {
-    id: "mhb0l8rwqw9fs3y", // Kathmandu Municipality Record ID
+    id: "fallback-kathmandu-municipality",
     name_en: "Kathmandu Municipality",
     name_ne: "काठमाडौं नगरपालिका",
     category_en: "Governance & NGO",
@@ -88,36 +78,41 @@ const FALLBACK_PARTNERS: Partner[] = [
 ];
 
 export async function getPartners(): Promise<Partner[]> {
-  try {
-    const records = await pb
-      .collection("NinjaLanding_Partners")
-      .getFullList<PartnerRecord>({ sort: "Order,created" });
+  const partners: Partner[] = [];
+  let order = 0;
 
-    console.log("PocketBase Partners found:", records.length);
-    if (records.length === 0) return FALLBACK_PARTNERS;
+  for (const contentSlug of CATEGORY_CONTENT_SLUGS) {
+    const list = await fetchDcmContentList(contentSlug);
+    // A content that exists but isn't content_type "list" (e.g. created as
+    // "single" by mistake) has no `items` field at all — skip it rather
+    // than crash, same as "doesn't exist yet".
+    if (!list?.items || list.items.length === 0) continue;
 
-    return records.map((r) => {
-      // Use the Logo field exactly as seen in the PB screenshot
-      const logoFilename = r.Logo;
-      
-      const logoUrl = logoFilename 
-        ? `${pb.files.getURL(r, logoFilename)}?v=${Date.now()}` 
-        : "/placeholder-logo.png";
+    const categoryEn = list.content.eng_name || list.content.name;
+    const categoryNe = list.content.name;
 
-      return {
-        id: r.id,
-        name_en: (r.Name || "").trim(),
-        name_ne: (r.Name_ne || r.Name || "").trim(),
-        category_en: (r.Category || "").trim(),
-        category_ne: (r.Category_ne || r.Category || "").trim(),
-        description_en: (r.Description_en || "").trim(),
-        description_ne: (r.Description_ne || r.Description_en || "").trim(),
-        logoUrl: logoUrl,
-        order: r.Order ?? 0,
-      };
-    });
-  } catch (error: any) {
-    console.error("Error fetching partners from PocketBase:", error);
-    return FALLBACK_PARTNERS;
+    const items: DcmSubContentDetail[] = await Promise.all(
+      list.items.map(async (item) => {
+        const detail = await fetchDcmSubContent(contentSlug, item.slug);
+        return detail?.item ?? item;
+      })
+    );
+
+    for (const item of items) {
+      const file = item.files?.[0];
+      partners.push({
+        id: item.id,
+        name_en: item.eng_name || item.name,
+        name_ne: item.name,
+        category_en: categoryEn,
+        category_ne: categoryNe,
+        description_en: item.eng_description || item.description || "",
+        description_ne: item.description || "",
+        logoUrl: file?.file_url || "/placeholder-logo.png",
+        order: order++,
+      });
+    }
   }
+
+  return partners.length > 0 ? partners : FALLBACK_PARTNERS;
 }

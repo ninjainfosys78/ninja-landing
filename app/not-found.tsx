@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react"
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen text-[#0b0d12] flex items-center justify-center px-6" style={{ backgroundColor: "#F7F6F2" }}>
+    <main className="min-h-screen text-[#0b0d12] flex items-center justify-center px-6" style={{ backgroundColor: "var(--page-bg)" }}>
       <div className="max-w-2xl text-center">
         <h1 className="text-8xl sm:text-9xl font-heading font-bold mb-6 text-[#2563EB]">404</h1>
         <h2 className="text-3xl sm:text-4xl font-heading font-bold mb-4 text-[#0b0d12]">Page Not Found</h2>

@@ -41,7 +41,7 @@ export default function OfficesModal({ isOpen, onClose }: OfficesModalProps) {
       aria-label="Office locations"
       onClick={onClose}
     >
-      <div className="rounded-lg max-w-2xl w-full p-8 relative" style={{ backgroundColor: "#F7F6F2" }} onClick={(e) => e.stopPropagation()}>
+      <div className="rounded-lg max-w-2xl w-full p-8 relative" style={{ backgroundColor: "#FFFFFF" }} onClick={(e) => e.stopPropagation()}>
         <button
           onClick={onClose}
           className="absolute top-6 right-6 text-[#0b0d12]/60 hover:text-[#0b0d12] transition-colors"
@@ -60,7 +60,7 @@ export default function OfficesModal({ isOpen, onClose }: OfficesModalProps) {
             <div
               key={office.city}
               className="p-6 border border-[#0b0d12]/10 rounded-lg hover:border-[#2563EB]/30 transition-colors"
-              style={{ backgroundColor: "#EFEDE7" }}
+              style={{ backgroundColor: "#FFFFFF" }}
             >
               <div className="flex items-start gap-4">
                 <MapPin className="text-[#2563EB] mt-1 flex-shrink-0" size={24} />

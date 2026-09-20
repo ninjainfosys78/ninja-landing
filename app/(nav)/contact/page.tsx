@@ -25,7 +25,9 @@ export default function ContactPage() {
           required: "*",
           agreeLabel: "I agree to receive other communications from Ninja Infosys.",
           send: "Submit",
-          locationHeading: "Our Location",
+          locationEyebrow: "Our Location",
+          locationTitle: "Find",
+          locationAccent: "Us Here",
           city: "Kathmandu",
           addressLine1: "Anamnagar, Kathmandu 44600",
           phone: "01-555051203",
@@ -42,7 +44,9 @@ export default function ContactPage() {
           required: "*",
           agreeLabel: "म Ninja Infosys बाट अन्य सञ्चार प्राप्त गर्न सहमत छु।",
           send: "पठाउनुहोस्",
-          locationHeading: "हाम्रो स्थान",
+          locationEyebrow: "हाम्रो स्थान",
+          locationTitle: "हामी",
+          locationAccent: "यहाँ छौं",
           city: "काठमाडौं",
           addressLine1: "अनामनगर, काठमाडौं ४४६००",
           phone: "०१-५५५०५१२०३",
@@ -127,7 +131,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <section className="relative min-h-screen text-[#0b0d12]/80 pt-32" style={{ backgroundColor: "#F7F6F2" }} aria-label="Contact section">
+      <section className="relative min-h-screen text-[#0b0d12]/80 pt-32" style={{ backgroundColor: "var(--page-bg)" }} aria-label="Contact section">
         {/* measured container: left padding set so the form starts under the logo */}
         <div
           ref={containerRef}
@@ -199,7 +203,13 @@ export default function ContactPage() {
           </div>
 
           <div className="mt-20 pt-16 pb-16 md:mt-28 md:pt-20 md:pb-20 border-t border-[#0b0d12]/10">
-            <h2 className="text-3xl md:text-4xl font-heading font-semibold text-[#0b0d12] mb-2">{t.locationHeading}</h2>
+            <div className="mb-8">
+              <h2 className="mb-3 text-xs font-medium uppercase tracking-[0.15em] text-[#0b0d12]/60">{t.locationEyebrow}</h2>
+              <h3 className="font-heading text-4xl font-normal leading-tight tracking-tight text-[#0b0d12] lg:text-5xl">
+                {t.locationTitle}{" "}
+                <span className="font-bold text-[#E31B23]">{t.locationAccent}</span>
+              </h3>
+            </div>
             <p className="text-sm text-[#0b0d12]/60 mb-6">{t.mapCaption || "Ninja Infosys, Anamnagar, Kathmandu, Nepal"}</p>
 
             <div className="mb-6">

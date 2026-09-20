@@ -1,5 +1,10 @@
 import "server-only";
-import pb from "@/lib/pocketbase";
+import {
+  fetchDcmContentList,
+  fetchDcmSubContent,
+  type DcmSubContentDetail,
+  type DcmSubContentSummary,
+} from "@/lib/dcm-client";
 
 export type PostMeta = {
   slug: string;
@@ -14,12 +19,9 @@ export type PostMeta = {
   excerpt_ne: string;
 };
 
-const BLOGS_COLLECTION = "Ninja_Blogs";
-
-function getImageUrl(record: any): string {
-  if (!record.Image) return "";
-  return pb.files.getURL(record, record.Image);
-}
+// Insight/blog posts are authored as sub-content items under this DCM
+// content slug, inside the tenant's single DCM category (env.DCM_CATEGORY_SLUG).
+const CONTENT_SLUG = "blogs";
 
 function calculateReadTime(content: string): string {
   if (!content) return "";
@@ -36,35 +38,37 @@ function buildExcerpt(content: string, maxLen = 220): string {
   return plain.slice(0, maxLen) + "...";
 }
 
+function toPostMeta(item: DcmSubContentSummary | DcmSubContentDetail): PostMeta {
+  const contentNe = item.description ?? "";
+  const content = item.eng_description || contentNe;
+  const files = "files" in item ? item.files : undefined;
+
+  return {
+    slug: item.slug,
+    title: item.eng_name || item.name,
+    title_ne: item.name,
+    deck: "",
+    readTime: calculateReadTime(content),
+    kicker: "",
+    date: item.published_date ?? "",
+    image: files?.[0]?.file_url ?? "",
+    excerpt: buildExcerpt(content),
+    excerpt_ne: buildExcerpt(contentNe),
+  };
+}
+
 export async function getAllPostsMeta(): Promise<PostMeta[]> {
-  try {
-    const records = await pb.collection(BLOGS_COLLECTION).getFullList({
-      sort: "-Published_date",
-    });
+  const list = await fetchDcmContentList(CONTENT_SLUG);
+  const items = list?.items ?? [];
 
-    return records.map((r: any) => {
-      const content: string = r.Content ?? "";
-      const content_ne: string = r.Content_ne || content; // Fallback to EN if NE is empty
-      const rawSlug = r.Slug || r.Title || "insight";
-      const slug = rawSlug.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-");
+  const posts = await Promise.all(
+    items.map(async (item) => {
+      const detail = await fetchDcmSubContent(CONTENT_SLUG, item.slug);
+      return toPostMeta(detail?.item ?? item);
+    })
+  );
 
-      return {
-        slug,
-        title: r.Title ?? "",
-        title_ne: r.Title_ne || r.Title || "",
-        deck: "",
-        readTime: r.ReadTime || calculateReadTime(content),
-        kicker: r.Kicker ?? "",
-        date: r.Published_date ?? "",
-        image: getImageUrl(r),
-        excerpt: buildExcerpt(content),
-        excerpt_ne: buildExcerpt(content_ne),
-      };
-    });
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    return [];
-  }
+  return posts.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
 }
 
 export async function getPostBySlug(slug: string): Promise<{
@@ -72,30 +76,11 @@ export async function getPostBySlug(slug: string): Promise<{
   content: string;
   content_ne: string;
 } | null> {
-  try {
-    const record: any = await pb
-      .collection(BLOGS_COLLECTION)
-      .getFirstListItem(`Slug = "${slug}"`);
+  const detail = await fetchDcmSubContent(CONTENT_SLUG, slug);
+  if (!detail?.item) return null;
 
-    const content: string = record.Content ?? "";
-    const content_ne: string = record.Content_ne || content; // Fallback to EN
+  const contentNe = detail.item.description ?? "";
+  const content = detail.item.eng_description || contentNe;
 
-    const meta: PostMeta = {
-      slug: record.Slug,
-      title: record.Title ?? "",
-      title_ne: record.Title_ne || record.Title || "",
-      deck: "",
-      readTime: record.ReadTime || calculateReadTime(content),
-      kicker: record.Kicker ?? "",
-      date: record.Published_date ?? "",
-      image: getImageUrl(record),
-      excerpt: buildExcerpt(content),
-      excerpt_ne: buildExcerpt(content_ne),
-    };
-
-    return { meta, content, content_ne };
-  } catch (err) {
-    console.error(`Error details for slug ${slug}:`, err);
-    return null;
-  }
+  return { meta: toPostMeta(detail.item), content, content_ne: contentNe };
 }

@@ -8,15 +8,20 @@ import { getBannerByImgName } from "@/lib/banners";
 
 import GlobalCTA from "@/components/global-cta";
 import SearchOverlay from "@/components/search-overlay";
-import OfficesModal from "@/components/offices-modal";
+import ContactModals from "@/components/contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import ProjectsGrid from "@/components/projects-grid";
+import { useContactModals } from "@/lib/hooks/use-contact-modals";
 
 export default function WorkPage() {
   const { language } = useLanguage();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [officesOpen, setOfficesOpen] = useState(false);
- 
+  const {
+    officesOpen, openOffices, closeOffices,
+    bookingOpen, openBooking, closeBooking,
+    quoteOpen, openQuote, closeQuote,
+  } = useContactModals();
+
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
   const t = {
@@ -117,7 +122,7 @@ useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setSearchOpen(false);
-        setOfficesOpen(false);
+        closeOffices();
       }
     };
     window.addEventListener("keydown", onKey);
@@ -126,7 +131,7 @@ useEffect(() => {
 
   return (
     <>
-      <main className="relative text-[#0b0d12]/80" style={{ backgroundColor: "#EFEDE7" }}>
+      <main className="relative text-[#0b0d12]/80" style={{ backgroundColor: "var(--page-bg)" }}>
         <section className="relative z-10">
           <div className="relative min-h-[50vh] pt-28 lg:pt-32">
              <div
@@ -184,7 +189,7 @@ useEffect(() => {
           </div>
         </section>
 
-        <section className="border-t border-[#0b0d12]/10 py-12 sm:py-16" style={{ backgroundColor: "#F7F6F2" }}>
+        <section className="border-t border-[#0b0d12]/10 py-12 sm:py-16" style={{ backgroundColor: "var(--page-bg)" }}>
           <div className="mx-auto max-w-[1450px] w-full px-6 sm:px-10">
             <h2 className="font-semibold text-[#0b0d12] text-[32px]">
               {t.featuredTitle}
@@ -225,7 +230,7 @@ useEffect(() => {
           </div>
         </section>
 
-        <section className="border border-[#0b0d12]/10 py-12 sm:py-16" style={{ backgroundColor: "#EFEDE7" }}>
+        <section className="border border-[#0b0d12]/10 py-12 sm:py-16" style={{ backgroundColor: "var(--page-bg-alt)" }}>
           <div className="mx-auto max-w-[1450px] w-full px-6 sm:px-10">
             <h3 className="font-semibold text-[#0b0d12] text-[32px]">
               {t.processTitle}
@@ -274,13 +279,17 @@ useEffect(() => {
           </div>
         </section>
 
-        <GlobalCTA onOfficesOpen={() => setOfficesOpen(true)} />
+        <GlobalCTA onOfficesOpen={openOffices} onBookingOpen={openBooking} onQuoteOpen={openQuote} />
       </main>
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      <OfficesModal
-        isOpen={officesOpen}
-        onClose={() => setOfficesOpen(false)}
+      <ContactModals
+        officesOpen={officesOpen}
+        onOfficesClose={closeOffices}
+        bookingOpen={bookingOpen}
+        onBookingClose={closeBooking}
+        quoteOpen={quoteOpen}
+        onQuoteClose={closeQuote}
       />
     </>
   );

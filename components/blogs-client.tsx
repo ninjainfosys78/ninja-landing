@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
 import type { PostMeta } from "@/lib/posts";
-import { getAllPostsMetaClient } from "@/lib/posts-client";
 import { getBannerByImgName } from "@/lib/banners";
 
 // Use a minimal client-side post shape to avoid importing server-only modules
@@ -21,7 +20,7 @@ type ClientPost = {
 type Post = ClientPost | PostMeta;
 
 interface BlogsClientProps {
-  initialLanguage?: "en" | "ne";
+  initialPosts?: PostMeta[];
 }
 
 // Temporary placeholder content — swap out once the CMS feed is wired up.
@@ -55,25 +54,18 @@ const DUMMY_POSTS: (ClientPost & { title_ne?: string; excerpt_ne?: string })[] =
   },
 ];
 
-export default function BlogsClient({}: BlogsClientProps) {
+export default function BlogsClient({ initialPosts = [] }: BlogsClientProps) {
   const { language } = useLanguage();
-  const [posts, setPosts] = useState<Post[]>([]);
   const [bannerUrl, setBannerUrl] = useState<string | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([getAllPostsMetaClient(), getBannerByImgName("insights")])
-      .then(([postsData, bannerUrlRaw]) => {
-        setPosts(postsData);
-        setBannerUrl(bannerUrlRaw || undefined);
-      })
-      .finally(() => setLoading(false));
+    getBannerByImgName("insights").then((bannerUrlRaw) => setBannerUrl(bannerUrlRaw || undefined));
   }, []);
 
-  const safePosts: Post[] = posts.length > 0 ? posts : DUMMY_POSTS;
+  const safePosts: Post[] = initialPosts.length > 0 ? initialPosts : DUMMY_POSTS;
 
   const labels = {
-    insights: language === "en" ? "Insights" : "अन्तर्दृष्टि",
+    insights: language === "en" ? "Blogs" : "ब्लगहरू",
     readMore: language === "en" ? "Read more" : "थप पढ्नुहोस्",
     home: language === "en" ? "Ninja Infosys" : "निन्जा इन्फोसिस",
   };
@@ -125,7 +117,7 @@ export default function BlogsClient({}: BlogsClientProps) {
                   </li>
                 </ol>
               </nav>
-              <h1 className="mt-2 text-5xl font-serif font-medium text-white sm:text-6xl">
+              <h1 className="mt-2 text-5xl font-heading font-bold text-white sm:text-6xl">
                 {labels.insights}
               </h1>
             </div>
@@ -136,11 +128,6 @@ export default function BlogsClient({}: BlogsClientProps) {
       {/* Blog Cards */}
       <section className="py-10 lg:py-12">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          {loading ? (
-            <div className="flex items-center justify-center py-32">
-              <div className="w-8 h-8 border-2 border-[#2563EB] border-t-transparent rounded-full animate-spin" />
-            </div>
-          ) : (
           <div className="grid gap-8 md:grid-cols-3">
             {safePosts.map((post) => {
               const p = post as any;
@@ -214,7 +201,6 @@ export default function BlogsClient({}: BlogsClientProps) {
               );
             })}
           </div>
-          )}
         </div>
       </section>
     </main>
