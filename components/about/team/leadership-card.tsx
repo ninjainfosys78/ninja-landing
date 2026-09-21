@@ -18,10 +18,10 @@ export default function LeadershipCard({ member, onLearnMore }: LeadershipCardPr
         <MemberPortrait name={member.name} image={member.image} />
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 px-1 min-h-0">
-        <h4 className="text-xl font-medium text-[#0b0d12]">{member.name}</h4>
-        <p className="text-sm text-[#0b0d12]/50">{member.role}</p>
-        {member.bio && <p className="mt-3 line-clamp-4 text-[15px] leading-relaxed text-[#0b0d12]/75 overflow-hidden">{member.bio}</p>}
+      <div className="flex min-w-0 flex-1 flex-col gap-2 px-1 min-h-0">
+        <h4 className="text-xl font-medium text-[#0b0d12] [overflow-wrap:anywhere]">{member.name}</h4>
+        <p className="text-sm text-[#0b0d12]/50 [overflow-wrap:anywhere]">{member.role}</p>
+        {member.bio && <p className="mt-3 line-clamp-4 text-[15px] leading-relaxed text-[#0b0d12]/75 overflow-hidden [overflow-wrap:anywhere]">{member.bio}</p>}
       </div>
 
       <button

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import BannerSubtitle from "@/components/ui/banner-subtitle";
 import SearchOverlay from "@/components/search-overlay";
 import Link from "next/link";
 import GlobalCTA from "@/components/global-cta";
@@ -8,6 +9,7 @@ import ContactModals from "@/components/contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getBannerByImgName } from "@/lib/banners";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
+import { StaggerWords } from "@/components/ui/reveal";
 
 export default function CareersPage() {
   const { language } = useLanguage();
@@ -62,15 +64,15 @@ export default function CareersPage() {
     <>
       <main className="relative bg-background text-foreground">
         <section className="relative z-10">
-          <div className="relative min-h-[70vh]">
+          <div className="relative min-h-[70vh] overflow-hidden">
             <div
-              className="absolute inset-0 bg-center bg-fixed grayscale"
+              className="absolute inset-0 bg-center bg-fixed grayscale blur-[8px] scale-110"
               style={{
                 backgroundImage: `url('${bannerUrl || "/careers.png"}')`,
                 backgroundSize: "cover",
               }}
             />
-            <div className="absolute inset-0 bg-[#0b0d12]/65" />
+            <div className="absolute inset-0 hero-dark-overlay" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12 flex items-center min-h-[70vh]">
               <div className="max-w-[1200px] text-left">
                 <nav aria-label="Breadcrumb" className="mt-0 text-sm text-white/80">
@@ -96,8 +98,13 @@ export default function CareersPage() {
                 </nav>
 
                 <h1 className="pt-4 text-5xl sm:text-6xl font-heading font-semibold text-white">
-                  {t.hero.title}
+                  <StaggerWords text={t.hero.title} />
                 </h1>
+                <BannerSubtitle>
+                  {language === "en"
+                    ? "Join a team building meaningful technology for institutions across Nepal."
+                    : "नेपालभरका संस्थाहरूका लागि अर्थपूर्ण प्रविधि बनाउने टोलीमा सामेल हुनुहोस्।"}
+                </BannerSubtitle>
               </div>
             </div>
           </div>

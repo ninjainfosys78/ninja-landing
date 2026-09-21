@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React from "react";
 import Image from "next/image";
@@ -7,6 +7,7 @@ import ContactModals from "@/components/contact-modals";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import type { Partner } from "@/lib/partners";
+import PageBanner from "@/components/ui/page-banner";
 
 interface PartnersClientProps {
   partners: Partner[];
@@ -45,18 +46,15 @@ export default function PartnersClient({ partners }: PartnersClientProps) {
 
   return (
     <>
-      <main className="pt-32 pb-24" style={{ backgroundColor: "var(--page-bg)" }}>
+      <PageBanner
+        bannerName="partners"
+        fallbackImage="/diverse-professionals-collaboration.jpg"
+        homeLabel={isNe ? "निन्जा इन्फोसिस" : "Ninja Infosys"}
+        title={content.title}
+        subtitle={content.subtitle}
+      />
+      <main className="pb-24 pt-20" style={{ backgroundColor: "var(--page-bg)" }}>
         <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
-
-          {/* Hero Area */}
-          <div className="max-w-4xl mb-24">
-            <h1 className="text-5xl sm:text-6xl font-heading font-bold text-[#0b0d12] mb-8 leading-tight">
-              {content.title}
-            </h1>
-            <p className="text-2xl text-[#0b0d12]/60 leading-relaxed">
-              {content.subtitle}
-            </p>
-          </div>
 
           {/* Partners Grid — grouped by category */}
           <div className="space-y-32">
@@ -77,7 +75,7 @@ export default function PartnersClient({ partners }: PartnersClientProps) {
                     return (
                       <div
                         key={p.id}
-                        className="group relative bg-white border border-[#0b0d12]/10 p-8 transition-all duration-300 hover:-translate-y-2 hover:border-[#2563EB]/30 hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.15)] flex flex-col h-full"
+                        className="group relative bg-white border border-[#0b0d12]/10 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)] flex flex-col h-full"
                       >
                         <div className="h-48 flex items-center justify-center mb-8 bg-[#0b0d12]/[0.02] rounded-none overflow-hidden group-hover:bg-[#0b0d12]/[0.05] transition-all duration-500 p-4">
                           <div className="relative w-full h-full transform transition-transform duration-700 group-hover:scale-110">

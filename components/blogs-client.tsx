@@ -1,10 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import BannerSubtitle from "@/components/ui/banner-subtitle";
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
 import type { PostMeta } from "@/lib/posts";
 import { getBannerByImgName } from "@/lib/banners";
+import { StaggerWords } from "@/components/ui/reveal";
+import BlogCard from "@/components/blogs/blog-card";
 
 // Use a minimal client-side post shape to avoid importing server-only modules
 type ClientPost = {
@@ -74,15 +77,15 @@ export default function BlogsClient({ initialPosts = [] }: BlogsClientProps) {
     <main className="relative bg-background text-foreground transition-colors duration-300">
       {/* Hero */}
       <section className="relative z-10">
-        <div className="relative min-h-[50vh] pt-28 lg:pt-32">
+        <div className="relative min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
           <div
-            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60 grayscale"
+            className="absolute inset-0 bg-cover bg-center bg-fixed grayscale blur-[8px] scale-110"
             style={{
               backgroundImage: `url('${bannerUrl || "/futuristic-travel-technology-interface.jpg"}')`,
             }}
           />
 
-          <div className="absolute inset-0 bg-[#0b0d12]/60" />
+          <div className="absolute inset-0 hero-dark-overlay" />
           <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
             <div className="max-w-[1200px] text-left">
               <nav
@@ -118,8 +121,13 @@ export default function BlogsClient({ initialPosts = [] }: BlogsClientProps) {
                 </ol>
               </nav>
               <h1 className="mt-2 text-5xl font-heading font-bold text-white sm:text-6xl">
-                {labels.insights}
+                <StaggerWords text={labels.insights} />
               </h1>
+              <BannerSubtitle>
+                {language === "en"
+                  ? "Insights, ideas and stories from our team on technology, governance and digital transformation."
+                  : "प्रविधि, सुशासन र डिजिटल रूपान्तरणबारे हाम्रो टोलीका विचार, अन्तर्दृष्टि र कथाहरू।"}
+              </BannerSubtitle>
             </div>
           </div>
         </div>
@@ -129,75 +137,22 @@ export default function BlogsClient({ initialPosts = [] }: BlogsClientProps) {
       <section className="py-10 lg:py-12">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-8 md:grid-cols-3">
-            {safePosts.map((post) => {
-              const p = post as any;
-              const displayTitle = language === "ne" ? (p.title_ne || p.title) : p.title;
-              const displayExcerpt = language === "ne" ? (p.excerpt_ne || p.excerpt) : p.excerpt;
-              
+            {safePosts.map((post, index) => {
+              const p = post as Post & { title_ne?: string; excerpt_ne?: string };
               return (
-                <div
+                <BlogCard
                   key={p.slug}
-                  className="group flex h-full flex-col border border-foreground/10 bg-card transition-all duration-300 hover:border-[#2563EB]/50 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
-                >
-                  {/* Image */}
-                  <div className="w-full overflow-hidden bg-muted">
-                    {p.image && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={p.image}
-                        alt={displayTitle}
-                        onError={(e) => {
-                          const targ = e.currentTarget as HTMLImageElement;
-                          if (!targ.src.endsWith("placeholder.jpg")) {
-                            targ.src = "/placeholder.jpg";
-                          }
-                        }}
-                        className="h-[220px] w-full object-cover grayscale transition duration-500 group-hover:grayscale-0 group-hover:scale-105"
-                      />
-                    )}
-                  </div>
-
-                  {/* Meta & Deck */}
-                  <div className="flex-1 px-6 py-5">
-                    <h3 className="mb-2 line-clamp-2 font-heading text-xl font-semibold text-foreground hover:text-[#2563EB] transition-colors">
-                      <Link href={`/blogs/${p.slug}`}>{displayTitle}</Link>
-                    </h3>
-
-                    {(p.date || p.readTime) && (
-                      <div className="pt-3 mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/60 flex flex-wrap gap-2">
-                        {p.date && <span>{p.date}</span>}
-                        {p.date && p.readTime && <span>•</span>}
-                        {p.readTime && <span>{p.readTime}</span>}
-                      </div>
-                    )}
-
-                    {displayExcerpt && (
-                      <p className="mb-6 line-clamp-3 text-sm leading-relaxed text-foreground/70">
-                        {displayExcerpt}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Read More */}
-                  <div className="px-6 pb-6">
-                    <Link
-                      href={`/blogs/${p.slug}`}
-                      className="inline-flex items-center gap-2 bg-[#E31B23] px-4 py-2 text-sm font-medium text-white cursor-pointer hover:brightness-110 transition"
-                    >
-                      {labels.readMore}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        className="h-4 w-4"
-                      >
-                        <path d="M5 12h14M13 5l7 7-7 7" />
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
+                  index={index}
+                  readMoreLabel={labels.readMore}
+                  post={{
+                    slug: p.slug,
+                    title: language === "ne" ? p.title_ne || p.title : p.title,
+                    excerpt: language === "ne" ? p.excerpt_ne || p.excerpt : p.excerpt,
+                    image: p.image,
+                    date: p.date,
+                    readTime: p.readTime,
+                  }}
+                />
               );
             })}
           </div>

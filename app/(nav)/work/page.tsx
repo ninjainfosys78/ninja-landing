@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Search, PenTool, Code, RefreshCw } from "lucide-react";
 import { getBannerByImgName } from "@/lib/banners";
 
@@ -10,8 +9,13 @@ import GlobalCTA from "@/components/global-cta";
 import SearchOverlay from "@/components/search-overlay";
 import ContactModals from "@/components/contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
-import ProjectsGrid from "@/components/projects-grid";
+import ProductShowcase from "@/components/work/products/product-showcase";
+import WorkHero from "@/components/work/hero/work-hero";
+import FeaturedCaseStudies from "@/components/work/case-studies/featured-case-studies";
+import ProcessSteps, { ProcessStep } from "@/components/work/process/process-steps";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
+
+const DEFAULT_BANNER = "/services.jpg";
 
 export default function WorkPage() {
   const { language } = useLanguage();
@@ -25,13 +29,13 @@ export default function WorkPage() {
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
   const t = {
-    crumbSelf: language === "en" ? "OUR WORK " : "हाम्रो काम",
+    crumbSelf: language === "en" ? "Our work" : "हाम्रो काम",
     heroTitle: language === "en" ? "Our work" : "हाम्रो काम",
     heroLead:
       language === "en"
         ? "A few projects and products we’re proud of—fast, accessible and built to last."
         : "छिटो, पहुँचयोग्य र दीर्घकालीन समाधानहरू—हाम्रा केही प्रोजेक्ट र प्रोडक्टहरू।",
-    galleryTitle: language === "en" ? "Projects" : "प्रोजेक्टहरू",
+    productsTitle: language === "en" ? "Projects" : "प्रोजेक्टहरू",
     featuredTitle:
       language === "en" ? "Featured case studies" : "मुख्य केस स्टडीहरू",
     processTitle: language === "en" ? "How we work" : "हामी कसरी काम गर्छौं",
@@ -106,11 +110,11 @@ useEffect(() => {
     let mounted = true;
     getBannerByImgName("work") 
       .then((url) => {
-        if (mounted) setBannerUrl(url || "/services.jpg"); 
+        if (mounted) setBannerUrl(url || DEFAULT_BANNER); 
       })
       .catch((err) => {
         console.error("Failed to load work banner:", err);
-        if (mounted) setBannerUrl("/services.jpg"); 
+        if (mounted) setBannerUrl(DEFAULT_BANNER); 
       });
     return () => {
       mounted = false;
@@ -129,155 +133,36 @@ useEffect(() => {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  const processSteps: ProcessStep[] = [
+    { title: t.discover, description: t.discoverDesc, Icon: Search },
+    { title: t.design, description: t.designDesc, Icon: PenTool },
+    { title: t.build, description: t.buildDesc, Icon: Code },
+    { title: t.evolve, description: t.evolveDesc, Icon: RefreshCw },
+  ];
+
   return (
     <>
       <main className="relative text-[#0b0d12]/80" style={{ backgroundColor: "var(--page-bg)" }}>
-        <section className="relative z-10">
-          <div className="relative min-h-[50vh] pt-28 lg:pt-32">
-             <div
-              className="absolute inset-0 bg-cover bg-center bg-fixed filter grayscale opacity-60"
-              style={{
-                backgroundImage: `url('${bannerUrl || "/services.jpg"}')`,
-              }}
-            />
-            <div className="absolute inset-0 bg-black/55" />
-            <div className="pointer-events-none absolute inset-0" />
-            <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
-              <div className="max-w-[1200px] text-left">
-                <h1 className="mt-0 text-5xl font-heading font-semibold text-white sm:text-6xl text-left">
-                  {t.heroTitle}
-                </h1>
-              </div>
-              <nav
-                aria-label="Breadcrumb"
-                className="mt-4 text-sm text-white/80"
-              >
-                <ol className="flex items-center gap-3">
-                  <li>
-                    <Link
-                      href="/"
-                      className="font-medium tracking-wide hover:text-white"
-                    >
-                      NINJA INFOSYS
-                    </Link>
-                  </li>
-                  <li aria-hidden className="inline-flex items-center">
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="h-5 w-5 text-white/70"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M9 18l6-6-6-6" />
-                    </svg>
-                  </li>
-                  <li className="font-medium tracking-wide">{t.crumbSelf}</li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </section>
+        <WorkHero
+          title={t.heroTitle}
+          lead={t.heroLead}
+          crumbSelf={t.crumbSelf}
+          bannerUrl={bannerUrl || DEFAULT_BANNER}
+        />
 
-        <section className="py-12 sm:py-16">
-          <div className="mx-auto max-w-[1450px] w-full px-6 sm:px-10">
-            <ProjectsGrid
-              language={language === "en" ? "en" : "ne"}
-              title={t.galleryTitle}
-              variant="work"
-            />
-          </div>
-        </section>
+        <ProductShowcase
+          language={language === "en" ? "en" : "ne"}
+          title={t.productsTitle}
+        />
 
-        <section className="border-t border-[#0b0d12]/10 py-12 sm:py-16" style={{ backgroundColor: "var(--page-bg)" }}>
-          <div className="mx-auto max-w-[1450px] w-full px-6 sm:px-10">
-            <h2 className="font-semibold text-[#0b0d12] text-[32px]">
-              {t.featuredTitle}
-            </h2>
-            <div className="mt-6 grid gap-6 md:grid-cols-2">
-              {featured.map((cs) => (
-                <article
-                  key={cs.title}
-                  className="group border border-[#0b0d12]/10 bg-white p-6 text-[#0b0d12] rounded-none transition-all hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#f0f0f2] hover:text-[#0b0d12]"
-                >
-                  <div className="text-[12px] font-semibold tracking-wider">
-                    {cs.eyebrow}
-                  </div>
-                  <h3 className="mt-1 text-xl pt-1 font-semibold text-[#0b0d12] transition-colors group-hover:text-[#0b0d12]">
-                    {cs.title}
-                  </h3>
-                  <div className="mt-3 grid gap-3 text-[#0b0d12]/85">
-                    <p>
-                      <span className="font-semibold text-[#0b0d12] transition-colors group-hover:text-[#0b0d12]">
-                        {language === "en" ? "Problem:" : "समस्या:"}{" "}
-                      </span>
-                      <span className="ml-1 text-[#0b0d12]/85 transition-colors group-hover:text-[#0b0d12]">
-                        {cs.problem}
-                      </span>
-                    </p>
-                    <p>
-                      <span className="font-semibold text-[#0b0d12] transition-colors group-hover:text-[#0b0d12]">
-                        {language === "en" ? "Approach:" : "दृष्टिकोण:"}{" "}
-                      </span>
-                      <span className="ml-1 text-[#0b0d12]/85 transition-colors group-hover:text-[#0b0d12]">
-                        {cs.approach}
-                      </span>
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+        <FeaturedCaseStudies
+          title={t.featuredTitle}
+          problemLabel={language === "en" ? "Problem" : "समस्या"}
+          approachLabel={language === "en" ? "Approach" : "दृष्टिकोण"}
+          studies={featured}
+        />
 
-        <section className="border border-[#0b0d12]/10 py-12 sm:py-16" style={{ backgroundColor: "var(--page-bg-alt)" }}>
-          <div className="mx-auto max-w-[1450px] w-full px-6 sm:px-10">
-            <h3 className="font-semibold text-[#0b0d12] text-[32px]">
-              {t.processTitle}
-            </h3>
-            <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
-                  t: t.discover,
-                  d: t.discoverDesc,
-                  Icon: Search,
-                },
-                {
-                  t: t.design,
-                  d: t.designDesc,
-                  Icon: PenTool,
-                },
-                {
-                  t: t.build,
-                  d: t.buildDesc,
-                  Icon: Code,
-                },
-                {
-                  t: t.evolve,
-                  d: t.evolveDesc,
-                  Icon: RefreshCw,
-                },
-              ].map((s) => (
-                <li
-                  key={s.t}
-                  className="group border border-[#0b0d12]/15 bg-transparent p-5 transition-transform hover:-translate-y-0.5 hover:bg-gray-500/5 hover:border-[#0b0d12]/30"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="h-9 w-9 flex items-center justify-center bg-[#0b0d12]/5 text-[#0b0d12]">
-                      {s.Icon ? (
-                        <s.Icon size={16} className="text-current" />
-                      ) : null}
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold">{s.t}</div>
-                      <p className="mt-1 text-[#0b0d12]/85">{s.d}</p>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+        <ProcessSteps title={t.processTitle} steps={processSteps} />
 
         <GlobalCTA onOfficesOpen={openOffices} onBookingOpen={openBooking} onQuoteOpen={openQuote} />
       </main>

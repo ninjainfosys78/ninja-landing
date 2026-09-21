@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import BannerSubtitle from "@/components/ui/banner-subtitle";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -12,6 +13,7 @@ import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getSolutionsCards, type SolutionCard } from "@/lib/solutions";
 import { getBannerByImgName } from "@/lib/banners";
+import { StaggerWords } from "@/components/ui/reveal";
 
 type Lang = "en" | "ne";
 type Key = "gov" | "edu" | "health" | "fin" | "corp";
@@ -252,8 +254,8 @@ export default function SolutionsClient() {
     <>
       <main className="relative bg-background text-foreground">
         <section className="relative z-10">
-          <div className="relative min-h-[50vh] pt-28 lg:pt-32">
-            <div className="absolute inset-0 grayscale">
+          <div className="relative min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
+            <div className="absolute inset-0 grayscale blur-[8px] scale-110">
               <Image
                 src={bannerUrl || "/digital-infrastructure-network-city.jpg"}
                 alt="Banner"
@@ -265,7 +267,7 @@ export default function SolutionsClient() {
               />
             </div>
 
-            <div className="absolute inset-0 bg-[#0b0d12]/70" />
+            <div className="absolute inset-0 hero-dark-overlay" />
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
               <div className="max-w-[1200px] text-left">
                 <nav
@@ -323,12 +325,23 @@ export default function SolutionsClient() {
                 </nav>
 
                 <h1 className="pt-4 text-5xl font-heading font-semibold text-white sm:text-6xl">
-                  {active
-                    ? detail?.pageTitle
-                    : language === "en"
-                    ? "Industry we serve"
-                    : "हामीले सेवा दिने उद्योग"}
+                  <StaggerWords
+                    text={
+                      active
+                        ? detail?.pageTitle ?? ""
+                        : language === "en"
+                        ? "Industry we serve"
+                        : "हामीले सेवा दिने उद्योग"
+                    }
+                  />
                 </h1>
+                {!active && (
+                  <BannerSubtitle>
+                    {language === "en"
+                      ? "Purpose-built digital solutions for the industries we serve, from government and education to healthcare and enterprise."
+                      : "सरकार, शिक्षा, स्वास्थ्य र उद्यमसम्मका उद्योगहरूका लागि विशेष रूपमा बनाइएका डिजिटल समाधानहरू।"}
+                  </BannerSubtitle>
+                )}
               </div>
             </div>
           </div>
@@ -348,7 +361,7 @@ export default function SolutionsClient() {
                   <Link
                     href={`/solutions/${card.id}`}
                     key={card.id}
-                    className="solutions-card text-left group relative block select-none w-full h-full rounded-none transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)] hover:ring-1 hover:ring-foreground/20 border border-foreground/10 flex flex-col"
+                    className="solutions-card text-left group relative block select-none w-full h-full rounded-none transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)] hover:ring-1 hover:ring-foreground/20 border border-foreground/10 flex flex-col"
                   >
                     <div className="relative aspect-[16/10] w-full flex-none overflow-hidden">
                       {card.imageUrl && (
@@ -493,7 +506,6 @@ export default function SolutionsClient() {
                 <ProjectsGrid
                   language={language as Lang}
                   title={galleryTitle}
-                  variant="solutions"
                 />
               </div>
             </section>

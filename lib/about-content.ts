@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import type { TeamMember } from "@/lib/team";
 import { isLeadershipRole } from "@/lib/team-groups";
+import { toTimelineEntry } from "@/lib/story/milestone-mapping";
+import type { StoryMilestone } from "@/lib/story/story-milestone";
 
 export interface TimelineEntry {
   year: string;
@@ -24,7 +26,8 @@ export interface TimelineEntry {
 export function getAboutContent(
   language: "en" | "ne",
   teamMembers: TeamMember[],
-  teamGridMembers: TeamMember[] = []
+  teamGridMembers: TeamMember[] = [],
+  storyMilestones: StoryMilestone[] = []
 ) {
   const mapMember = (m: TeamMember) => ({
     name: language === "en" ? m.name : m.name_ne || m.name,
@@ -40,7 +43,7 @@ export function getAboutContent(
   const leaders = [...teamMembers, ...promoted].map(mapMember);
   const team = teamGridMembers.filter((m) => !isLeadershipRole(m.role)).map(mapMember);
 
-  return language === "en"
+  const staticContent = language === "en"
     ? {
         who: "Who we are",
         heroTitle: "ABOUT US",
@@ -213,4 +216,12 @@ export function getAboutContent(
         teamSubtitle: "उत्कृष्टताप्रति समर्पित हाम्रा विकासकर्ता र सहयोग टिमलाई भेट्नुहोस्, जसको लगनले हाम्रो सफलतालाई अघि बढाउँछ।",
         team,
       };
+
+  // DCM-authored milestones replace the built-in timeline as soon as any exist.
+  const timeline =
+    storyMilestones.length > 0
+      ? storyMilestones.map((milestone) => toTimelineEntry(milestone, language))
+      : staticContent.timeline;
+
+  return { ...staticContent, timeline };
 }

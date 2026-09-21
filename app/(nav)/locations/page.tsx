@@ -3,6 +3,7 @@
 import React from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
+import SectionHeading from "@/components/ui/section-heading";
 
 const OFFICES = {
   en: [
@@ -46,14 +47,18 @@ export default function LocationsPage() {
     <>
       <main className="pt-32 pb-24 min-h-screen" style={{ backgroundColor: "var(--page-bg)" }}>
         <div className="max-w-[1400px] mx-auto px-6">
-          <div className="mb-16">
-            <h1 className="text-5xl sm:text-6xl font-heading font-bold text-[#0b0d12] mb-4">{t.heading}</h1>
-            <p className="text-xl text-[#0b0d12]/60 max-w-2xl">{t.subheading}</p>
-          </div>
+          <SectionHeading
+            as="h1"
+            title={t.heading}
+            description={t.subheading}
+            className="mb-16"
+            titleClassName="text-5xl sm:text-6xl font-heading font-bold text-[#0b0d12] mb-4"
+            descriptionClassName="text-xl text-[#0b0d12]/60 max-w-2xl"
+          />
 
           <div className="grid grid-cols-1 max-w-2xl gap-12">
             {offices.map((office, idx) => (
-              <div key={idx} className="bg-white border border-[#0b0d12]/10 rounded-lg overflow-hidden group hover:border-[#2563EB]/50 transition-all duration-300">
+              <div key={idx} className="bg-white border border-[#0b0d12]/10 rounded-lg overflow-hidden group transition-all duration-300">
                 <div className="h-64 grayscale group-hover:grayscale-0 transition-all duration-500">
                   <iframe
                     src={office.mapUrl}

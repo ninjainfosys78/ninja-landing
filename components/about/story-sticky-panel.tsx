@@ -1,7 +1,6 @@
 "use client";
-import { AnimatePresence, motion, type MotionValue } from "framer-motion";
+import { motion, type MotionValue } from "framer-motion";
 import type { TimelineEntry } from "@/lib/about-content";
-import StoryProgressRail from "./story-progress-rail";
 
 interface StoryStickyPanelProps {
   label: string;
@@ -10,7 +9,7 @@ interface StoryStickyPanelProps {
   description: string;
   timeline: TimelineEntry[];
   activeIndex: number;
-  progress: MotionValue<number>;
+  progress?: MotionValue<number>;
 }
 
 export default function StoryStickyPanel({
@@ -44,32 +43,7 @@ export default function StoryStickyPanel({
         {description}
       </p>
 
-      <div className="mt-12 flex items-baseline gap-2">
-        <span className="font-heading text-sm font-bold text-[#2563EB] tabular-nums">
-          {String(activeIndex + 1).padStart(2, "0")}
-        </span>
-        <span className="text-xs text-foreground/30 tabular-nums">
-          / {String(timeline.length).padStart(2, "0")}
-        </span>
-      </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeEntry.year}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          className="mt-3"
-        >
-          <div className="text-2xl lg:text-3xl font-heading font-semibold text-foreground">
-            {activeEntry.year}
-          </div>
-          <div className="text-sm text-foreground/50 mt-1">{activeEntry.title}</div>
-        </motion.div>
-      </AnimatePresence>
-
-      <StoryProgressRail stepCount={timeline.length} activeIndex={activeIndex} progress={progress} timeline={timeline} />
     </motion.div>
   );
 }

@@ -33,10 +33,9 @@ interface Pillar {
   color: string;
 }
 
-function CapabilityCard({ pillar, index }: { pillar: Pillar; index: number }) {
+function CapabilityCard({ pillar }: { pillar: Pillar }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const Icon = pillar.icon;
-  const number = String(index + 1).padStart(2, "0");
 
   // Cursor-tracked spotlight — set as CSS custom properties directly on the
   // node so the glow follows the pointer without a React re-render per move.
@@ -51,7 +50,7 @@ function CapabilityCard({ pillar, index }: { pillar: Pillar; index: number }) {
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      className="group relative h-full overflow-hidden rounded-3xl border border-[#d7e4fa] bg-white p-8 shadow-[0_1px_2px_rgba(10,31,77,0.04),0_18px_40px_-18px_rgba(10,31,77,0.16)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_-24px_rgba(37,99,235,0.4)] sm:p-10"
+      className="group relative h-full overflow-hidden rounded-3xl border border-[#d7e4fa] bg-white p-8 shadow-[0_1px_2px_rgba(10,31,77,0.04),0_18px_40px_-18px_rgba(10,31,77,0.16)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)] sm:p-10"
       style={{ color: pillar.color }}
     >
       {/* Spotlight glow that follows the cursor — the premium hover cue */}
@@ -62,15 +61,6 @@ function CapabilityCard({ pillar, index }: { pillar: Pillar; index: number }) {
           background: `radial-gradient(280px circle at var(--spot-x, 50%) var(--spot-y, 50%), ${pillar.color}17, transparent 70%)`,
         }}
       />
-
-      {/* Oversized ghost numeral, an editorial marker rather than decoration */}
-      <span
-        aria-hidden="true"
-        className="absolute -top-3 right-5 font-heading font-bold leading-none select-none transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105"
-        style={{ fontSize: "96px", color: pillar.color, opacity: 0.07 }}
-      >
-        {number}
-      </span>
 
       <div className="relative mb-8">
         <div
@@ -87,14 +77,6 @@ function CapabilityCard({ pillar, index }: { pillar: Pillar; index: number }) {
       <p className="relative text-[#0b0d12]/60 leading-relaxed font-sans text-[16px] mb-8">
         {pillar.text}
       </p>
-
-      {/* Accent underline draws in from the left on hover */}
-      <div className="relative h-[2px] w-full bg-[#0b0d12]/10 overflow-hidden">
-        <div
-          className="h-full w-full origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
-          style={{ backgroundColor: pillar.color }}
-        />
-      </div>
     </div>
   );
 }
@@ -196,7 +178,7 @@ export default function AboutUsSection() {
           </Reveal>
         </div>
 
-        {/* Capability cards — numbered, with a cursor-tracked spotlight and a drawn-in accent underline on hover */}
+        {/* Capability cards — with a cursor-tracked spotlight on hover */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
           initial="hidden"
@@ -206,7 +188,7 @@ export default function AboutUsSection() {
         >
           {content.pillars.map((pillar, idx) => (
             <motion.div key={idx} variants={cardItemVariants}>
-              <CapabilityCard pillar={pillar} index={idx} />
+              <CapabilityCard pillar={pillar} />
             </motion.div>
           ))}
         </motion.div>
@@ -215,7 +197,7 @@ export default function AboutUsSection() {
         <Reveal className="mt-20 text-center" delay={0.1}>
           <Link
             href="/about"
-            className="inline-flex items-center gap-4 bg-[#E31B23] text-white font-bold group px-10 py-5 transition-all hover:brightness-110 hover:shadow-lg active:scale-95"
+            className="inline-flex items-center gap-4 bg-[#E31B23] text-white font-bold group px-10 py-5 transition-all hover:brightness-110 hover:shadow-md active:scale-95"
           >
             <span className="text-lg tracking-widest uppercase">
               {content.cta}

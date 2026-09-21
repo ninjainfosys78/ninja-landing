@@ -5,6 +5,7 @@ import { useActiveIndexInView } from "@/lib/hooks/use-active-index-in-view";
 import type { TimelineEntry } from "@/lib/about-content";
 import StoryStickyPanel from "./story-sticky-panel";
 import StoryItem from "./story-item";
+import StoryBackground from "./story-background";
 
 interface OurStorySectionProps {
   storyTitle: string;
@@ -40,9 +41,9 @@ export default function OurStorySection({ storyTitle, timeline, language }: OurS
     <section
       id="our-story"
       ref={sectionRef}
-      className="relative z-10 scroll-mt-28 border-t border-foreground/5"
-      style={{ backgroundColor: "var(--page-bg)" }}
+      className="relative z-10 isolate scroll-mt-28 overflow-clip"
     >
+      <StoryBackground />
       <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-32">
           <div className="lg:w-1/3 lg:sticky lg:top-32 h-fit">
@@ -61,13 +62,12 @@ export default function OurStorySection({ storyTitle, timeline, language }: OurS
             <div className="space-y-32 lg:space-y-48 pb-32 border-l border-foreground/5 lg:pl-16 ml-6 lg:ml-0">
               {timeline.map((entry, index) => (
                 <StoryItem
-                  key={entry.year}
+                  key={`${entry.year}-${index}`}
                   ref={(el) => {
                     itemRefs[index].current = el;
                   }}
                   entry={entry}
                   index={index}
-                  scrollYProgress={scrollYProgress}
                   isActive={index === activeIndex}
                 />
               ))}

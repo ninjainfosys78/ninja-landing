@@ -120,10 +120,10 @@ export default function GlobalCTA({ onOfficesOpen, onBookingOpen, onQuoteOpen }:
             return (
               <RevealItem key={idx} className="h-full group">
                 <div
-                  className={`relative overflow-hidden p-10 flex flex-col justify-between transition-all duration-500 border h-full hover:-translate-y-2.5 ${
+                  className={`relative overflow-hidden p-10 flex flex-col justify-between transition-all duration-500 border h-full hover:-translate-y-1 ${
                     action.primary
-                      ? 'bg-[#E31B23] border-[#E31B23] text-white shadow-xl shadow-[#E31B23]/20 hover:shadow-2xl hover:shadow-[#E31B23]/30'
-                      : 'bg-white border-[#0b0d12]/8 text-[#0b0d12] shadow-[0_10px_30px_-18px_rgba(11,13,18,0.25)] hover:border-[#173C80]/40 hover:shadow-[0_28px_55px_-18px_rgba(23,60,128,0.3)]'
+                      ? 'bg-[#E31B23] border-[#E31B23] text-white shadow-xl shadow-[#E31B23]/20 hover:shadow-lg hover:shadow-[#E31B23]/20'
+                      : 'bg-white border-[#0b0d12]/8 text-[#0b0d12] shadow-[0_10px_30px_-18px_rgba(11,13,18,0.25)] hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)]'
                   }`}
                 >
                   {/* Diagonal shine sweep on hover */}

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import BannerSubtitle from "@/components/ui/banner-subtitle";
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
 import BlogPostBody from "@/components/blog-post-body";
@@ -29,12 +30,12 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
     <main className="bg-background text-foreground min-h-screen">
       {/* Title Hero */}
       <section className="relative z-10 bg-background text-foreground">
-        <div className="relative min-h-[44vh] pt-24 lg:pt-28">
+        <div className="relative min-h-[44vh] overflow-hidden pt-24 lg:pt-28">
           <div
-            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60"
+            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60 blur-[8px] scale-110"
             style={{ backgroundImage: "url('/insights.jpg')" }}
           />
-          <div className="absolute inset-0 bg-[#0b0d12]/60" />
+          <div className="absolute inset-0 hero-dark-overlay" />
 
           <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="max-w-[1200px] text-left">
@@ -67,6 +68,11 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
               <h1 className="mt-4 text-5xl font-heading font-semibold text-white sm:text-6xl">
                 {labels.insights}
               </h1>
+              <BannerSubtitle>
+                {isNe
+                  ? "प्रविधि, सुशासन र डिजिटल रूपान्तरणबारे हाम्रो टोलीका विचार, अन्तर्दृष्टि र कथाहरू।"
+                  : "Insights, ideas and stories from our team on technology, governance and digital transformation."}
+              </BannerSubtitle>
             </div>
           </div>
         </div>

@@ -45,11 +45,11 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
         {member.image && (
           <img src={member.image} alt={member.name} className="aspect-[4/5] w-full object-cover md:col-span-2 md:h-full md:min-h-[560px]" />
         )}
-        <div className={`flex flex-col justify-center gap-4 p-8 sm:p-12 lg:p-16 ${member.image ? "md:col-span-3" : "md:col-span-5"}`}>
-          <h4 className="font-heading text-4xl font-bold leading-tight text-[#0b0d12] lg:text-5xl">{member.name}</h4>
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#E31B23]">{member.role}</p>
+        <div className={`flex min-w-0 flex-col justify-center gap-4 p-8 sm:p-12 lg:p-16 ${member.image ? "md:col-span-3" : "md:col-span-5"}`}>
+          <h4 className="font-heading text-4xl font-bold leading-tight text-[#0b0d12] lg:text-5xl [overflow-wrap:anywhere]">{member.name}</h4>
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#E31B23] [overflow-wrap:anywhere]">{member.role}</p>
           <div className="my-2 h-[3px] w-14 bg-gradient-to-r from-[#E31B23] to-[#2563EB]" />
-          {member.bio && <p className="text-base leading-[1.9] text-[#0b0d12]/75 lg:text-lg">{member.bio}</p>}
+          {member.bio && <p className="text-base leading-[1.9] text-[#0b0d12]/75 lg:text-lg [overflow-wrap:anywhere]">{member.bio}</p>}
           <MemberLinkedInButton url={member.linkedinUrl} />
         </div>
       </div>

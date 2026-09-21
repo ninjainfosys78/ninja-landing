@@ -17,7 +17,7 @@ export default function TeamMarqueeRow({ members, reverse = false }: TeamMarquee
   const half = repeatToFill(members);
 
   return (
-    <div className="group/row overflow-hidden">
+    <div data-no-reveal className="group/row overflow-hidden">
       <div
         className="flex w-max motion-reduce:!animate-none group-hover/row:[animation-play-state:paused]"
         style={{

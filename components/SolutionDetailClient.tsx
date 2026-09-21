@@ -53,7 +53,7 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
     <main className="bg-background text-foreground min-h-screen">
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 grayscale opacity-40">
+        <div className="absolute inset-0 grayscale blur-[8px] scale-110">
            <Image
              src={bannerUrl || "/digital-infrastructure-network-city.jpg"}
              alt="Banner"
@@ -61,7 +61,7 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
              className="object-cover"
            />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0b0d12]/60 to-[#0b0d12]" />
+        <div className="absolute inset-0 hero-dark-overlay" />
 
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16 mt-12">
           <Link
@@ -100,11 +100,11 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
                </p>
 
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-12">
-                  <div className="p-8 border border-foreground/10 bg-foreground/5 hover:border-[#2563EB]/30 transition-colors">
+                  <div className="p-8 border border-foreground/10 bg-foreground/5 transition-colors">
                      <h4 className="text-lg font-bold mb-4">{t.securityFirst}</h4>
                      <p className="text-sm text-foreground/50">{t.securityDesc}</p>
                   </div>
-                  <div className="p-8 border border-foreground/10 bg-foreground/5 hover:border-[#2563EB]/30 transition-colors">
+                  <div className="p-8 border border-foreground/10 bg-foreground/5 transition-colors">
                      <h4 className="text-lg font-bold mb-4">{t.cloudNative}</h4>
                      <p className="text-sm text-foreground/50">{t.cloudDesc}</p>
                   </div>

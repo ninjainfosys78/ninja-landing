@@ -24,6 +24,11 @@ export type TeamMember = {
 const LEADERSHIP_CONTENT_SLUG = "leadership";
 const TEAM_CONTENT_SLUG = "team";
 
+// Every leadership record has sort_order 0 in DCM, so the API returns them
+// newest-first. This list pins the on-page order; anyone not listed follows in
+// the order DCM returned them.
+const LEADERSHIP_DISPLAY_ORDER = ["ramesh", "trilochan", "kritisha", "nabin"];
+
 const FALLBACK_TEAM: TeamMember[] = [
   {
     id: "fallback-ramesh",
@@ -81,10 +86,17 @@ async function fetchTeamFromDcm(contentSlug: string): Promise<TeamMember[]> {
   );
 }
 
+function leadershipRank(member: TeamMember): number {
+  const name = member.name.toLowerCase();
+  const rank = LEADERSHIP_DISPLAY_ORDER.findIndex((firstName) => name.startsWith(firstName));
+  return rank === -1 ? LEADERSHIP_DISPLAY_ORDER.length : rank;
+}
+
 /** Founders/execs — rendered as large individual spotlights on the About page. */
 export async function getTeamMembers(): Promise<TeamMember[]> {
   const members = await fetchTeamFromDcm(LEADERSHIP_CONTENT_SLUG);
-  return members.length > 0 ? members : FALLBACK_TEAM;
+  if (members.length === 0) return FALLBACK_TEAM;
+  return [...members].sort((a, b) => leadershipRank(a) - leadershipRank(b));
 }
 
 /** The rest of the company — rendered as a premium card grid. Empty until authored in DCM. */

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
+import BannerSubtitle from "@/components/ui/banner-subtitle";
 import dynamic from "next/dynamic";
 const Testimonials: React.ComponentType<any> = dynamic(
   () => import("@/components/testimonials").then((m) => m.default ?? m),
@@ -17,14 +18,17 @@ import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getBannerByImgName } from "@/lib/banners";
 import { getAboutContent } from "@/lib/about-content";
+import type { StoryMilestone } from "@/lib/story/story-milestone";
 import type { TeamMember } from "@/lib/team";
+import { StaggerWords } from "@/components/ui/reveal";
 
 interface AboutClientProps {
   teamMembers: TeamMember[];
+  storyMilestones?: StoryMilestone[];
   teamGridMembers?: TeamMember[];
 }
 
-export default function AboutClient({ teamMembers, teamGridMembers = [] }: AboutClientProps) {
+export default function AboutClient({ teamMembers, teamGridMembers = [], storyMilestones = [] }: AboutClientProps) {
   const { language } = useLanguage();
   const {
     officesOpen, openOffices, closeOffices,
@@ -63,23 +67,23 @@ export default function AboutClient({ teamMembers, teamGridMembers = [] }: About
   }, []);
 
   const content = useMemo(
-    () => getAboutContent(language, teamMembers, teamGridMembers),
-    [language, teamMembers, teamGridMembers]
+    () => getAboutContent(language, teamMembers, teamGridMembers, storyMilestones),
+    [language, teamMembers, teamGridMembers, storyMilestones]
   );
 
   return (
     <>
       <main className="relative bg-background text-foreground transition-colors duration-300">
         <section className="relative z-10">
-          <div className="relative min-h-[50vh] pt-28 lg:pt-32">
+          <div className="relative min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
             <div
-              className="absolute inset-0 bg-center bg-fixed filter grayscale"
+              className="absolute inset-0 bg-center bg-fixed filter grayscale blur-[8px] scale-110"
               style={{
                 backgroundImage: `url('${bannerUrl || "/about.jpg"}')`,
                 backgroundSize: "cover",
               }}
             />
-            <div className="absolute inset-0 bg-[#0b0d12]/80" />
+            <div className="absolute inset-0 hero-dark-overlay" />
 
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
               <div className="max-w-[1600px] text-left">
@@ -114,8 +118,13 @@ export default function AboutClient({ teamMembers, teamGridMembers = [] }: About
                 </nav>
 
                 <h1 className="pt-4 text-5xl font-heading font-semibold text-white sm:text-6xl text-left">
-                  {content.heroTitle}
+                  <StaggerWords text={content.heroTitle} />
                 </h1>
+                <BannerSubtitle>
+                  {language === 'en'
+                    ? 'Meet the people, the values and the story behind the digital systems we build for institutions across Nepal.'
+                    : 'नेपालभरका संस्थाहरूका लागि हामीले बनाउने डिजिटल प्रणालीहरूको पछाडिका मानिस, मूल्य र कथा चिन्नुहोस्।'}
+                </BannerSubtitle>
               </div>
             </div>
           </div>

@@ -114,14 +114,11 @@ export default function InsightsRail({
             >
               <Link
                 href={insight.url}
-                className="relative flex flex-col h-full overflow-hidden transition-all duration-500 hover:-translate-y-2.5 bg-white border border-black/10 hover:border-[#2563EB]/50 hover:shadow-[0_28px_60px_-20px_rgba(37,99,235,0.28)]"
+                className="relative flex flex-col h-full overflow-hidden transition-all duration-500 hover:-translate-y-1 bg-white border border-black/10 hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)]"
               >
                 {/* Top accent bar */}
-                <div className="h-[3px] w-full bg-gradient-to-r from-[#E31B23] to-[#2563EB] opacity-70 group-hover:opacity-100 transition-opacity" />
+                <div className="h-[3px] w-full bg-gradient-to-r from-[#E31B23] to-[#2563EB] opacity-70" />
 
-                {/* Corner Accents on hover */}
-                <div className="absolute top-1 left-0 w-4 h-4 border-t-2 border-l-2 border-[#2563EB] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110 pointer-events-none" />
-                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#2563EB] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110 pointer-events-none" />
 
                 {/* Diagonal shine sweep */}
                 <div

@@ -59,7 +59,7 @@ export default function OfficesModal({ isOpen, onClose }: OfficesModalProps) {
           {offices.map((office) => (
             <div
               key={office.city}
-              className="p-6 border border-[#0b0d12]/10 rounded-lg hover:border-[#2563EB]/30 transition-colors"
+              className="p-6 border border-[#0b0d12]/10 rounded-lg transition-colors"
               style={{ backgroundColor: "#FFFFFF" }}
             >
               <div className="flex items-start gap-4">

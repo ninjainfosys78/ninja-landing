@@ -41,6 +41,10 @@ const SustainabilitySection = dynamic(() => import("@/components/sustainability-
   ssr: true,
 });
 
+const ProjectsPreviewSection = dynamic(() => import("@/components/home/projects/projects-preview-section"), {
+  ssr: true,
+});
+
 const AboutUsSection = dynamic(() => import("@/components/about-us-section"), {
   ssr: true,
 });
@@ -130,6 +134,9 @@ export default function HomePageClient({ insights, trustedLogos }: HomePageClien
 
         {/* Editorial Carousel */}
         <FeaturedCarousel key={language} />
+
+        {/* Projects */}
+        <ProjectsPreviewSection />
 
         {/* Global Insights */}
         <InsightsRail insights={safeInsights} />

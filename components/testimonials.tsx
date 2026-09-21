@@ -146,7 +146,7 @@ export default function Testimonials() {
                     {group.map((item, idx) => (
                       <article
                         key={`${slideIndex}-${idx}-${item.name}`}
-                        className="p-8 min-h-[200px] flex gap-5 items-start shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_-24px_rgba(37,99,235,0.3)] hover:border-[#2563EB]/30"
+                        className="p-8 min-h-[200px] flex gap-5 items-start shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)]"
                         style={{ backgroundColor: '#ffffff', border: '1px solid rgba(11,13,18,0.08)' }}
                         aria-label={item.name}
                       >

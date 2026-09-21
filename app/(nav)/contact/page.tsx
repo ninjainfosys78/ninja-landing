@@ -6,6 +6,7 @@ import Link from "next/link"
 import { toast } from "sonner"
 
 import SearchOverlay from "@/components/search-overlay"
+import PageBanner from "@/components/ui/page-banner"
 
 
 export default function ContactPage() {
@@ -131,7 +132,18 @@ export default function ContactPage() {
 
   return (
     <>
-      <section className="relative min-h-screen text-[#0b0d12]/80 pt-32" style={{ backgroundColor: "var(--page-bg)" }} aria-label="Contact section">
+      <PageBanner
+        bannerName="contact"
+        fallbackImage="/digital-infrastructure-network-city.jpg"
+        homeLabel={language === "en" ? "Ninja Infosys" : "निन्जा इन्फोसिस"}
+        title={language === "en" ? "Contact" : "सम्पर्क"}
+        subtitle={
+          language === "en"
+            ? "Tell us about your project and our team will get back to you shortly."
+            : "आफ्नो परियोजनाबारे हामीलाई बताउनुहोस्, हाम्रो टोलीले छिट्टै सम्पर्क गर्नेछ।"
+        }
+      />
+      <section className="relative min-h-screen text-[#0b0d12]/80 pt-12" style={{ backgroundColor: "var(--page-bg)" }} aria-label="Contact section">
         {/* measured container: left padding set so the form starts under the logo */}
         <div
           ref={containerRef}
