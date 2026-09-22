@@ -18,7 +18,7 @@ export default function LeadershipSection({ eyebrow, title, accent, members }: L
   if (members.length === 0) return null;
 
   return (
-    <section id="leadership" className="relative z-10 overflow-hidden border-t border-[#d7e4fa] bg-white">
+    <section className="relative z-10 overflow-hidden bg-white">
       <div className="mx-auto max-w-[1600px] px-6 py-24 sm:px-8 lg:px-12 lg:py-32">
         <div className="mb-12 lg:mb-16">
           <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.15em] text-[#0b0d12]/60">{eyebrow}</h2>

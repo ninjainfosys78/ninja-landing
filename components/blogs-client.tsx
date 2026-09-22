@@ -79,7 +79,7 @@ export default function BlogsClient({ initialPosts = [] }: BlogsClientProps) {
       <section className="relative z-10">
         <div className="relative min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
           <div
-            className="absolute inset-0 bg-cover bg-center bg-fixed grayscale blur-[8px] scale-110"
+            className="absolute inset-0 bg-cover bg-center bg-fixed blur-[8px] scale-110"
             style={{
               backgroundImage: `url('${bannerUrl || "/futuristic-travel-technology-interface.jpg"}')`,
             }}
@@ -87,12 +87,12 @@ export default function BlogsClient({ initialPosts = [] }: BlogsClientProps) {
 
           <div className="absolute inset-0 hero-dark-overlay" />
           <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
-            <div className="max-w-[1200px] text-left">
+            <div className="mx-auto max-w-[1200px] text-center">
               <nav
                 aria-label="Breadcrumb"
                 className="mt-4 text-sm text-white/50"
               >
-                <ol className="flex items-center gap-3">
+                <ol className="flex items-center justify-center gap-3">
                   <li>
                     <Link
                       href="/"

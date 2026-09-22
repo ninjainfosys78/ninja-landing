@@ -66,17 +66,17 @@ export default function CareersPage() {
         <section className="relative z-10">
           <div className="relative min-h-[70vh] overflow-hidden">
             <div
-              className="absolute inset-0 bg-center bg-fixed grayscale blur-[8px] scale-110"
+              className="absolute inset-0 bg-center bg-fixed blur-[8px] scale-110"
               style={{
                 backgroundImage: `url('${bannerUrl || "/careers.png"}')`,
                 backgroundSize: "cover",
               }}
             />
             <div className="absolute inset-0 hero-dark-overlay" />
-            <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12 flex items-center min-h-[70vh]">
-              <div className="max-w-[1200px] text-left">
+            <div className="relative mx-auto flex min-h-[70vh] max-w-[1600px] items-center justify-center px-6 lg:px-12">
+              <div className="mx-auto max-w-[1200px] text-center">
                 <nav aria-label="Breadcrumb" className="mt-0 text-sm text-white/80">
-                  <ol className="flex items-center gap-3">
+                  <ol className="flex items-center justify-center gap-3">
                     <li>
                       <Link href="/" className="font-medium tracking-wide hover:text-white">
                         {t.body.breadcrumbHome}

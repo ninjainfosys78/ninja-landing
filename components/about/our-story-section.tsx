@@ -59,7 +59,17 @@ export default function OurStorySection({ storyTitle, timeline, language }: OurS
           </div>
 
           <div className="lg:w-2/3 overflow-x-hidden">
-            <div className="space-y-32 lg:space-y-48 pb-32 border-l border-foreground/5 lg:pl-16 ml-6 lg:ml-0">
+            <div className="relative space-y-32 lg:space-y-48 pb-32 lg:pl-16 ml-6 lg:ml-0">
+              {/* Timeline spine: a visible base line plus a gradient fill
+                  that grows with scroll progress, so the line itself shows
+                  how far through the story you are. */}
+              <div className="absolute inset-y-0 left-0 w-px bg-foreground/15" />
+              <motion.div
+                aria-hidden
+                className="absolute inset-y-0 left-0 w-px origin-top bg-gradient-to-b from-[#2563EB] to-[#E31B23]"
+                style={{ scaleY: scrollYProgress }}
+              />
+
               {timeline.map((entry, index) => (
                 <StoryItem
                   key={`${entry.year}-${index}`}
@@ -74,12 +84,13 @@ export default function OurStorySection({ storyTitle, timeline, language }: OurS
             </div>
 
             <motion.div
-              className="pt-24 border-t border-foreground/5"
+              className="pt-24 border-t border-foreground/10"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              <p className="text-foreground/30 font-heading italic text-xl">
+              <p className="flex items-center gap-3 text-foreground/50 font-heading italic text-xl">
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#2563EB]" />
                 {STORY_CONTINUED[language]}
               </p>
             </motion.div>

@@ -12,8 +12,8 @@ import GlobalCTA from "@/components/global-cta";
 import ContactModals from "@/components/contact-modals";
 import OurStorySection from "@/components/about/our-story-section";
 import WhoWeAreSection from "@/components/about/who-we-are-section";
+import FounderSpotlight from "@/components/about/team/founder-spotlight";
 import LeadershipSection from "@/components/about/team/leadership-section";
-import TeamMarqueeSection from "@/components/about/team/team-marquee-section";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getBannerByImgName } from "@/lib/banners";
@@ -28,7 +28,11 @@ interface AboutClientProps {
   teamGridMembers?: TeamMember[];
 }
 
-export default function AboutClient({ teamMembers, teamGridMembers = [], storyMilestones = [] }: AboutClientProps) {
+export default function AboutClient({
+  teamMembers,
+  teamGridMembers = [],
+  storyMilestones = [],
+}: AboutClientProps) {
   const { language } = useLanguage();
   const {
     officesOpen, openOffices, closeOffices,
@@ -77,7 +81,7 @@ export default function AboutClient({ teamMembers, teamGridMembers = [], storyMi
         <section className="relative z-10">
           <div className="relative min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
             <div
-              className="absolute inset-0 bg-center bg-fixed filter grayscale blur-[8px] scale-110"
+              className="absolute inset-0 bg-center bg-fixed filter blur-[8px] scale-110"
               style={{
                 backgroundImage: `url('${bannerUrl || "/about.jpg"}')`,
                 backgroundSize: "cover",
@@ -86,12 +90,12 @@ export default function AboutClient({ teamMembers, teamGridMembers = [], storyMi
             <div className="absolute inset-0 hero-dark-overlay" />
 
             <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16">
-              <div className="max-w-[1600px] text-left">
+              <div className="mx-auto max-w-[1200px] text-center">
                 <nav
                   aria-label="Breadcrumb"
                   className="mt-0 text-sm text-white"
                 >
-                  <ol className="flex items-center gap-3">
+                  <ol className="flex items-center justify-center gap-3">
                     <li>
                       <Link
                         href="/"
@@ -117,7 +121,7 @@ export default function AboutClient({ teamMembers, teamGridMembers = [], storyMi
                   </ol>
                 </nav>
 
-                <h1 className="pt-4 text-5xl font-heading font-semibold text-white sm:text-6xl text-left">
+                <h1 className="pt-4 text-5xl font-heading font-semibold text-white sm:text-6xl text-center">
                   <StaggerWords text={content.heroTitle} />
                 </h1>
                 <BannerSubtitle>
@@ -217,18 +221,18 @@ export default function AboutClient({ teamMembers, teamGridMembers = [], storyMi
           </div>
         </section>
 
-        <LeadershipSection
-          eyebrow={content.teamEyebrow}
-          title={language === 'en' ? 'Get to Know' : 'चिनौं'}
-          accent={language === 'en' ? 'Our Leaders' : 'हाम्रा नेतृत्वकर्ता'}
-          members={content.leaders}
+        <FounderSpotlight
+          eyebrow={content.founderEyebrow}
+          title={language === 'en' ? 'Meet the' : 'चिनौं'}
+          accent={language === 'en' ? 'Founder' : 'हाम्रा संस्थापक'}
+          member={content.founder}
         />
 
-        <TeamMarqueeSection
-          title={language === 'en' ? 'The People Behind' : 'काम पछाडिका'}
-          accent={language === 'en' ? 'the Work' : 'मानिसहरू'}
-          subtitle={content.teamSubtitle}
-          members={content.team}
+        <LeadershipSection
+          eyebrow={content.teamEyebrow}
+          title={language === 'en' ? 'The People' : 'हाम्रो काम'}
+          accent={language === 'en' ? 'Behind the Work' : 'पछाडिका व्यक्तिहरू'}
+          members={content.otherLeaders}
         />
 
         <OurStorySection

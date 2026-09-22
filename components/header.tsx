@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -11,16 +11,29 @@ import NavDropdown from "@/components/header/nav-dropdown";
 import { ABOUT_MENU_ITEMS, SOLUTIONS_MENU_ITEMS } from "@/components/header/nav-menu-items";
 import { hasHeroBanner, isActiveLink, navLinkClass } from "@/components/header/nav-styles";
 
+const HEADER_HEIGHT_PX = 88;
+const HERO_SELECTOR = "#hero, main > section";
+
+// True while the page's top banner is still under the navbar, so the bar can
+// stay transparent on the hero at any scroll position, not just at the very top.
+function isHeroBehindHeader(): boolean {
+  const hero = document.querySelector(HERO_SELECTOR);
+  return hero ? hero.getBoundingClientRect().bottom > HEADER_HEIGHT_PX : true;
+}
+
 export default function Header() {
-  const { language, setLanguage } = useLanguage();
+  // setLanguage is unused while the toggle button below is commented out.
+  const { language } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [heroBehind, setHeroBehind] = useState(true);
   const headerRef = useRef<HTMLElement | null>(null);
   const lastScrollY = useRef(0);
   const pathname = usePathname();
+  const router = useRouter();
 
-  const overHero = hasHeroBanner(pathname) && !isScrolled && !mobileOpen;
+  const overHero = hasHeroBanner(pathname) && heroBehind && !mobileOpen;
 
   const closeAllMenus = () => {
     setMobileOpen(false);
@@ -41,6 +54,7 @@ export default function Header() {
     const onScroll = () => {
       const currentY = window.scrollY;
       setIsScrolled(currentY > 20);
+      setHeroBehind(isHeroBehindHeader());
       
       if (currentY < 80) {
         setHidden(false);
@@ -52,9 +66,10 @@ export default function Header() {
       }
       lastScrollY.current = currentY;
     };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   return (
     <>
@@ -64,7 +79,7 @@ export default function Header() {
         overHero ? "border-transparent bg-transparent" : "border-white/10 bg-[#0A1F4D]/95 backdrop-blur-md"
       }`}
       style={{
-        boxShadow: isScrolled ? '0 12px 28px -18px rgba(4,10,28,0.6)' : 'none',
+        boxShadow: isScrolled && !overHero ? '0 12px 28px -18px rgba(4,10,28,0.6)' : 'none',
         transition: 'all 0.5s cubic-bezier(0.16,1,0.3,1)',
         transform: hidden ? 'translateY(-120%)' : 'translateY(0)',
       }}
@@ -139,19 +154,21 @@ export default function Header() {
 
         {/* Right Action Bar */}
         <div className="flex items-center gap-8">
+          {/* Language toggle — commented out on request, not deleted.
           <button
             onClick={() => setLanguage(language === "en" ? "ne" : "en")}
             className={`hidden sm:block w-24 shrink-0 text-center text-[13px] font-bold tracking-wider transition-colors uppercase text-white/60 hover:text-white`}
           >
             {language === "en" ? "नेपाली" : "English"}
           </button>
+          */}
 
           <button 
             onClick={() => {
               if (pathname === "/") {
                 document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
               } else {
-                window.location.href = "/contact";
+                router.push("/contact");
               }
             }}
             className={`hidden lg:inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-[15px] font-bold transition-all active:scale-95 justify-center shrink-0 bg-[#E31B23] text-white shadow-sm hover:brightness-110`}

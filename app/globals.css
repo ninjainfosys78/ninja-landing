@@ -231,8 +231,8 @@ header nav a, nav.main-navigation a { font-size: 16px; line-height: 1.2; }
 .text-pretty  { text-wrap: pretty; }
 .sharp-edges  { border-radius: 0 !important; }
 
-/* Page-top banner overlay: blue theme shared by every inner-page hero */
-.hero-dark-overlay { background: linear-gradient(135deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.66) 55%, rgba(0,0,0,0.55) 100%); }
+/* Page-top banner overlay: deep-navy blue theme, resonating with the home hero (#0A1F4D / #050D24) */
+.hero-dark-overlay { background: linear-gradient(135deg, rgba(5,13,36,0.85) 0%, rgba(10,31,77,0.74) 55%, rgba(18,48,107,0.62) 100%); }
 
 /* Animations */
 @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
@@ -252,10 +252,6 @@ header nav a, nav.main-navigation a { font-size: 16px; line-height: 1.2; }
   from { transform: translateX(-150%) skewX(-12deg); }
   to   { transform: translateX(250%) skewX(-12deg); }
 }
-@keyframes marquee-left {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
 @keyframes progress-fill {
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
@@ -266,7 +262,6 @@ header nav a, nav.main-navigation a { font-size: 16px; line-height: 1.2; }
   @keyframes float   { 0%, 100% { transform: none; } }
   @keyframes ambient-drift-a { 0%, 100% { transform: none; } }
   @keyframes ambient-drift-b { 0%, 100% { transform: none; } }
-  @keyframes marquee-left { from, to { transform: none; } }
 }
 
 /* Testimonial cards font override */

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import type { ProductItem } from "@/components/work/products/product-items";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
-const CARD_STAGGER_SECONDS = 0.12;
+const CARD_STAGGER_SECONDS = 0.22;
 
 interface ProjectPreviewCardProps {
   product: ProductItem;
@@ -27,8 +27,8 @@ export default function ProjectPreviewCard({ product, index, onSelect }: Project
       }}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.8, delay: index * CARD_STAGGER_SECONDS, ease: EASE_OUT }}
+      viewport={{ once: true, amount: 0.35 }}
+      transition={{ duration: 1.3, delay: index * CARD_STAGGER_SECONDS, ease: EASE_OUT }}
       onClick={() => onSelect(product)}
       className="group relative cursor-pointer overflow-hidden rounded-2xl border border-[#D7E4FA] bg-white shadow-[0_1px_2px_rgba(10,31,77,0.04)] transition-shadow duration-500 hover:shadow-[0_16px_32px_-18px_rgba(10,31,77,0.25)]"
     >
@@ -44,12 +44,6 @@ export default function ProjectPreviewCard({ product, index, onSelect }: Project
           aria-hidden
           className="absolute inset-0 bg-gradient-to-t from-[#0A1F4D]/80 via-[#0A1F4D]/10 to-transparent"
         />
-        <span
-          className="absolute left-5 top-5 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white"
-          style={{ backgroundColor: product.accent }}
-        >
-          {product.tags[0]}
-        </span>
         <h3 className="absolute bottom-5 left-5 right-5 font-heading text-2xl font-semibold text-white">
           {product.name}
         </h3>

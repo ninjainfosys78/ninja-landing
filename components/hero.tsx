@@ -13,15 +13,15 @@ interface HeroProps {
   children?: React.ReactNode
 }
 
-const HERO_ACCENT_ON_DARK = "#FF5A61"
-const HERO_GRADIENT_TEXT = "linear-gradient(90deg, #6EA0FF 0%, #A78BFA 50%, #FF5A61 100%)"
+// Sampled from the logo's blue swoosh (public/logo.png) so the rotating
+// word matches the brand mark exactly rather than an unrelated palette.
+const HERO_LOGO_BLUE = "#0A45A7"
 
 export default function Hero({ showContent = true, backgroundOnly = false, children }: HeroProps) {
   const { language } = useLanguage()
   const content =
     language === "en"
       ? {
-          label: "ESTABLISHED VISIONARY STRATEGY",
           titleLine1: "Turning Intent",
           titleLine2: "into",
           titleItalic: "Infrastructure",
@@ -30,7 +30,6 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
           cta2: "Our Methodology",
         }
       : {
-          label: "स्थापित दूरदर्शी रणनीति",
           titleLine1: "इरादालाई",
           titleLine2: "रूपान्तरण",
           titleItalic: "पूर्वाधारमा",
@@ -69,23 +68,6 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                 show: { transition: { staggerChildren: 0.14, delayChildren: 0.1 } },
               }}
             >
-              {/* Label */}
-              <motion.div
-                className="mb-8 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.06] px-5 py-2 backdrop-blur"
-                variants={{
-                  hidden: { opacity: 0, y: 16 },
-                  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-                }}
-              >
-                <span aria-hidden="true" className="h-2 w-2 animate-pulse rounded-full" style={{ backgroundColor: HERO_ACCENT_ON_DARK }} />
-                <span
-                  className="text-[11px] font-bold uppercase tracking-[0.22em]"
-                  style={{ color: HERO_ACCENT_ON_DARK }}
-                >
-                  {content.label}
-                </span>
-              </motion.div>
-
               {/* Headline */}
               <h1
                 id="hero-title"
@@ -106,10 +88,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                   className="block font-extrabold not-italic tracking-tight overflow-hidden"
                   style={{
                     fontSize: "clamp(40px, 5.6vw, 72px)",
-                    backgroundImage: HERO_GRADIENT_TEXT,
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
+                    color: HERO_LOGO_BLUE,
                   }}
                   variants={{
                     hidden: { opacity: 0, y: 40 },

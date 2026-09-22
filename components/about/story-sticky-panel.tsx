@@ -38,12 +38,10 @@ export default function StoryStickyPanel({
         <br />
         <span className="pl-4 lg:pl-10 text-[#2563EB]">{titleSecondWord}</span>
       </h3>
-      <div className="h-1 w-20 bg-[#2563EB] mb-8" />
-      <p className="text-base lg:text-lg text-foreground/50 leading-relaxed max-w-sm font-light">
+      <div className="h-1 w-20 bg-gradient-to-r from-[#2563EB] to-[#E31B23] mb-8 rounded-full" />
+      <p className="text-base lg:text-lg text-foreground/70 leading-relaxed max-w-sm font-normal">
         {description}
       </p>
-
-
     </motion.div>
   );
 }

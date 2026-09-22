@@ -53,7 +53,7 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
     <main className="bg-background text-foreground min-h-screen">
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 grayscale blur-[8px] scale-110">
+        <div className="absolute inset-0 blur-[8px] scale-110">
            <Image
              src={bannerUrl || "/digital-infrastructure-network-city.jpg"}
              alt="Banner"
@@ -63,7 +63,7 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
         </div>
         <div className="absolute inset-0 hero-dark-overlay" />
 
-        <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16 mt-12">
+        <div className="relative mx-auto max-w-[1600px] px-6 lg:px-16 mt-12 text-center">
           <Link
             href="/solutions"
             className="inline-flex items-center gap-2 text-white/60 hover:text-[#2563EB] transition-colors mb-12 group"
@@ -71,12 +71,12 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
             <span className="text-xs font-bold uppercase tracking-widest">{t.backToSolutions}</span>
           </Link>
-          
-          <div className="max-w-4xl">
+
+          <div className="mx-auto max-w-4xl">
             <h1 className="text-5xl sm:text-6xl font-heading font-bold text-white leading-tight tracking-tighter mb-8">
               {title}
             </h1>
-            <p className="text-xl lg:text-3xl text-white/70 font-light leading-relaxed max-w-2xl">
+            <p className="mx-auto text-xl lg:text-3xl text-white/70 font-light leading-relaxed max-w-2xl">
               {description}
             </p>
           </div>
@@ -117,7 +117,7 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
                    src={solution.imageUrl} 
                    alt={title} 
                    fill 
-                   className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                   className="object-cover transition-all duration-1000"
                  />
                )}
             </div>

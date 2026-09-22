@@ -17,7 +17,7 @@ export default function ProjectCard({ title, blurb, category, image }: ProjectCa
         <img
           src={image || FALLBACK_IMAGE}
           alt={title}
-          className="h-full w-full object-cover grayscale-[40%] transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+          className="h-full w-full object-cover transition-all duration-700 group-hover:scale-105"
           onError={(e) => {
             const target = e.currentTarget;
             if (target.src.endsWith(FALLBACK_IMAGE)) return;

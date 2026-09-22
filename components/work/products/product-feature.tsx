@@ -22,8 +22,8 @@ export default function ProductFeature({ product, index }: ProductFeatureProps) 
         className={isReversed ? "lg:order-2" : undefined}
         initial={{ opacity: 0, x: isReversed ? 60 : -60 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.9, ease: EASE_OUT }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 1.4, ease: EASE_OUT }}
       >
         <ProductImageFrame src={product.image} alt={product.name} accent={product.accent} />
       </motion.div>
@@ -31,8 +31,8 @@ export default function ProductFeature({ product, index }: ProductFeatureProps) 
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.9, delay: 0.15, ease: EASE_OUT }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 1.4, delay: 0.3, ease: EASE_OUT }}
       >
         <h3 className="mt-4 font-heading text-4xl font-semibold tracking-tight text-[#0b0d12] sm:text-5xl">
           {product.name}

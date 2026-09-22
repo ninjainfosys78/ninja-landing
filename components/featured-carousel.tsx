@@ -3,24 +3,30 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, type Variants } from "framer-motion";
+import { motion, useInView, type Variants } from "framer-motion";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
 
 const AUTOPLAY_MS = 6000;
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+const IMAGE_REVEAL_SECONDS = 1.1;
+const TEXT_ENTRANCE_DELAY_SECONDS = 0.7;
+const TEXT_SLIDE_DISTANCE_PX = 80;
+const IMAGE_HIDDEN_CLIP = "inset(0 100% 0 0)";
+const IMAGE_SHOWN_CLIP = "inset(0 0% 0 0)";
 
 const textStagger: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
+  show: { transition: { staggerChildren: 0.14, delayChildren: TEXT_ENTRANCE_DELAY_SECONDS } },
 };
 
 const textItem: Variants = {
-  hidden: { opacity: 0, y: 28, filter: "blur(6px)" },
+  hidden: { opacity: 0, x: TEXT_SLIDE_DISTANCE_PX, filter: "blur(6px)" },
   show: {
     opacity: 1,
-    y: 0,
+    x: 0,
     filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.8, ease: EASE_OUT },
   },
 };
 
@@ -76,6 +82,8 @@ export default function FeaturedCarousel() {
   const [current, setCurrent] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.35 });
   const { language } = useLanguage();
 
   const next = useCallback(() => {
@@ -87,24 +95,30 @@ export default function FeaturedCarousel() {
   }, []);
 
   useEffect(() => {
-    if (!isHovered) {
+    if (isInView && !isHovered) {
       timerRef.current = setInterval(next, AUTOPLAY_MS);
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [next, isHovered]);
+  }, [next, isHovered, isInView]);
 
   const labels = {
     readMore: language === "en" ? "Read more" : "थप पढ्नुहोस्",
   };
 
   return (
-    <section className="relative w-full h-[600px] md:h-[700px] overflow-hidden bg-black group"
+    <section ref={sectionRef} className="relative w-full h-[600px] md:h-[700px] overflow-hidden bg-black group"
              onMouseEnter={() => setIsHovered(true)}
              onMouseLeave={() => setIsHovered(false)}>
 
-      {/* Slides */}
+      {/* Slides — the picture wipes in from the left the first time the section scrolls into view */}
+      <motion.div
+        className="absolute inset-0"
+        initial={{ clipPath: IMAGE_HIDDEN_CLIP }}
+        animate={{ clipPath: isInView ? IMAGE_SHOWN_CLIP : IMAGE_HIDDEN_CLIP }}
+        transition={{ duration: IMAGE_REVEAL_SECONDS, ease: EASE_OUT }}
+      >
       {ITEMS.map((item, idx) => {
         const title = language === "ne" ? item.title_ne : item.title;
         const description = language === "ne" ? item.description_ne : item.description;
@@ -142,7 +156,7 @@ export default function FeaturedCarousel() {
                 className="max-w-2xl"
                 variants={textStagger}
                 initial="hidden"
-                animate={idx === current ? "show" : "hidden"}
+                animate={idx === current && isInView ? "show" : "hidden"}
               >
                 <motion.div variants={textItem} className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#2563EB] mb-4">
                   {category}
@@ -183,6 +197,7 @@ export default function FeaturedCarousel() {
           </div>
         );
       })}
+      </motion.div>
 
       {/* Navigation Buttons */}
       <div className="absolute bottom-12 left-6 sm:left-8 lg:left-12 2xl:left-16 z-20 flex items-center gap-4">

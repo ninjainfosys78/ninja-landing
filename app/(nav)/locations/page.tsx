@@ -59,7 +59,7 @@ export default function LocationsPage() {
           <div className="grid grid-cols-1 max-w-2xl gap-12">
             {offices.map((office, idx) => (
               <div key={idx} className="bg-white border border-[#0b0d12]/10 rounded-lg overflow-hidden group transition-all duration-300">
-                <div className="h-64 grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div className="h-64 transition-all duration-500">
                   <iframe
                     src={office.mapUrl}
                     width="100%"

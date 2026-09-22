@@ -10,7 +10,6 @@ import {
   Lightbulb,
 } from "lucide-react";
 import type { TeamMember } from "@/lib/team";
-import { isLeadershipRole } from "@/lib/team-groups";
 import { toTimelineEntry } from "@/lib/story/milestone-mapping";
 import type { StoryMilestone } from "@/lib/story/story-milestone";
 
@@ -21,8 +20,8 @@ export interface TimelineEntry {
 }
 
 // Static bilingual copy for the About page, kept out of the page component
-// since it's pure data, not UI logic — the leadership and team lists are the
-// only parts that are dynamic (sourced from DCM via teamMembers/teamGridMembers).
+// since it's pure data, not UI logic — the leadership/team lists are the
+// only parts that are dynamic (sourced from DCM).
 export function getAboutContent(
   language: "en" | "ne",
   teamMembers: TeamMember[],
@@ -37,11 +36,15 @@ export function getAboutContent(
     bio: language === "en" ? m.bio_en : m.bio_ne || m.bio_en,
   });
 
-  // Anyone authored under DCM "leadership" is a leader by placement; role
-  // keywords only promote people who were added to the general "team" list.
-  const promoted = teamGridMembers.filter((m) => isLeadershipRole(m.role));
-  const leaders = [...teamMembers, ...promoted].map(mapMember);
-  const team = teamGridMembers.filter((m) => !isLeadershipRole(m.role)).map(mapMember);
+  // Which group someone belongs to is decided directly in the DCM admin
+  // panel by which content bucket they're authored under (leadership /
+  // team) — not guessed from role-text keywords. getTeamMembers() sorts the
+  // founder first (see LEADERSHIP_DISPLAY_ORDER in lib/team.ts), so they
+  // get their own spotlight row; everyone else in "leadership", plus
+  // everyone in "team", shares one grid ("Our Team").
+  const leaders = teamMembers.map(mapMember);
+  const [founder, ...restLeaders] = leaders;
+  const otherLeaders = [...restLeaders, ...teamGridMembers.map(mapMember)];
 
   const staticContent = language === "en"
     ? {
@@ -125,10 +128,10 @@ export function getAboutContent(
           { icon: Lightbulb, title: "Pragmatic Innovation", body: "We don't chase hype. We apply new technologies like AI and Cloud-Native patterns only when they drive real business outcomes." }
         ],
         leadershipTitle: "Our Team",
-        leaders,
+        founderEyebrow: "Leadership",
+        founder,
         teamEyebrow: "Our Team",
-        teamSubtitle: "Meet the developers and support specialists whose passion and commitment to excellence fuel our success.",
-        team,
+        otherLeaders,
       }
     : {
         who: "हामी को हौं",
@@ -211,10 +214,10 @@ export function getAboutContent(
           { icon: Lightbulb, title: "व्यावहारिक नवाचार", body: "हामी केवल चर्चाको पछि लाग्दैनौं। हामी एआई जस्ता नयाँ प्रविधिहरू प्रयोग गर्छौं जसले वास्तविक नतिजा दिन्छ।" }
         ],
         leadershipTitle: "हाम्रो टिम",
-        leaders,
+        founderEyebrow: "नेतृत्व",
+        founder,
         teamEyebrow: "हाम्रो टिम",
-        teamSubtitle: "उत्कृष्टताप्रति समर्पित हाम्रा विकासकर्ता र सहयोग टिमलाई भेट्नुहोस्, जसको लगनले हाम्रो सफलतालाई अघि बढाउँछ।",
-        team,
+        otherLeaders,
       };
 
   // DCM-authored milestones replace the built-in timeline as soon as any exist.

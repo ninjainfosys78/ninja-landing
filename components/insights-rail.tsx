@@ -1,10 +1,16 @@
 "use client";
 
-import { ArrowRight, Clock } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
 import { useLanguage } from "@/components/LanguageProvider";
-import { Reveal, RevealGroup, RevealItem, StaggerWords } from "@/components/ui/reveal";
+import { RevealGroup, RevealItem } from "@/components/ui/reveal";
+
+const SLOW_REVEAL_SECONDS = 1.3;
+const SLOW_REVEAL_STAGGER_SECONDS = 0.25;
+const SLOW_REVEAL_AMOUNT = 0.3;
+import { getInsightCopy } from "@/components/home/insights/insight-copy";
+import InsightFeatureCard from "@/components/home/insights/insight-feature-card";
+import InsightListCard from "@/components/home/insights/insight-list-card";
+import InsightsSectionHeader from "@/components/home/insights/insights-section-header";
+import type { InsightStory } from "@/components/home/insights/insight-story";
 
 export type InsightCard = {
   title: string;
@@ -52,144 +58,51 @@ const DUMMY_INSIGHTS: InsightCard[] = [
   },
 ];
 
-export default function InsightsRail({
-  language: propLanguage,
-  insights,
-}: InsightsRailProps) {
+function toStory(insight: InsightCard, language: "en" | "ne"): InsightStory {
+  const isNepali = language === "ne";
+  return {
+    url: insight.url,
+    title: isNepali ? insight.title_ne || insight.title : insight.title,
+    deck: isNepali ? insight.deck_ne || insight.deck : insight.deck,
+    readTime: insight.readTime,
+    image: insight.image,
+  };
+}
+
+const listNumber = (index: number) => String(index + 2).padStart(2, "0");
+
+export default function InsightsRail({ language: propLanguage, insights }: InsightsRailProps) {
   const { language: ctxLanguage } = useLanguage();
-  const language = propLanguage ?? ctxLanguage ?? "en";
+  const language: "en" | "ne" = propLanguage ?? ctxLanguage ?? "en";
+  const copy = getInsightCopy(language);
 
-  const content =
-    language === "en"
-      ? {
-        title: "Blogs",
-        viewAll: "View all blogs",
-        readMore: "Read more",
-      }
-      : {
-        title: "ब्लगहरू",
-        viewAll: "सबै ब्लगहरू हेर्नुहोस्",
-        readMore: "थप पढ्नुहोस्",
-      };
-
-  const safeInsights: InsightCard[] =
-    Array.isArray(insights) && insights.length > 0 ? insights : DUMMY_INSIGHTS;
+  const source = Array.isArray(insights) && insights.length > 0 ? insights : DUMMY_INSIGHTS;
+  const [featured, ...rest] = source.map((insight) => toStory(insight, language));
 
   return (
     <section
       id="insights"
-      className="py-16 md:py-24 relative overflow-hidden"
-      style={{ backgroundColor: 'var(--page-bg)', color: '#0b0d12' }}
+      className="relative overflow-hidden border-y border-[#D7E4FA] py-20 md:py-28"
+      style={{ backgroundColor: "var(--page-bg)", color: "#0b0d12" }}
       aria-labelledby="insights-title"
     >
-      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
-        <Reveal className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 sm:mb-16 gap-4">
-          <h2
-            id="insights-title"
-            className="text-[38px] md:text-[48px] leading-tight font-bold"
-            style={{ color: '#0b0d12' }}
-          >
-            <StaggerWords text={content.title} amount={0.6} />
-          </h2>
 
-          <Link
-            href="/blogs"
-            className="hidden md:flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors flex-shrink-0 hover:text-[#2563EB] group"
-            style={{ color: '#0b0d12' }}
-          >
-            {content.viewAll}
-            <ArrowRight
-              size={16}
-              className="transition-transform group-hover:translate-x-1"
-            />
-          </Link>
-        </Reveal>
+      <div className="relative mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12">
+        <InsightsSectionHeader copy={copy} />
 
-        <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {safeInsights.map((insight, idx) => (
-            <RevealItem
-              key={insight.url}
-              className={`group relative cursor-pointer ${idx === 0 ? "md:col-span-2 md:row-span-2" : ""
-                }`}
-            >
-              <Link
-                href={insight.url}
-                className="relative flex flex-col h-full overflow-hidden transition-all duration-500 hover:-translate-y-1 bg-white border border-black/10 hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)]"
-              >
-                {/* Top accent bar */}
-                <div className="h-[3px] w-full bg-gradient-to-r from-[#E31B23] to-[#2563EB] opacity-70" />
+        <RevealGroup className="mt-14 grid gap-6 lg:grid-cols-12 lg:gap-8" amount={SLOW_REVEAL_AMOUNT} stagger={SLOW_REVEAL_STAGGER_SECONDS}>
+          <RevealItem className="lg:col-span-7" duration={SLOW_REVEAL_SECONDS}>
+            <InsightFeatureCard story={featured} featuredLabel={copy.featured} readLabel={copy.readArticle} />
+          </RevealItem>
 
-
-                {/* Diagonal shine sweep */}
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 z-10 pointer-events-none overflow-hidden"
-                >
-                  <div
-                    className="absolute inset-y-0 -inset-x-full opacity-0 group-hover:opacity-100 group-hover:[animation:shine-sweep_1.1s_ease]"
-                    style={{
-                      background: "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%)",
-                    }}
-                  />
-                </div>
-
-                <div className={`relative overflow-hidden ${idx === 0 ? "flex-1 min-h-[350px] md:min-h-[500px]" : "h-[200px] sm:h-[240px]"}`}>
-                  <Image
-                    src={insight.image || "/placeholder.jpg"}
-                    alt={insight.title}
-                    fill
-                    sizes={idx === 0 ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 100vw, 33vw"}
-                    className="object-cover object-top grayscale transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:scale-110"
-                  />
-                </div>
-
-                <div className={`p-5 sm:p-6 ${idx === 0 ? "md:p-8 md:pt-10 mt-auto" : ""}`}>
-                  {insight.readTime && (
-                    <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                      <span className="flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-[#2563EB]">
-                        <Clock size={12} />
-                        {insight.readTime}
-                      </span>
-                    </div>
-                  )}
-
-                  <h3
-                    className={`font-bold mb-2 sm:mb-3 text-balance transition-colors group-hover:text-[#2563EB] ${idx === 0
-                        ? "text-xl sm:text-2xl md:text-3xl"
-                        : "text-lg sm:text-xl"
-                      }`}
-                    style={{ color: '#0b0d12' }}
-                  >
-                    {language === "ne" ? (insight.title_ne || insight.title) : insight.title}
-                  </h3>
-
-                  <p className="text-sm leading-relaxed text-pretty line-clamp-3" style={{ color: 'rgba(11,13,18,0.6)' }}>
-                    {language === "ne" ? (insight.deck_ne || insight.deck) : insight.deck}
-                  </p>
-
-                  <div className="flex items-center gap-2 mt-4 text-sm font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity text-[#2563EB]">
-                    {content.readMore}
-                    <ArrowRight
-                      size={14}
-                      className="transition-transform group-hover:translate-x-1"
-                    />
-                  </div>
-                </div>
-              </Link>
-            </RevealItem>
-          ))}
+          <div className="flex flex-col gap-6 lg:col-span-5 lg:gap-8">
+            {rest.map((story, index) => (
+              <RevealItem key={story.url} className="flex-1" duration={SLOW_REVEAL_SECONDS}>
+                <InsightListCard story={story} number={listNumber(index)} />
+              </RevealItem>
+            ))}
+          </div>
         </RevealGroup>
-
-        <div className="mt-8 sm:mt-12 text-center md:hidden">
-          <Link
-            href="/blogs"
-            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:text-[#2563EB]"
-            style={{ color: '#0b0d12' }}
-          >
-            {content.viewAll}
-            <ArrowRight size={16} />
-          </Link>
-        </div>
       </div>
     </section>
   );

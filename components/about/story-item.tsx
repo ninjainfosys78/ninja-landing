@@ -30,9 +30,19 @@ const StoryItem = forwardRef<HTMLDivElement, StoryItemProps>(
       <div
         ref={ref}
         className={`relative group origin-left transition-all duration-500 ${
-          isActive ? "opacity-100 scale-100" : "opacity-40 scale-[0.98]"
+          isActive ? "opacity-100 scale-100" : "opacity-75 scale-[0.98]"
         }`}
       >
+        {/* Active-chapter spotlight — a soft glow card instead of just
+            dimming everything else, so the current entry reads as
+            "in focus" rather than the rest reading as barely-there. */}
+        <div
+          aria-hidden
+          className={`absolute -inset-x-6 -inset-y-6 -z-10 rounded-3xl bg-gradient-to-br from-[#2563EB]/[0.06] to-transparent transition-opacity duration-500 lg:-inset-x-10 ${
+            isActive ? "opacity-100" : "opacity-0"
+          }`}
+        />
+
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -46,14 +56,14 @@ const StoryItem = forwardRef<HTMLDivElement, StoryItemProps>(
 
             <motion.h4
               variants={itemVariants}
-              className="text-xl lg:text-3xl font-heading font-semibold text-foreground mb-4 tracking-tight"
+              className="text-xl lg:text-3xl font-heading font-bold text-foreground mb-4 tracking-tight"
             >
               {entry.title}
             </motion.h4>
 
             <motion.p
               variants={itemVariants}
-              className="text-base lg:text-lg text-foreground/60 leading-relaxed max-w-2xl font-light"
+              className="text-base lg:text-lg text-foreground/75 leading-relaxed max-w-2xl font-normal"
             >
               {entry.text}
             </motion.p>

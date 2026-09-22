@@ -38,9 +38,9 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
           <div className="absolute inset-0 hero-dark-overlay" />
 
           <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
-            <div className="max-w-[1200px] text-left">
+            <div className="mx-auto max-w-[1200px] text-center">
               <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/80">
-                <ol className="flex items-center gap-3">
+                <ol className="flex items-center justify-center gap-3">
                   <li>
                     <Link href="/" className="font-medium tracking-wide hover:text-white/80">
                       {labels.home}

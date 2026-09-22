@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { ArrowRight, Eye, Target, Heart, type LucideIcon } from "lucide-react";
@@ -30,54 +30,19 @@ interface Pillar {
   icon: LucideIcon;
   title: string;
   text: string;
-  color: string;
 }
 
 function CapabilityCard({ pillar }: { pillar: Pillar }) {
-  const cardRef = useRef<HTMLDivElement>(null);
   const Icon = pillar.icon;
 
-  // Cursor-tracked spotlight — set as CSS custom properties directly on the
-  // node so the glow follows the pointer without a React re-render per move.
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    cardRef.current!.style.setProperty("--spot-x", `${event.clientX - rect.left}px`);
-    cardRef.current!.style.setProperty("--spot-y", `${event.clientY - rect.top}px`);
-  };
-
   return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      className="group relative h-full overflow-hidden rounded-3xl border border-[#d7e4fa] bg-white p-8 shadow-[0_1px_2px_rgba(10,31,77,0.04),0_18px_40px_-18px_rgba(10,31,77,0.16)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)] sm:p-10"
-      style={{ color: pillar.color }}
-    >
-      {/* Spotlight glow that follows the cursor — the premium hover cue */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{
-          background: `radial-gradient(280px circle at var(--spot-x, 50%) var(--spot-y, 50%), ${pillar.color}17, transparent 70%)`,
-        }}
-      />
-
-      <div className="relative mb-8">
-        <div
-          className="inline-flex rounded-2xl p-4 text-white transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
-          style={{ backgroundColor: pillar.color, boxShadow: `0 12px 24px -10px ${pillar.color}` }}
-        >
-          <Icon size={28} className="text-white" />
-        </div>
-      </div>
-
-      <h3 className="relative text-2xl font-heading font-bold text-[#0b0d12] mb-4 group-hover:text-current transition-colors">
-        {pillar.title}
-      </h3>
-      <p className="relative text-[#0b0d12]/60 leading-relaxed font-sans text-[16px] mb-8">
-        {pillar.text}
-      </p>
-    </div>
+    <article className="group flex h-full flex-col items-center rounded-[1.25rem] border border-[#d7e4fa] bg-white p-8 py-12 text-center shadow-[0_1px_2px_rgba(10,31,77,0.04),0_14px_34px_-16px_rgba(10,31,77,0.14)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_36px_-18px_rgba(10,31,77,0.28)] lg:p-10 lg:py-14">
+      <span className="icon-tile mb-7 h-16 w-16 transition-transform duration-500 group-hover:scale-105">
+        <Icon size={30} />
+      </span>
+      <h3 className="mb-3 text-center font-heading text-xl font-bold text-foreground">{pillar.title}</h3>
+      <p className="text-center text-[15px] leading-relaxed text-foreground/65">{pillar.text}</p>
+    </article>
   );
 }
 
@@ -95,20 +60,17 @@ export default function AboutUsSection() {
             {
               icon: Eye,
               title: "Our Purpose",
-              text: "Build trustworthy software that helps teams move faster, operate safely, and deliver real outcomes.",
-              color: "#2563EB"
+              text: "Build trustworthy software that helps teams move faster, operate safely, and deliver real outcomes."
             },
             {
               icon: Target,
               title: "Our Mission",
-              text: "Enable enterprises with modern engineering practices and craft-focused teams—shipping measurable value.",
-              color: "#E31B23"
+              text: "Enable enterprises with modern engineering practices and craft-focused teams—shipping measurable value."
             },
             {
               icon: Heart,
               title: "Our Values",
-              text: "Craft and clarity, integrity and ownership, partner mindset, and security by default.",
-              color: "#2563EB"
+              text: "Craft and clarity, integrity and ownership, partner mindset, and security by default."
             },
           ],
           cta: "Learn more about us",
@@ -122,20 +84,17 @@ export default function AboutUsSection() {
             {
               icon: Eye,
               title: "हाम्रो उद्देश्य",
-              text: "विश्वासयोग्य सफ्टवेयर बनाउनु—जसले टिमलाई छिटो र सुरक्षित रूपमा काम गर्न मद्दत गर्छ।",
-              color: "#2563EB"
+              text: "विश्वासयोग्य सफ्टवेयर बनाउनु—जसले टिमलाई छिटो र सुरक्षित रूपमा काम गर्न मद्दत गर्छ।"
             },
             {
               icon: Target,
               title: "हाम्रो मिशन",
-              text: "आधुनिक इन्जिनियरिङ अभ्यास र कौशल केन्द्रित टोलीमार्फत मापनयोग्य मूल्य डेलिभर गराउने।",
-              color: "#E31B23"
+              text: "आधुनिक इन्जिनियरिङ अभ्यास र कौशल केन्द्रित टोलीमार्फत मापनयोग्य मूल्य डेलिभर गराउने।"
             },
             {
               icon: Heart,
               title: "हाम्रो मूल्यहरू",
-              text: "कला र स्पष्टता, इमानदारी र स्वामित्व, साझेदारी सोच, र सुरक्षा-पहिले।",
-              color: "#2563EB"
+              text: "कला र स्पष्टता, इमानदारी र स्वामित्व, साझेदारी सोच, र सुरक्षा-पहिले।"
             },
           ],
           cta: "हाम्रो बारेमा थप जान्नुहोस्",
@@ -178,7 +137,7 @@ export default function AboutUsSection() {
           </Reveal>
         </div>
 
-        {/* Capability cards — with a cursor-tracked spotlight on hover */}
+        {/* Capability cards — same look as the "Our Core" cards on the About page */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
           initial="hidden"

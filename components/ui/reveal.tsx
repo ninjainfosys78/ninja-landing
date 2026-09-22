@@ -40,37 +40,37 @@ export function Reveal({
   );
 }
 
-const staggerContainer: Variants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0,
-    },
-  },
-};
+const DEFAULT_STAGGER_SECONDS = 0.12;
+const DEFAULT_ITEM_DURATION_SECONDS = 0.65;
 
-const staggerItem: Variants = {
+const staggerContainer = (stagger: number): Variants => ({
+  hidden: {},
+  show: { transition: { staggerChildren: stagger, delayChildren: 0 } },
+});
+
+const staggerItem = (duration: number): Variants => ({
   hidden: { opacity: 0, y: 32, scale: 0.96, filter: "blur(5px)" },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
     filter: "blur(0px)",
-    transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration, ease: [0.16, 1, 0.3, 1] },
   },
-};
+});
 
 export function RevealGroup({
   children,
   className,
   once = true,
   amount = 0.05,
+  stagger = DEFAULT_STAGGER_SECONDS,
 }: {
   children: React.ReactNode;
   className?: string;
   once?: boolean;
   amount?: number;
+  stagger?: number;
 }) {
   return (
     <motion.div
@@ -78,7 +78,7 @@ export function RevealGroup({
       initial="hidden"
       whileInView="show"
       viewport={{ once, amount, margin: "0px 0px -5% 0px" }}
-      variants={staggerContainer}
+      variants={staggerContainer(stagger)}
     >
       {children}
     </motion.div>
@@ -88,12 +88,14 @@ export function RevealGroup({
 export function RevealItem({
   children,
   className,
+  duration = DEFAULT_ITEM_DURATION_SECONDS,
 }: {
   children: React.ReactNode;
   className?: string;
+  duration?: number;
 }) {
   return (
-    <motion.div className={className} variants={staggerItem}>
+    <motion.div className={className} variants={staggerItem(duration)}>
       {children}
     </motion.div>
   );

@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import CookieConsent from "@/components/cookie-consent"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
+import PageTransition from "@/components/page-transition"
 import { Toaster } from "sonner"
 
 const ibm = IBM_Plex_Sans({
@@ -54,7 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" forcedTheme="dark" enableSystem={false}>
           <LanguageProvider>
             <Header />
-            {children}
+            <PageTransition>{children}</PageTransition>
             <Footer />
             <CookieConsent />
           </LanguageProvider>
