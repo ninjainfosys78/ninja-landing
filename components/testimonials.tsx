@@ -66,11 +66,11 @@ export default function Testimonials() {
       records.reduce<Testimonial[]>((acc, r) => {
         const name =
           language === "en"
-            ? r.nameEn
+            ? r.nameEn || r.nameNe
             : r.nameNe || r.nameEn
         const quote =
           language === "en"
-            ? r.quoteEn
+            ? r.quoteEn || r.quoteNe
             : r.quoteNe || r.quoteEn
         if (!name || !quote) return acc
         acc.push({
