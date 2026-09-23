@@ -4,33 +4,40 @@ import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import AutoReveal from "@/components/ui/auto-reveal";
 
-const TRANSITION = { duration: 0.4, ease: [0.16, 1, 0.3, 1] as const };
+const TRANSITION = { duration: 0.35, ease: [0.16, 1, 0.3, 1] as const };
 
 /**
- * Cross-fades between pages instead of the outgoing page just vanishing the
- * instant navigation starts (which is what made routing feel like a hard
- * refresh). Lives in the root layout — which never remounts on navigation —
- * so AnimatePresence can hold the outgoing page on screen, fading it out,
- * while the incoming one fades in. A `template.tsx` can't do this: Next
- * tears down and remounts it per navigation, so there's never a moment where
- * both the old and new page exist for AnimatePresence to animate between.
+ * Cross-fades between pages: the outgoing page fades out while the incoming
+ * one fades in, at the same time, in the same spot — so there's never a
+ * frame with nothing on screen (the "blink" a plain fade-in-only version has
+ * the instant the old page unmounts) and never a moment where both pages are
+ * visible stacked on top of each other in the document flow (what happens if
+ * you drop AnimatePresence's `mode="wait"` without also taking the exiting
+ * page out of flow).
+ *
+ * Both pages share one CSS Grid cell (`grid-area: 1 / 1`) so they overlap
+ * instead of stacking vertically — no `position: absolute` bookkeeping
+ * needed, and no dependency on a positioned ancestor.
  */
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={pathname}
-        data-reveal-root
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={TRANSITION}
-      >
-        <AutoReveal />
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <div className="grid">
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={pathname}
+          data-reveal-root
+          className="[grid-area:1/1]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={TRANSITION}
+        >
+          <AutoReveal />
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }

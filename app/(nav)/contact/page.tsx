@@ -207,8 +207,9 @@ export default function ContactPage() {
 
             <div className="hidden md:block">
               <div className="h-[620px] w-full overflow-hidden" aria-hidden>
-                <div className="h-full w-full contact-clip">
+                <div className="relative h-full w-full contact-clip">
                   <img src="/contact.png" alt="" className="w-full h-full object-cover object-right" />
+                  <div className="absolute inset-0 bg-[#0A1F4D]/80 mix-blend-color" />
                 </div>
               </div>
             </div>

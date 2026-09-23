@@ -25,7 +25,7 @@ export default function FounderSpotlight({ eyebrow, title, accent, member }: Fou
           </h3>
         </div>
 
-        <RevealGroup className="flex flex-row items-start gap-6 overflow-hidden rounded-3xl border border-[#d7e4fa] bg-white p-4 shadow-[0_1px_2px_rgba(10,31,77,0.04),0_14px_34px_-16px_rgba(10,31,77,0.14)] sm:gap-12 sm:p-10 lg:gap-16 lg:p-14">
+        <RevealGroup className="flex max-w-7xl flex-row items-start gap-6 overflow-hidden rounded-3xl border border-[#d7e4fa] bg-white p-4 shadow-[0_1px_2px_rgba(10,31,77,0.04),0_14px_34px_-16px_rgba(10,31,77,0.14)] sm:gap-12 sm:p-10 lg:gap-16 lg:p-14">
           <RevealItem className="shrink-0">
             <div className="relative aspect-[4/5] w-28 overflow-hidden rounded-2xl bg-[#dbe8fd] sm:w-56 lg:w-72">
               <MemberPortrait name={member.name} image={member.image} />
@@ -40,7 +40,7 @@ export default function FounderSpotlight({ eyebrow, title, accent, member }: Fou
               {member.role}
             </p>
             {member.bio && (
-              <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[#0b0d12]/75 [overflow-wrap:anywhere] sm:line-clamp-6 sm:text-base lg:text-lg">
+              <p className="mt-2 line-clamp-3 max-w-2xl text-sm leading-relaxed text-[#0b0d12]/75 [overflow-wrap:anywhere] sm:line-clamp-6 sm:text-base lg:text-lg">
                 {member.bio}
               </p>
             )}

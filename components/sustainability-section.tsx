@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Landmark, HeartPulse, GraduationCap, Wallet, type LucideIcon } from "lucide-react";
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
 import { CountUp } from "@/components/ui/count-up";
@@ -34,6 +34,24 @@ const slideFromLeft: Variants = {
 // Achievement card's own lines still stagger bottom-up, one after another.
 const staggerLine = slideFromBottom;
 
+interface SolutionArea {
+  icon: LucideIcon;
+  label: string;
+}
+
+function SolutionAreaPill({ area }: { area: SolutionArea }) {
+  const Icon = area.icon;
+
+  return (
+    <div className="flex items-center gap-3 rounded-xl border border-[#d7e4fa] bg-white/80 px-4 py-3 shadow-[0_1px_2px_rgba(10,31,77,0.04),0_10px_24px_-14px_rgba(10,31,77,0.14)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2563EB]/35">
+      <span className="icon-tile h-9 w-9 flex-shrink-0 !rounded-lg">
+        <Icon size={17} />
+      </span>
+      <span className="text-sm font-semibold text-[#0b0d12]/80">{area.label}</span>
+    </div>
+  );
+}
+
 export default function SustainabilitySection() {
   const { language } = useLanguage();
   const imageWrapRef = useRef<HTMLDivElement>(null);
@@ -46,18 +64,34 @@ export default function SustainabilitySection() {
   const content =
     language === "en"
       ? {
-          category: "Digital Sustainability",
-          title: "Engineering a Greener Digital Future",
+          title: "Solutions Built for Every Institution",
           description:
-            "Architecting energy-efficient digital infrastructure and sustainable codebases that minimize carbon footprints without compromising high-stakes performance.",
-          cta: "Our Green IT Framework",
+            "From e-governance platforms to healthcare, education and fintech systems, we build custom web, mobile and cloud solutions that scale with your institution.",
+          cta: "Explore Our Solutions",
+          eyebrow: "Platform Delivery",
+          statLabel1: "Uptime Goal",
+          statLabel2: "Solution Areas",
+          solutionAreas: [
+            { icon: Landmark, label: "E-Governance" },
+            { icon: HeartPulse, label: "Healthcare" },
+            { icon: GraduationCap, label: "Education" },
+            { icon: Wallet, label: "Fintech" },
+          ],
         }
       : {
-          category: "डिजिटल दिगोपन",
-          title: "हरियाली डिजिटल भविष्यको निर्माण",
+          title: "प्रत्येक संस्थाका लागि समाधान",
           description:
-            "ऊर्जा-कुशल डिजिटल पूर्वाधार र दिगो कोडबेसहरूको निर्माण जसले उच्च-स्तरको प्रदर्शनमा सम्झौता नगरी कार्बन पदचिह्नलाई न्यूनीकरण गर्दछ।",
-          cta: "हाम्रो ग्रीन आईटी फ्रेमवर्क",
+            "सरकारी, स्वास्थ्य, शिक्षा र फिनटेक प्रणालीदेखि लिएर, हामी तपाईंको संस्थासँगै विस्तार हुने वेब, मोबाइल र क्लाउड समाधानहरू निर्माण गर्छौं।",
+          cta: "हाम्रा समाधानहरू हेर्नुहोस्",
+          eyebrow: "प्लेटफर्म डेलिभरी",
+          statLabel1: "अपटाइम लक्ष्य",
+          statLabel2: "समाधान क्षेत्रहरू",
+          solutionAreas: [
+            { icon: Landmark, label: "इ-गभर्नेन्स" },
+            { icon: HeartPulse, label: "स्वास्थ्य" },
+            { icon: GraduationCap, label: "शिक्षा" },
+            { icon: Wallet, label: "फिनटेक" },
+          ],
         };
 
   return (
@@ -65,6 +99,22 @@ export default function SustainabilitySection() {
       className="relative overflow-hidden py-12 lg:py-16 border-t"
       style={{ backgroundColor: "var(--page-bg)", borderColor: "rgba(11,13,18,0.06)" }}
     >
+      {/* Subtle noise + soft accent glows, matching the texture used on the About section */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.035] pointer-events-none"
+        style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 -left-20 h-[420px] w-[420px] rounded-full blur-[120px]"
+        style={{ backgroundColor: "#2563EB0a" }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-40 right-0 h-[420px] w-[420px] rounded-full blur-[120px]"
+        style={{ backgroundColor: "#E31B230a" }}
+      />
 
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-32 items-center">
@@ -77,13 +127,6 @@ export default function SustainabilitySection() {
             viewport={{ once: true, amount: 0.3, margin: "0px 0px -10% 0px" }}
             variants={staggerContainer}
           >
-            <motion.div variants={slideFromRight} className="flex items-center gap-4 mb-8">
-              <div className="h-[2px] w-12 bg-gradient-to-r from-[#E31B23] to-[#2563EB]" />
-              <div className="text-[12px] font-bold uppercase tracking-[0.4em] text-[#2563EB]">
-                {content.category}
-              </div>
-            </motion.div>
-
             <motion.h2
               variants={slideFromRight}
               className="text-4xl sm:text-6xl lg:text-7xl font-heading font-bold mb-10 leading-[1.05] tracking-tight text-[#0b0d12]"
@@ -92,9 +135,17 @@ export default function SustainabilitySection() {
               {content.title}
             </motion.h2>
 
-            <motion.p variants={slideFromBottom} className="text-xl text-[#0b0d12]/60 mb-12 leading-relaxed max-w-xl">
+            <motion.p variants={slideFromBottom} className="text-xl text-[#0b0d12]/60 mb-10 leading-relaxed max-w-xl">
               {content.description}
             </motion.p>
+
+            <motion.div variants={staggerContainer} className="grid grid-cols-2 gap-3 mb-12 max-w-md">
+              {content.solutionAreas.map((area, idx) => (
+                <motion.div key={idx} variants={staggerLine}>
+                  <SolutionAreaPill area={area} />
+                </motion.div>
+              ))}
+            </motion.div>
 
             <motion.div variants={slideFromBottom}>
               <Link
@@ -121,8 +172,8 @@ export default function SustainabilitySection() {
             <div ref={imageWrapRef} className="relative aspect-[1/1] overflow-hidden rounded-3xl border border-[#d7e4fa] bg-[#e8f1ff] shadow-xl shadow-[#0b0d12]/5">
               <motion.div className="absolute inset-0" style={{ scale: imgScale }}>
                 <Image
-                  src="/sustainability-construction.jpg"
-                  alt="Construction Sustainability"
+                  src="/digital-infrastructure-network-city.jpg"
+                  alt="Digital infrastructure powering government and institutional platforms"
                   fill
                   className="object-cover transition-all duration-1000 group-hover:scale-105 group-hover:brightness-110"
                   priority
@@ -143,7 +194,7 @@ export default function SustainabilitySection() {
                 <motion.div variants={staggerLine} className="flex items-center gap-4 mb-4">
                   <div className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse" />
                   <div className="text-white font-bold tracking-[0.2em] text-[10px] uppercase">
-                    {language === "en" ? "Operational Efficiency" : "सञ्चालन दक्षता"}
+                    {content.eyebrow}
                   </div>
                 </motion.div>
                 <motion.div variants={staggerLine} className="flex gap-8">
@@ -152,15 +203,15 @@ export default function SustainabilitySection() {
                       <CountUp to={99.9} decimals={1} suffix="%" />
                     </div>
                     <div className="text-white/40 text-[10px] uppercase">
-                      {language === "en" ? "Uptime Goal" : "अपटाइम लक्ष्य"}
+                      {content.statLabel1}
                     </div>
                   </div>
                   <div className="border-l border-white/10 pl-8">
                     <div className="text-[#2563EB] text-2xl font-bold mb-1">
-                      <CountUp to={-40} suffix="%" />
+                      <CountUp to={5} />
                     </div>
                     <div className="text-white/40 text-[10px] uppercase">
-                      {language === "en" ? "Carbon Offset" : "कार्बन अफसेट"}
+                      {content.statLabel2}
                     </div>
                   </div>
                 </motion.div>

@@ -37,6 +37,7 @@ const FALLBACK_TEAM: TeamMember[] = [
     name_ne: "रमेश क्षेत्री",
     role_ne: "संस्थापक र सीईओ",
     imageUrl: "/ceo.jpg",
+    linkedinUrl: "https://www.linkedin.com/in/rameshchhetriofficial/",
     bio_en: "He drives the company’s strategic vision and commitment to digital transformation. He focuses on delivering high-impact IT solutions and e-governance systems, bridging the gap between technical innovation and practical business needs.",
     bio_ne: "उहाँले कम्पनीको रणनीतिक दृष्टिकोण र डिजिटल रूपान्तरणप्रतिको प्रतिबद्धतालाई अगाडि बढाउनुहुन्छ। उहाँ प्राविधिक आविष्कार र व्यावहारिक व्यापारिक आवश्यकताहरूबीचको अन्तरलाई कम गर्दै उच्च-प्रभाव आईटी समाधानहरू र ई-सुशासन प्रणालीहरू प्रदान गर्नमा केन्द्रित हुनुहुन्छ।",
   },

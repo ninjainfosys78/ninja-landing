@@ -52,7 +52,6 @@ export default function AboutUsSection() {
   const content =
     language === "en"
       ? {
-          category: "Capabilities",
           title: "Engineered for excellence, built for scale.",
           description:
             "Ninja Infosys is an IT technical solution provider. Our dedicated technical professionals offer services in IT Consultancy, Software Development, and Project-based solutions with a mission to establish lasting professional relationships provided through reliable technology.",
@@ -76,7 +75,6 @@ export default function AboutUsSection() {
           cta: "Learn more about us",
         }
       : {
-          category: "क्षमताहरू",
           title: "उत्कृष्टताको लागि इन्जिनियर गरिएको, स्केलको लागि निर्मित।",
           description:
             "निन्जा इन्फोसिस एक आईटी प्राविधिक समाधान प्रदायक हो। हाम्रा समर्पित प्राविधिक पेशेवरहरूले आईटी परामर्श, सफ्टवेयर विकास, र परियोजना-आधारित समाधानहरूमा सेवाहरू प्रदान गर्दछन्।",
@@ -122,11 +120,6 @@ export default function AboutUsSection() {
       <div className="relative z-10 max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
         {/* Centered Header */}
         <div className="max-w-4xl mx-auto text-center mb-20">
-          <Reveal>
-            <div className="text-[12px] font-bold uppercase tracking-[0.3em] text-[#2563EB] mb-6">
-              {content.category}
-            </div>
-          </Reveal>
           <h2 className="text-4xl sm:text-5xl lg:text-7xl font-heading font-bold text-[#0b0d12] mb-8 leading-[1.1] tracking-tight">
             <StaggerWords text={content.title} amount={0.6} />
           </h2>

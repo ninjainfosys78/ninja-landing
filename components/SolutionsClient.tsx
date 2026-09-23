@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
@@ -12,7 +11,10 @@ import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getBannerByImgName } from "@/lib/banners";
 import { StaggerWords } from "@/components/ui/reveal";
-import SolutionDetailView from "@/components/solutions/detail/solution-detail-view";
+import BannerSubtitle from "@/components/ui/banner-subtitle";
+import SolutionOverview from "@/components/solutions/detail/solution-overview";
+import SolutionCapabilities from "@/components/solutions/detail/solution-capabilities";
+import { getSolutionDetailCopy } from "@/components/solutions/detail/solution-detail-copy";
 
 type Lang = "en" | "ne";
 type Key = "gov" | "edu" | "health" | "fin" | "corp";
@@ -192,13 +194,6 @@ const LEFT_NAV = [
   },
 ];
 
-const ALLOWED_CATEGORY_KEYS: Key[] = ["gov", "edu", "health", "fin", "corp"];
-
-function categoryFromParams(params: URLSearchParams | ReturnType<typeof useSearchParams>): Key | null {
-  const cat = (params.get("cat") || "").toLowerCase() as Key;
-  return ALLOWED_CATEGORY_KEYS.includes(cat) ? cat : null;
-}
-
 export default function SolutionsClient() {
   const { language } = useLanguage();
   const {
@@ -207,22 +202,11 @@ export default function SolutionsClient() {
     quoteOpen, openQuote, closeQuote
   } = useContactModals();
   const [searchOpen, setSearchOpen] = useState(false);
-  const router = useRouter();
-  const params = useSearchParams();
-  // Read the category straight from the URL on first render, not just from
-  // a post-mount effect — otherwise a fresh /solutions?cat=X visit (e.g. from
-  // the header dropdown) flashes the disabled bare-/solutions state for a
-  // frame before the category detail view appears.
-  const [active, setActive] = useState<Key | null>(() => categoryFromParams(params));
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
   useEffect(() => {
     getBannerByImgName("solutions").then((bannerUrlRaw) => setBannerUrl(bannerUrlRaw || null));
   }, []);
-
-  useEffect(() => {
-    setActive(categoryFromParams(params));
-  }, [params]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -238,18 +222,12 @@ export default function SolutionsClient() {
   }, []);
 
   const content = SOLUTIONS_CONTENT;
-  const detail = active ? content[active][language as Lang] : null;
-
-  const activate = (key: Key) => {
-    setActive(key);
-    router.replace(`/solutions?cat=${key}`);
-  };
-
-  // The bare /solutions listing (no ?cat=) is disabled — only the header
-  // dropdown's category links (?cat=gov, ?cat=edu, ...) render a page here.
-  if (!active) {
-    return null;
-  }
+  const copy = getSolutionDetailCopy(language as Lang);
+  const pageTitle = language === "en" ? "Solutions" : "समाधानहरू";
+  const pageSubtitle =
+    language === "en"
+      ? "Custom web, mobile and cloud solutions for government, healthcare, education and fintech institutions."
+      : "सरकारी, स्वास्थ्य, शिक्षा र फिनटेक संस्थाहरूका लागि अनुकूल वेब, मोबाइल र क्लाउड समाधानहरू।";
 
   return (
     <>
@@ -295,55 +273,45 @@ export default function SolutionsClient() {
                         <path d="M9 18l6-6-6-6" />
                       </svg>
                     </li>
-                    <li>
-                      <Link
-                        href="/solutions"
-                        onClick={() => setActive(null)}
-                        className="font-medium tracking-wide hover:text-white"
-                      >
-                        {language === "en" ? "SOLUTIONS" : "समाधान"}
-                      </Link>
+                    <li className="font-medium tracking-wide">
+                      {language === "en" ? "SOLUTIONS" : "समाधान"}
                     </li>
-                    {active && (
-                      <>
-                        <li aria-hidden className="inline-flex items-center">
-                          <svg
-                            viewBox="0 0 24 24"
-                            className="h-5 w-5 text-white/70"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
-                            <path d="M9 18l6-6-6-6" />
-                          </svg>
-                        </li>
-                        <li className="font-medium tracking-wide">
-                          {detail?.pageTitle}
-                        </li>
-                      </>
-                    )}
                   </ol>
                 </nav>
 
                 <h1 className="pt-4 text-5xl font-heading font-semibold text-white sm:text-6xl">
-                  <StaggerWords text={detail?.pageTitle ?? ""} />
+                  <StaggerWords text={pageTitle} />
                 </h1>
+                <BannerSubtitle>{pageSubtitle}</BannerSubtitle>
               </div>
             </div>
           </div>
         </section>
 
-        {active && detail && (
-          <SolutionDetailView
-            language={language as Lang}
-            active={active}
-            detail={detail}
-            tabs={LEFT_NAV.map((item) => ({ key: item.key, label: item.label[language as Lang] }))}
-            onSelect={activate}
-          />
-        )}
+        {LEFT_NAV.map((item) => {
+          const detail = content[item.key][language as Lang];
+          return (
+            <div id={item.key} key={item.key} className="scroll-mt-28">
+              <section className="relative overflow-hidden bg-white py-16 sm:py-24">
+                <div aria-hidden className="pointer-events-none absolute -right-40 top-10 h-[28rem] w-[28rem] rounded-full bg-[#2563EB]/[0.08] blur-3xl" />
+                <div className="relative mx-auto max-w-[1450px] px-6 sm:px-10">
+                  <SolutionOverview solution={item.key} label={detail.pageTitle} lead={detail.lead} />
+                </div>
+              </section>
 
-        <GlobalCTA 
+              <section className="py-16 sm:py-24" style={{ backgroundColor: "var(--page-bg-alt)" }}>
+                <div className="mx-auto max-w-[1450px] px-6 sm:px-10">
+                  <SolutionCapabilities
+                    title={copy.capabilitiesTitle}
+                    capabilities={[...detail.bulletsCol1, ...detail.bulletsCol2]}
+                  />
+                </div>
+              </section>
+            </div>
+          );
+        })}
+
+        <GlobalCTA
           onOfficesOpen={openOffices} 
           onBookingOpen={openBooking}
           onQuoteOpen={openQuote}

@@ -9,9 +9,9 @@ export const ABOUT_MENU_ITEMS: NavDropdownItem[] = [
 ];
 
 export const SOLUTIONS_MENU_ITEMS: NavDropdownItem[] = [
-  { label: "Government & Municipality", labelNe: "सरकार तथा नगरपालिका", href: "/solutions?cat=gov" },
-  { label: "Education", labelNe: "शिक्षा", href: "/solutions?cat=edu" },
-  { label: "Healthcare", labelNe: "स्वास्थ्य", href: "/solutions?cat=health" },
-  { label: "Fintech", labelNe: "फिनटेक", href: "/solutions?cat=fin" },
-  { label: "Corporate Solutions", labelNe: "कर्पोरेट समाधान", href: "/solutions?cat=corp" },
+  { label: "Government & Municipality", labelNe: "सरकार तथा नगरपालिका", href: "/solutions#gov" },
+  { label: "Education", labelNe: "शिक्षा", href: "/solutions#edu" },
+  { label: "Healthcare", labelNe: "स्वास्थ्य", href: "/solutions#health" },
+  { label: "Fintech", labelNe: "फिनटेक", href: "/solutions#fin" },
+  { label: "Corporate Solutions", labelNe: "कर्पोरेट समाधान", href: "/solutions#corp" },
 ];

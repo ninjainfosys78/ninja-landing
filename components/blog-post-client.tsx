@@ -23,7 +23,6 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
   const labels = {
     home: isNe ? "निन्जा इन्फोसिस" : "Ninja Infosys",
     insights: isNe ? "ब्लगहरू" : "Blogs",
-    back: isNe ? "← ब्लगहरूमा फर्कनुहोस्" : "← Back to Blogs",
   };
 
   return (
@@ -101,15 +100,6 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
           </div>
 
           <BlogPostBody source={displayContent} />
-
-          <div className="mt-12 pt-8 border-t border-foreground/10">
-            <Link
-              href="/blogs"
-              className="text-sm font-semibold uppercase tracking-widest text-foreground/60 hover:text-[#2563EB] transition"
-            >
-              {labels.back}
-            </Link>
-          </div>
         </div>
       </section>
     </main>

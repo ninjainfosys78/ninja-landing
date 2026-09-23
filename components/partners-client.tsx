@@ -67,7 +67,7 @@ export default function PartnersClient({ partners }: PartnersClientProps) {
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                   {items.map((p) => {
                     const displayName = isNe ? p.name_ne : p.name_en;
                     const displayDesc = isNe ? p.description_ne : p.description_en;
@@ -75,9 +75,9 @@ export default function PartnersClient({ partners }: PartnersClientProps) {
                     return (
                       <div
                         key={p.id}
-                        className="group relative bg-white border border-[#0b0d12]/10 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)] flex flex-col h-full"
+                        className="group relative bg-white border border-[#0b0d12]/10 p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)] flex flex-col h-full"
                       >
-                        <div className="h-48 flex items-center justify-center mb-8 bg-[#0b0d12]/[0.02] rounded-none overflow-hidden group-hover:bg-[#0b0d12]/[0.05] transition-all duration-500 p-4">
+                        <div className="h-24 flex items-center justify-center mb-4 bg-[#0b0d12]/[0.02] rounded-none overflow-hidden group-hover:bg-[#0b0d12]/[0.05] transition-all duration-500 p-2.5">
                           <div className="relative w-full h-full transform transition-transform duration-700 group-hover:scale-110">
                             <Image
                               src={p.logoUrl}
@@ -88,14 +88,14 @@ export default function PartnersClient({ partners }: PartnersClientProps) {
                           </div>
                         </div>
                         <div className="flex-grow">
-                          <h3 className="text-2xl font-heading font-bold text-[#0b0d12] mb-3">
+                          <h3 className="text-base font-heading font-bold text-[#0b0d12] mb-2">
                             {displayName}
                           </h3>
                           <p className="text-[#0b0d12]/60 leading-relaxed text-sm font-sans">
                             {displayDesc}
                           </p>
                         </div>
-                        <div className="mt-6 h-1 w-12 bg-[#2563EB]/20 group-hover:w-full transition-all duration-500" />
+                        <div className="mt-3 h-1 w-10 bg-[#2563EB]/20 group-hover:w-full transition-all duration-500" />
                       </div>
                     );
                   })}

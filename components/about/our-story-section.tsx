@@ -23,11 +23,6 @@ const STORY_DESCRIPTION: Record<"en" | "ne", string> = {
   ne: "एक दशकको उत्कृष्ट इन्जिनियरिङ, सानो स्टुडियोबाट वैश्विक प्राविधिक साझेदारसम्मको यात्रा।",
 };
 
-const STORY_CONTINUED: Record<"en" | "ne", string> = {
-  en: "To be continued...",
-  ne: "क्रमशः...",
-};
-
 export default function OurStorySection({ storyTitle, timeline, language }: OurStorySectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -82,18 +77,6 @@ export default function OurStorySection({ storyTitle, timeline, language }: OurS
                 />
               ))}
             </div>
-
-            <motion.div
-              className="pt-24 border-t border-foreground/10"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              <p className="flex items-center gap-3 text-foreground/50 font-heading italic text-xl">
-                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#2563EB]" />
-                {STORY_CONTINUED[language]}
-              </p>
-            </motion.div>
           </div>
         </div>
       </div>

@@ -25,11 +25,9 @@ export default function Header() {
   // setLanguage is unused while the toggle button below is commented out.
   const { language } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [heroBehind, setHeroBehind] = useState(true);
   const headerRef = useRef<HTMLElement | null>(null);
-  const lastScrollY = useRef(0);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -49,22 +47,13 @@ export default function Header() {
     return () => document.removeEventListener("pointerdown", onDocPointerDown);
   }, []);
 
-  // Scroll-aware: hide on scroll down, show on scroll up
+  // Scroll-aware: tracks scroll position for background/shadow styling.
+  // The header itself always stays visible (no hide-on-scroll-down).
   useEffect(() => {
     const onScroll = () => {
       const currentY = window.scrollY;
       setIsScrolled(currentY > 20);
       setHeroBehind(isHeroBehindHeader());
-      
-      if (currentY < 80) {
-        setHidden(false);
-      } else if (currentY > lastScrollY.current + 4) {
-        setHidden(true);
-        setMobileOpen(false);
-      } else if (currentY < lastScrollY.current - 4) {
-        setHidden(false);
-      }
-      lastScrollY.current = currentY;
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -81,7 +70,6 @@ export default function Header() {
       style={{
         boxShadow: isScrolled && !overHero ? '0 12px 28px -18px rgba(4,10,28,0.6)' : 'none',
         transition: 'all 0.5s cubic-bezier(0.16,1,0.3,1)',
-        transform: hidden ? 'translateY(-120%)' : 'translateY(0)',
       }}
       role="banner"
     >
@@ -114,9 +102,7 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav
-          className={`hidden lg:flex items-center gap-1 whitespace-nowrap rounded-full border p-1.5 transition-all duration-500 ${
-            overHero ? "border-white/15 bg-white/10 backdrop-blur-md" : "border-transparent bg-transparent"
-          }`}
+          className="hidden lg:flex items-center gap-1 whitespace-nowrap rounded-full border border-white/15 bg-white/10 backdrop-blur-md p-1.5 transition-all duration-500"
           aria-label="Main navigation"
         >
           <NavDropdown
@@ -138,6 +124,7 @@ export default function Header() {
           />
 
           {[
+            { label: 'Services', labelNe: 'सेवाहरू', href: '/services' },
             { label: 'Blogs', labelNe: 'ब्लगहरू', href: '/blogs' },
             { label: 'Partners', labelNe: 'साझेदारहरू', href: '/partners' },
             { label: 'Contact', labelNe: 'सम्पर्क', href: '/contact' }
@@ -213,6 +200,7 @@ export default function Header() {
                   {[
                     { label: 'About Us', href: '/about' },
                     { label: 'Solutions', href: '/solutions' },
+                    { label: 'Services', href: '/services' },
                     { label: 'Blogs', href: '/blogs' },
                     { label: 'Partners', href: '/partners' },
                     { label: 'Contact', href: '/contact' }

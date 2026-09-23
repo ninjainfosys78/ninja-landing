@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { useLanguage } from "@/components/LanguageProvider";
-import { getProducts, type ProductItem } from "@/components/work/products/product-items";
+import { getProducts } from "@/components/work/products/product-items";
 
-import ProjectDetailModal from "./project-detail-modal";
 import ProjectPreviewCard from "./project-preview-card";
 import SectionHeading from "@/components/ui/section-heading";
 
@@ -17,12 +15,11 @@ export default function ProjectsPreviewSection() {
   const { language } = useLanguage();
   const lang = language === "en" ? "en" : "ne";
   const products = getProducts(lang);
-  const [selected, setSelected] = useState<ProductItem | null>(null);
 
   const copy =
     lang === "en"
-      ? { title: "Projects", viewAll: "View all projects", viewInSite: "View in site", keyFeatures: "Key features", close: "Close" }
-      : { title: "प्रोजेक्टहरू", viewAll: "सबै परियोजना हेर्नुहोस्", viewInSite: "साइटमा हेर्नुहोस्", keyFeatures: "मुख्य विशेषताहरू", close: "बन्द गर्नुहोस्" };
+      ? { title: "Projects", viewAll: "View all projects" }
+      : { title: "प्रोजेक्टहरू", viewAll: "सबै परियोजना हेर्नुहोस्" };
 
   return (
     <section
@@ -36,7 +33,7 @@ export default function ProjectsPreviewSection() {
           <div>
             <SectionHeading
               title={copy.title}
-              titleClassName="font-heading text-4xl font-semibold tracking-tight text-[#0b0d12] sm:text-5xl"
+              titleClassName="font-sans text-4xl font-semibold tracking-tight text-[#0b0d12] sm:text-5xl"
             />
           </div>
           <Link
@@ -50,11 +47,10 @@ export default function ProjectsPreviewSection() {
 
         <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((product, index) => (
-            <ProjectPreviewCard key={product.id} product={product} index={index} onSelect={setSelected} />
+            <ProjectPreviewCard key={product.id} product={product} index={index} />
           ))}
         </div>
       </div>
-      <ProjectDetailModal product={selected} copy={copy} onClose={() => setSelected(null)} />
     </section>
   );
 }

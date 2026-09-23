@@ -129,7 +129,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
               >
                 <Link
                   href="/work"
-                  className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[15px] font-bold text-white transition-all hover:brightness-110 hover:scale-[1.03] active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-[15px] font-bold text-white transition-all hover:brightness-110 hover:scale-[1.03] active:scale-95"
                   style={{ backgroundColor: "#E31B23" }}
                 >
                   {content.cta}
@@ -138,7 +138,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
 
                 <Link
                   href="/about"
-                  className="inline-flex items-center justify-center rounded-full px-8 py-4 text-[15px] font-bold transition-all hover:bg-white/10 hover:scale-[1.03] active:scale-95"
+                  className="inline-flex items-center justify-center rounded-xl px-8 py-4 text-[15px] font-bold transition-all hover:bg-white/10 hover:scale-[1.03] active:scale-95"
                   style={{
                     color: "#FFFFFF",
                     border: "1.5px solid rgba(255,255,255,0.45)",

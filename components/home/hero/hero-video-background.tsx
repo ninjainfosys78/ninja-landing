@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react"
 
-const HERO_VIDEO_SRC = "/videos/hero-luminous-network.mp4"
-const PLAYBACK_RATE = 0.4
-const TONE_DOWN = "brightness(0.6) contrast(0.95) saturate(1.2)"
+const HERO_VIDEO_SRC = "/videos/hero-team-office.mp4"
+const PLAYBACK_RATE = 0.6
+const TONE_DOWN = "brightness(0.75) contrast(1.05) saturate(0.9)"
 const READABILITY_OVERLAY =
-  "linear-gradient(90deg, rgba(3,9,28,0.82) 0%, rgba(4,12,36,0.6) 42%, rgba(4,12,36,0.4) 100%)"
+  "linear-gradient(90deg, rgba(5,10,24,0.88) 0%, rgba(6,13,30,0.68) 42%, rgba(6,13,30,0.45) 100%)"
 
 export default function HeroVideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null)

@@ -63,7 +63,7 @@ const ITEMS: CarouselItem[] = [
     description: "Strategic frameworks for organizations to achieve carbon neutrality while maintaining growth.",
     description_ne: "विकास कायम राख्दै कार्बन तटस्थता हासिल गर्न संस्थाहरूको लागि रणनीतिक ढाँचाहरू।",
     image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1600",
-    link: "/blogs/1789721497503",
+    link: "/blogs/1789974152069",
   },
   {
     id: "3",
@@ -74,7 +74,7 @@ const ITEMS: CarouselItem[] = [
     description: "Exploring the commercial potential and social implications of persistent virtual environments.",
     description_ne: "स्थायी भर्चुअल वातावरणको व्यावसायिक सम्भावना र सामाजिक प्रभावहरूको अन्वेषण गर्दै।",
     image: "/assets/insights/metaverse.jpeg",
-    link: "/blogs/1789721497503",
+    link: "/blogs/1789974402995",
   },
 ];
 

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import ProductImageFrame from "@/components/work/products/product-image-frame";
+import ImageFrame from "@/components/ui/image-frame";
 
 import { SOLUTION_VISUALS, type SolutionKey } from "./solution-keys";
 
@@ -43,7 +43,7 @@ export default function SolutionOverview({ solution, label, lead }: SolutionOver
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, delay: 0.1, ease: EASE_OUT }}
       >
-        <ProductImageFrame src={image} alt={label} accent={accent} />
+        <ImageFrame src={image} alt={label} accent={accent} />
       </motion.div>
     </div>
   );

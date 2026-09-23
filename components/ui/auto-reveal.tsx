@@ -14,6 +14,19 @@ const MAX_STAGGER_STEPS = 5;
 const CLEANUP_AFTER_MS = 1600;
 const VIEWPORT_MARGIN = "0px 0px -8% 0px";
 
+// Safari has no requestIdleCallback; a short timeout is the standard fallback.
+const IDLE_FALLBACK_MS = 50;
+
+function whenIdle(callback: () => void): () => void {
+  const ric = window.requestIdleCallback;
+  if (ric) {
+    const handle = ric(callback);
+    return () => window.cancelIdleCallback?.(handle);
+  }
+  const handle = window.setTimeout(callback, IDLE_FALLBACK_MS);
+  return () => window.clearTimeout(handle);
+}
+
 function isBelowFold(el: HTMLElement): boolean {
   const rect = el.getBoundingClientRect();
   const horizontallyOnScreen = rect.right > 0 && rect.left < window.innerWidth;
@@ -88,11 +101,18 @@ export default function AutoReveal() {
       frame = requestAnimationFrame(scan);
     };
 
-    scan();
+    // Deferred (not called synchronously here): mutating DOM nodes the instant
+    // this effect fires can land before React's own hydration/commit work for
+    // this pass has fully settled (most visible under StrictMode's dev-only
+    // double-invoke), which makes React think the server markup didn't match
+    // and throw away + rebuild that subtree — a visible flash on page load.
+    // A single rAF wasn't a strong enough guarantee in practice; idle callback is.
+    const cancelIdleScan = whenIdle(scan);
     const mutations = new MutationObserver(scheduleScan);
     mutations.observe(document.body, { childList: true, subtree: true });
 
     return () => {
+      cancelIdleScan();
       cancelAnimationFrame(frame);
       mutations.disconnect();
       observer.disconnect();
