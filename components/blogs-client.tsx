@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
 import type { PostMeta } from "@/lib/posts";
 import { getBannerByImgName } from "@/lib/banners";
-import { StaggerWords } from "@/components/ui/reveal";
+import { StaggerWords, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import BlogCard from "@/components/blogs/blog-card";
 
 // Use a minimal client-side post shape to avoid importing server-only modules
@@ -136,26 +136,26 @@ export default function BlogsClient({ initialPosts = [] }: BlogsClientProps) {
       {/* Blog Cards */}
       <section className="py-10 lg:py-12">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="grid gap-8 md:grid-cols-3">
-            {safePosts.map((post, index) => {
+          <RevealGroup className="grid gap-8 md:grid-cols-3" amount={0.3} stagger={0.15}>
+            {safePosts.map((post) => {
               const p = post as Post & { title_ne?: string; excerpt_ne?: string };
               return (
-                <BlogCard
-                  key={p.slug}
-                  index={index}
-                  readMoreLabel={labels.readMore}
-                  post={{
-                    slug: p.slug,
-                    title: language === "ne" ? p.title_ne || p.title : p.title,
-                    excerpt: language === "ne" ? p.excerpt_ne || p.excerpt : p.excerpt,
-                    image: p.image,
-                    date: p.date,
-                    readTime: p.readTime,
-                  }}
-                />
+                <RevealItem key={p.slug} className="h-full" duration={0.9}>
+                  <BlogCard
+                    readMoreLabel={labels.readMore}
+                    post={{
+                      slug: p.slug,
+                      title: language === "ne" ? p.title_ne || p.title : p.title,
+                      excerpt: language === "ne" ? p.excerpt_ne || p.excerpt : p.excerpt,
+                      image: p.image,
+                      date: p.date,
+                      readTime: p.readTime,
+                    }}
+                  />
+                </RevealItem>
               );
             })}
-          </div>
+          </RevealGroup>
         </div>
       </section>
     </main>

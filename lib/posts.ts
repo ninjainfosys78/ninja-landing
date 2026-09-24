@@ -23,6 +23,25 @@ export type PostMeta = {
 // content slug, inside the tenant's single DCM category (env.DCM_CATEGORY_SLUG).
 const CONTENT_SLUG = "blogs";
 
+// `/blogs/[slug]` is statically exported, so generateStaticParams() must
+// never resolve to zero params (e.g. when DCM_API_URL isn't configured, or
+// no posts are published yet) — an empty result fails the whole export.
+// Mirrors the FALLBACK_SOLUTIONS pattern in lib/solutions.ts.
+const FALLBACK_POSTS: PostMeta[] = [
+  {
+    slug: "welcome-to-ninja-insights",
+    title: "Welcome to Ninja Insights",
+    title_ne: "निन्जा इनसाइट्समा स्वागत छ",
+    deck: "",
+    readTime: "1 min read",
+    kicker: "",
+    date: "",
+    image: "/insights.jpg",
+    excerpt: "Our latest articles and updates will appear here soon.",
+    excerpt_ne: "हाम्रा पछिल्ला लेख र अपडेटहरू चाँडै यहाँ देखा पर्नेछन्।",
+  },
+];
+
 function calculateReadTime(content: string): string {
   if (!content) return "";
   const words = content.trim().split(/\s+/).length;
@@ -61,6 +80,8 @@ export async function getAllPostsMeta(): Promise<PostMeta[]> {
   const list = await fetchDcmContentList(CONTENT_SLUG);
   const items = list?.items ?? [];
 
+  if (items.length === 0) return FALLBACK_POSTS;
+
   const posts = await Promise.all(
     items.map(async (item) => {
       const detail = await fetchDcmSubContent(CONTENT_SLUG, item.slug);
@@ -77,10 +98,14 @@ export async function getPostBySlug(slug: string): Promise<{
   content_ne: string;
 } | null> {
   const detail = await fetchDcmSubContent(CONTENT_SLUG, slug);
-  if (!detail?.item) return null;
+  if (detail?.item) {
+    const contentNe = detail.item.description ?? "";
+    const content = detail.item.eng_description || contentNe;
+    return { meta: toPostMeta(detail.item), content, content_ne: contentNe };
+  }
 
-  const contentNe = detail.item.description ?? "";
-  const content = detail.item.eng_description || contentNe;
+  const fallback = FALLBACK_POSTS.find((p) => p.slug === slug);
+  if (!fallback) return null;
 
-  return { meta: toPostMeta(detail.item), content, content_ne: contentNe };
+  return { meta: fallback, content: fallback.excerpt, content_ne: fallback.excerpt_ne };
 }

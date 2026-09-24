@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import ImageFrame from "@/components/ui/image-frame";
+import { useMounted } from "@/components/ui/reveal";
 
 import { SOLUTION_VISUALS, type SolutionKey } from "./solution-keys";
 
@@ -18,19 +18,22 @@ interface SolutionOverviewProps {
 export default function SolutionOverview({ solution, label, lead }: SolutionOverviewProps) {
   const { image, accent, Icon } = SOLUTION_VISUALS[solution];
 
-  // Mirrors the hero fix: SSR can't run a mount animation, so it would bake the
-  // final "show" state directly and the entrance would never play. Deferring
-  // to a real post-mount state flip forces a genuine, visible client transition,
-  // and staggerChildren makes the icon, title and description follow turn by turn.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  // This section sits well down a long page (5 categories stacked
+  // vertically) — a mount-triggered animation would fire immediately for
+  // every category at once and finish long before a reader scrolls to the
+  // later ones. whileInView instead waits until each section is actually
+  // scrolled into view; the `animate` override below only forces the hidden
+  // state for the brief pre-hydration window (see components/ui/reveal.tsx).
+  const mounted = useMounted();
 
   return (
     <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <motion.div
         key={`${solution}-text`}
         initial="hidden"
-        animate={mounted ? "show" : "hidden"}
+        whileInView="show"
+        animate={!mounted ? "hidden" : undefined}
+        viewport={{ once: true, amount: 0.4 }}
         variants={{
           hidden: {},
           show: { transition: { staggerChildren: 0.22, delayChildren: 0.1 } },
@@ -69,7 +72,9 @@ export default function SolutionOverview({ solution, label, lead }: SolutionOver
       <motion.div
         key={`${solution}-image`}
         initial={{ opacity: 0, x: 48 }}
-        animate={mounted ? { opacity: 1, x: 0 } : { opacity: 0, x: 48 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        animate={!mounted ? { opacity: 0, x: 48 } : undefined}
+        viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.9, delay: 0.4, ease: EASE_OUT }}
       >
         <ImageFrame src={image} alt={label} accent={accent} />

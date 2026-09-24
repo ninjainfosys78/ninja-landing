@@ -6,7 +6,6 @@ import Head from "next/head";
 
 import Hero from "@/components/hero";
 import SearchOverlay from "@/components/search-overlay";
-import CookieBanner from "@/components/cookie-banner";
 import { useLanguage } from "@/components/LanguageProvider";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import ContactModals from "@/components/contact-modals";
@@ -157,8 +156,6 @@ export default function HomePageClient({ insights, trustedLogos }: HomePageClien
         quoteOpen={quoteOpen}
         onQuoteClose={closeQuote}
       />
-
-      <CookieBanner />
 
       {/* Embedded JSON Content */}
       <script

@@ -1,60 +1,23 @@
 "use client";
 
-import React, { useEffect, useRef, useSyncExternalStore } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 
 // Framer Motion's server-rendered output for these components resolves to
 // the already-visible "show" state instead of the "hidden" starting state
 // (verified against the raw pre-hydration HTML) — so on a fresh load, a hard
-// refresh, or a browser restoring scroll position into a section, whatever
-// is on screen at that moment never visibly animates; it's already finished
-// before the first paint. Deferring every reveal to a real post-mount state
-// flip forces SSR/first paint to render hidden and makes the reveal a
-// genuine, guaranteed-visible client-side transition. Every component below
-// renders a plain, style-matched placeholder until mounted, then swaps to
-// the real motion element — the swap is visually seamless since both render
-// the identical hidden styles at that instant.
-//
-// A per-component useState/useEffect pair would flip at a different tick
-// for every instance — React commits child effects before parent effects,
-// so a RevealItem could become a real motion.div (with only `variants`, no
-// initial of its own) one render before its parent RevealGroup does, with
-// no animating ancestor yet to inherit "hidden" from, rendering it visible
-// with no way to recover once mounted. A single shared store flipped once
-// via a microtask lets every consumer that registered interest during the
-// current commit flip to "mounted" in the exact same render pass, so a
-// RevealGroup and its RevealItem children always swap together.
-let hasMounted = false;
-let mountScheduled = false;
-const mountListeners = new Set<() => void>();
-
-function scheduleMountFlip() {
-  if (mountScheduled) return;
-  mountScheduled = true;
-  queueMicrotask(() => {
-    hasMounted = true;
-    mountListeners.forEach((listener) => listener());
-  });
-}
-
-function subscribeMounted(listener: () => void) {
-  mountListeners.add(listener);
-  return () => mountListeners.delete(listener);
-}
-
-function getMountedSnapshot() {
-  return hasMounted;
-}
-
-function getServerMountedSnapshot() {
-  return false;
-}
-
+// refresh, a browser restoring scroll position, or a component that first
+// mounts later (e.g. after an async fetch resolves), whatever's on screen at
+// that moment never visibly animates; it's already finished before the first
+// paint. Every component below stays a real motion element at all times
+// (never swaps element type on mount — a type swap tears down and rebuilds
+// the subtree, which breaks Framer's parent→child variant inheritance and
+// can leave children stuck visible) and instead force-pins the hidden state
+// via an explicit `animate` override until its OWN first mount has committed,
+// then hands control back to the normal initial/whileInView transition.
 export function useMounted(): boolean {
-  const mounted = useSyncExternalStore(subscribeMounted, getMountedSnapshot, getServerMountedSnapshot);
-  useEffect(() => {
-    scheduleMountFlip();
-  }, []);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   return mounted;
 }
 
@@ -83,20 +46,14 @@ export function Reveal({
   amount = 0.2,
 }: RevealProps) {
   const mounted = useMounted();
-
-  if (!mounted) {
-    return (
-      <div className={className} style={{ opacity: 0, transform: `translateY(${y}px) scale(0.96)`, filter: "blur(8px)" }}>
-        {children}
-      </div>
-    );
-  }
+  const hidden = { opacity: 0, y, scale: 0.96, filter: "blur(8px)" };
 
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, scale: 0.96, filter: "blur(8px)" }}
+      initial={hidden}
       whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      animate={!mounted ? hidden : undefined}
       viewport={{ once, amount, margin: "0px 0px -10% 0px" }}
       transition={{ duration, delay, ease: [0.16, 1, 0.3, 1] }}
     >
@@ -144,19 +101,13 @@ export function RevealGroup({
 }) {
   const mounted = useMounted();
 
-  // The container itself carries no visual state (its "hidden" variant is
-  // `{}`) — only orchestrates children — so pre-mount it just needs to stay
-  // a plain, non-animating wrapper; each RevealItem child hides itself.
-  if (!mounted) {
-    return <div className={className} style={style}>{children}</div>;
-  }
-
   return (
     <motion.div
       className={className}
       style={style}
       initial="hidden"
       whileInView="show"
+      animate={!mounted ? "hidden" : undefined}
       viewport={{ once, amount, margin: "0px 0px -5% 0px" }}
       variants={staggerContainer(stagger)}
     >
@@ -176,17 +127,11 @@ export function RevealItem({
   duration?: number;
   x?: number;
 }) {
-  const mounted = useMounted();
-
-  if (!mounted) {
-    const translate = x !== undefined ? `translateX(${x}px)` : "translateY(32px)";
-    return (
-      <div className={className} style={{ opacity: 0, transform: `${translate} scale(0.96)`, filter: "blur(5px)" }}>
-        {children}
-      </div>
-    );
-  }
-
+  // No mounted-gate of its own: it inherits "hidden"/"show" from its parent
+  // RevealGroup, which (always a real motion.div, never type-swapped) is
+  // itself already SSR/first-paint-safe. A separate gate here would let this
+  // child flip to a real motion.div on a different render than its parent —
+  // exactly the parent/child desync that used to leave items stuck visible.
   return (
     <motion.div className={className} variants={staggerItem(duration, x)}>
       {children}
@@ -214,26 +159,12 @@ export function StaggerWords({
   const mounted = useMounted();
   const words = text.split(" ");
 
-  if (!mounted) {
-    return (
-      <span className={className}>
-        {words.map((word, i) => (
-          <React.Fragment key={i}>
-            <span className={`inline-block ${wordClassName ?? ""}`} style={{ opacity: 0, transform: "translateY(18px)", filter: "blur(4px)" }}>
-              {word}
-            </span>
-            {i < words.length - 1 ? " " : ""}
-          </React.Fragment>
-        ))}
-      </span>
-    );
-  }
-
   return (
     <motion.span
       className={className}
       initial="hidden"
       whileInView="show"
+      animate={!mounted ? "hidden" : undefined}
       viewport={{ once: true, amount, margin: "0px 0px -10% 0px" }}
       variants={{
         hidden: {},

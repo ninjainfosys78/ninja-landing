@@ -143,7 +143,6 @@ export default function Testimonials() {
                   <RevealGroup
                     className="grid gap-6"
                     amount={0.3}
-                    once={false}
                     stagger={0.15}
                     style={{ gridTemplateColumns: `repeat(${perView}, 1fr)`, alignItems: "stretch" }}
                   >
