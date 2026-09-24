@@ -95,13 +95,17 @@ export default function InsightsRail({ language: propLanguage, insights }: Insig
             <InsightFeatureCard story={featured} featuredLabel={copy.featured} readLabel={copy.readArticle} />
           </RevealItem>
 
-          <div className="flex flex-col gap-6 lg:col-span-5 lg:gap-8">
+          <RevealGroup
+            className="flex flex-col gap-6 lg:col-span-5 lg:gap-8"
+            amount={SLOW_REVEAL_AMOUNT}
+            stagger={SLOW_REVEAL_STAGGER_SECONDS}
+          >
             {rest.map((story, index) => (
               <RevealItem key={story.url} className="flex-1" duration={SLOW_REVEAL_SECONDS}>
                 <InsightListCard story={story} number={listNumber(index)} />
               </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </RevealGroup>
       </div>
     </section>

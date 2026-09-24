@@ -21,7 +21,7 @@ export default function LeadershipCard({ member, onLearnMore }: LeadershipCardPr
           onLearnMore(member);
         }
       }}
-      className="card-premium group flex h-full cursor-pointer flex-col gap-4 overflow-hidden p-4"
+      className="card-premium card-premium--soft-shadow group flex h-full cursor-pointer flex-col gap-4 overflow-hidden p-4"
     >
       <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#dbe8fd]">
         <MemberPortrait name={member.name} image={member.image} />

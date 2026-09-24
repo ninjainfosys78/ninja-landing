@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 import BlogCardCover from "./blog-card-cover";
 import { formatPostDate } from "./format-post-date";
+import { useMounted } from "@/components/ui/reveal";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 const COLUMNS = 3;
@@ -29,11 +30,18 @@ interface BlogCardProps {
 export default function BlogCard({ post, index, readMoreLabel }: BlogCardProps) {
   const href = `/blogs/${post.slug}`;
   const date = formatPostDate(post.date);
+  // Framer Motion's SSR output bakes the already-visible "show" state instead
+  // of "hidden" for whileInView-driven elements, so on refresh anything
+  // already in view never visibly animates. Forcing "hidden" via an explicit
+  // `animate` prop until mount guarantees a genuine hidden first paint (see
+  // components/ui/reveal.tsx for the fuller explanation).
+  const mounted = useMounted();
 
   return (
     <motion.article
       initial={{ opacity: 0, y: 48 }}
       whileInView={{ opacity: 1, y: 0 }}
+      animate={!mounted ? { opacity: 0, y: 48 } : undefined}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 1.3, delay: (index % COLUMNS) * COLUMN_STAGGER_SECONDS, ease: EASE_OUT }}
       className="h-full"

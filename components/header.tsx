@@ -33,6 +33,14 @@ export default function Header() {
 
   const overHero = hasHeroBanner(pathname) && heroBehind && !mobileOpen;
 
+  // Framer Motion's SSR output bakes the already-visible "show" state instead
+  // of "hidden" for a mount-triggered `animate`, so on refresh the header
+  // never visibly animates in — it's already finished before the first paint.
+  // Deferring the trigger to a real post-mount state flip forces SSR/first
+  // paint to render hidden and makes it a genuine, visible transition.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const closeAllMenus = () => {
     setMobileOpen(false);
   };
@@ -76,7 +84,7 @@ export default function Header() {
       <motion.div
         className="max-w-[1600px] mx-auto h-[88px] px-6 sm:px-8 lg:px-12 2xl:px-16 flex items-center justify-between"
         initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={mounted ? { opacity: 1, y: 0 } : { opacity: 0, y: -16 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Logo Section */}

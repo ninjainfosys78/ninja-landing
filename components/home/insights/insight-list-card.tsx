@@ -19,7 +19,7 @@ export default function InsightListCard({ story, number }: InsightListCardProps)
     >
       <span
         aria-hidden
-        className="absolute inset-y-0 left-0 w-[3px] origin-top scale-y-0 bg-gradient-to-b from-[#E31B23] to-[#2563EB] transition-transform duration-500 group-hover:scale-y-100"
+        className="absolute inset-y-0 left-0 w-[3px] origin-top scale-y-0 bg-[#2563EB] transition-transform duration-500 group-hover:scale-y-100"
       />
 
       <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-xl bg-white sm:h-32 sm:w-36">

@@ -38,7 +38,6 @@ export default function ServicesPage() {
       lang === "en"
         ? "We don't just build software — we craft experiences. Every engagement pairs thoughtful design with reliable engineering."
         : "हामी सफ्टवेयर मात्र बनाउँदैनौं — अनुभव सिर्जना गर्छौं। हरेक कामले सोचविचारपूर्ण डिजाइनलाई भरपर्दो इन्जिनियरिङसँग जोड्छ।",
-    ctaLabel: lang === "en" ? "Talk to us" : "हामीसँग कुरा गर्नुहोस्",
   };
 
   useEffect(() => {
@@ -84,7 +83,6 @@ export default function ServicesPage() {
         <ServicesList
           title={t.listTitle}
           description={t.listDescription}
-          ctaLabel={t.ctaLabel}
           services={services}
         />
 

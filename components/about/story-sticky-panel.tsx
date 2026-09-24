@@ -1,6 +1,7 @@
 "use client";
 import { motion, type MotionValue } from "framer-motion";
 import type { TimelineEntry } from "@/lib/about-content";
+import { useMounted } from "@/components/ui/reveal";
 
 interface StoryStickyPanelProps {
   label: string;
@@ -22,11 +23,18 @@ export default function StoryStickyPanel({
   progress,
 }: StoryStickyPanelProps) {
   const activeEntry = timeline[activeIndex];
+  // Framer Motion's SSR output bakes the already-visible "show" state instead
+  // of "hidden" for whileInView-driven elements, so on refresh anything
+  // already in view never visibly animates. Forcing "hidden" via an explicit
+  // `animate` prop until mount guarantees a genuine hidden first paint (see
+  // components/ui/reveal.tsx for the fuller explanation).
+  const mounted = useMounted();
 
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
+      animate={!mounted ? { opacity: 0, x: -20 } : undefined}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
     >

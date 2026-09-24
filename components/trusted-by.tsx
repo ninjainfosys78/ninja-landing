@@ -25,8 +25,8 @@ const LOGO_GAP_MOBILE = 12;
 // group has at least this many items guarantees a group is always wide
 // enough to fill the screen (and then some), so the wrap is never visible.
 const MIN_GROUP_ITEMS = 14;
-const MARQUEE_PX_PER_SECOND = 40;
-const MIN_DURATION_SECONDS = 12;
+const MARQUEE_PX_PER_SECOND = 88;
+const MIN_DURATION_SECONDS = 8;
 
 function buildLoopGroup(list: TrustedLogoRecord[]): TrustedLogoRecord[] {
   if (list.length === 0) return [];
@@ -105,24 +105,15 @@ export default function TrustedBy({ initialLogos = [] }: TrustedByProps) {
         <div className="flex flex-col items-center mb-8">
           <StaggerWords
             text={language === "ne" ? "प्रमुख संस्थाहरूद्वारा विश्वास गरिएको" : "Trusted by leading organizations"}
-            className="text-[12px] font-bold uppercase tracking-[0.2em] text-center"
+            className="text-xl sm:text-2xl font-semibold tracking-tight text-center"
             amount={0.6}
-          />
-          <motion.span
-            aria-hidden="true"
-            className="mt-4 h-[2px] w-16 rounded-full"
-            style={{ background: 'linear-gradient(90deg, #E31B23, #2563EB)', transformOrigin: 'center' }}
-            initial={{ scaleX: 0, opacity: 0 }}
-            whileInView={{ scaleX: 1, opacity: 1 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           />
         </div>
 
         <Reveal delay={0.1} className="relative">
           {/* Edge fade masks so logos scroll in/out instead of clipping abruptly */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 z-20 bg-gradient-to-r from-white to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 z-20 bg-gradient-to-l from-white to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 z-20 bg-gradient-to-r from-[var(--page-bg-alt)] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 z-20 bg-gradient-to-l from-[var(--page-bg-alt)] to-transparent" />
 
           <div
             className="marquee"

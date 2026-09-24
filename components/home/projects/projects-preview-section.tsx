@@ -18,8 +18,16 @@ export default function ProjectsPreviewSection() {
 
   const copy =
     lang === "en"
-      ? { title: "Projects", viewAll: "View all projects" }
-      : { title: "प्रोजेक्टहरू", viewAll: "सबै परियोजना हेर्नुहोस्" };
+      ? {
+          title: "Projects",
+          description: "A selection of platforms and products we've designed, built, and shipped for real institutions.",
+          viewAll: "View all projects",
+        }
+      : {
+          title: "प्रोजेक्टहरू",
+          description: "वास्तविक संस्थाहरूका लागि हामीले डिजाइन, निर्माण र सञ्चालन गरेका प्लेटफर्म र उत्पादनहरूको छनोट।",
+          viewAll: "सबै परियोजना हेर्नुहोस्",
+        };
 
   return (
     <section
@@ -33,7 +41,9 @@ export default function ProjectsPreviewSection() {
           <div>
             <SectionHeading
               title={copy.title}
-              titleClassName="font-sans text-4xl font-semibold tracking-tight text-[#0b0d12] sm:text-5xl"
+              description={copy.description}
+              titleClassName="font-heading text-4xl font-semibold tracking-tight text-[#0b0d12] sm:text-5xl"
+              descriptionClassName="mt-5 max-w-2xl text-lg leading-relaxed text-[#5b6472]"
             />
           </div>
           <Link

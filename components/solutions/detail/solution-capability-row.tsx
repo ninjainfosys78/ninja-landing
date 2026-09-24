@@ -39,7 +39,7 @@ export default function SolutionCapabilityRow({ text }: SolutionCapabilityRowPro
     >
       <motion.span
         variants={tickVariants}
-        className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] text-white shadow-[0_8px_18px_-8px_rgba(37,99,235,0.7)]"
+        className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] text-white shadow-[0_6px_12px_-8px_rgba(37,99,235,0.4)]"
       >
         <Check size={18} strokeWidth={3} />
       </motion.span>

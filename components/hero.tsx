@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useLanguage } from "@/components/LanguageProvider"
 import { motion } from "framer-motion"
@@ -19,6 +19,14 @@ const HERO_LOGO_BLUE = "#0A45A7"
 
 export default function Hero({ showContent = true, backgroundOnly = false, children }: HeroProps) {
   const { language } = useLanguage()
+
+  // The server can't run the mount animation, so it renders the "show" (final)
+  // state directly — hydration then just matches that already-visible DOM and
+  // never plays the entrance. Deferring the trigger to a real post-mount state
+  // flip forces SSR/first paint to render "hidden" and makes "show" a genuine,
+  // visible client-side transition instead.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
   const content =
     language === "en"
       ? {
@@ -62,24 +70,29 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
             <motion.div
               className="max-w-[720px]"
               initial="hidden"
-              animate="show"
+              animate={mounted ? "show" : "hidden"}
               variants={{
                 hidden: {},
-                show: { transition: { staggerChildren: 0.14, delayChildren: 0.1 } },
+                show: { transition: { staggerChildren: 0.35, delayChildren: 0.1 } },
               }}
             >
-              {/* Headline */}
-              <h1
+              {/* Headline — its own stagger container, so both lines move together as
+                  one "turn" ahead of the description and buttons that follow it. */}
+              <motion.h1
                 id="hero-title"
                 className="mb-12 leading-[1.05]"
                 style={{ fontFamily: 'var(--font-heading)' }}
+                variants={{
+                  hidden: {},
+                  show: { transition: { staggerChildren: 0.1 } },
+                }}
               >
                 <motion.span
                   className="block font-extrabold not-italic tracking-tight text-white overflow-hidden"
                   style={{ fontSize: "clamp(40px, 5.6vw, 72px)" }}
                   variants={{
                     hidden: { opacity: 0, y: 40 },
-                    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+                    show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
                   }}
                 >
                   {content.titleLine1} {content.titleLine2}
@@ -92,7 +105,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                   }}
                   variants={{
                     hidden: { opacity: 0, y: 40 },
-                    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+                    show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
                   }}
                 >
                   {language === "en" ? (
@@ -101,7 +114,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                     content.titleItalic
                   )}
                 </motion.span>
-              </h1>
+              </motion.h1>
 
               {/* Deck */}
               <motion.p
@@ -113,7 +126,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                 }}
                 variants={{
                   hidden: { opacity: 0, y: 20 },
-                  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } },
                 }}
               >
                 {content.deck}
@@ -124,7 +137,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                 className="flex flex-wrap gap-4"
                 variants={{
                   hidden: { opacity: 0, y: 20 },
-                  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } },
                 }}
               >
                 <Link

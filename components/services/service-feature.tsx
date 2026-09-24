@@ -5,6 +5,7 @@ import { motion, type Variants } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
 
 import ImageFrame from "@/components/ui/image-frame";
+import { useMounted } from "@/components/ui/reveal";
 import type { ServiceItem } from "./service-items";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
@@ -28,11 +29,16 @@ const textItemVariants: Variants = {
 interface ServiceFeatureProps {
   service: ServiceItem;
   index: number;
-  ctaLabel: string;
 }
 
-export default function ServiceFeature({ service, index, ctaLabel }: ServiceFeatureProps) {
+export default function ServiceFeature({ service, index }: ServiceFeatureProps) {
   const isReversed = index % 2 === 1;
+  // Framer Motion's SSR output bakes the already-visible "show" state instead
+  // of "hidden" for whileInView-driven elements, so on refresh anything
+  // already in view never visibly animates. Forcing "hidden" via an explicit
+  // `animate` prop until mount guarantees a genuine hidden first paint (see
+  // components/ui/reveal.tsx for the fuller explanation).
+  const mounted = useMounted();
 
   return (
     <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
@@ -40,6 +46,7 @@ export default function ServiceFeature({ service, index, ctaLabel }: ServiceFeat
         className={isReversed ? "lg:order-2" : undefined}
         initial={{ opacity: 0, x: isReversed ? 60 : -60 }}
         whileInView={{ opacity: 1, x: 0 }}
+        animate={!mounted ? { opacity: 0, x: isReversed ? 60 : -60 } : undefined}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: IMAGE_DURATION_SECONDS, ease: EASE_OUT }}
       >
@@ -49,6 +56,7 @@ export default function ServiceFeature({ service, index, ctaLabel }: ServiceFeat
       <motion.div
         initial="hidden"
         whileInView="show"
+        animate={!mounted ? "hidden" : undefined}
         viewport={{ once: true, amount: 0.4 }}
         variants={textContainerVariants}
       >
@@ -79,10 +87,10 @@ export default function ServiceFeature({ service, index, ctaLabel }: ServiceFeat
         <motion.div variants={textItemVariants}>
           <Link
             href="/contact"
-            className="mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ backgroundColor: service.accent }}
+            className="mt-8 inline-flex items-center gap-3 px-6 py-3 text-sm font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-90"
+            style={{ backgroundColor: service.accent, borderRadius: "6px" }}
           >
-            {ctaLabel}
+            {service.cta}
             <ArrowRight size={16} />
           </Link>
         </motion.div>

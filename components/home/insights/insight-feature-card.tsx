@@ -29,11 +29,6 @@ export default function InsightFeatureCard({ story, featuredLabel, readLabel }: 
         aria-hidden
         className="absolute inset-0 bg-gradient-to-t from-[#0A1F4D] via-[#0A1F4D]/55 to-[#0A1F4D]/5"
       />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 -inset-x-full opacity-0 group-hover:opacity-100 group-hover:[animation:shine-sweep_1.1s_ease]"
-        style={{ background: "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%)" }}
-      />
 
       <div className="absolute left-6 top-6 flex items-center gap-3 sm:left-8 sm:top-8">
         <span className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-white backdrop-blur-md">

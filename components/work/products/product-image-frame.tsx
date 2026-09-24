@@ -25,11 +25,6 @@ export default function ProductImageFrame({ src, alt, accent }: ProductImageFram
         style={{ backgroundColor: accent }}
       />
       <div className="overflow-hidden rounded-3xl border border-[#D7E4FA] bg-white shadow-[0_30px_60px_-30px_rgba(10,31,77,0.35)] ">
-        <div className="flex items-center gap-2 border-b border-[#D7E4FA] bg-[#F6F9FE] px-4 py-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#E31B23]/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#2563EB]/50" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#0A1F4D]/30" />
-        </div>
         <div className="relative aspect-[16/10] overflow-hidden">
           <motion.div className="absolute inset-[-10%]" style={{ y: imageY }}>
             <Image
@@ -40,11 +35,6 @@ export default function ProductImageFrame({ src, alt, accent }: ProductImageFram
               className="object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
             />
           </motion.div>
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-30 mix-blend-multiply"
-            style={{ background: `linear-gradient(135deg, ${accent}, transparent 60%)` }}
-          />
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ export interface ServiceItem {
   bullets: string[];
   image: string;
   accent: string;
+  cta: string;
 }
 
 interface ServiceSource {
@@ -16,6 +17,7 @@ interface ServiceSource {
   bullets: Record<ServiceLang, string[]>;
   image: string;
   accent: string;
+  cta: Record<ServiceLang, string>;
 }
 
 const SERVICE_SOURCES: ServiceSource[] = [
@@ -42,6 +44,7 @@ const SERVICE_SOURCES: ServiceSource[] = [
     },
     image: "/webdevelopment.jpg",
     accent: "#2563EB",
+    cta: { en: "Start your website", ne: "आफ्नो वेबसाइट सुरु गर्नुहोस्" },
   },
   {
     id: "mobile-app-development",
@@ -66,6 +69,7 @@ const SERVICE_SOURCES: ServiceSource[] = [
     },
     image: "/mobileapp.jpg",
     accent: "#4F7F14",
+    cta: { en: "Build your app", ne: "आफ्नो एप बनाउनुहोस्" },
   },
   {
     id: "marketing",
@@ -90,6 +94,7 @@ const SERVICE_SOURCES: ServiceSource[] = [
     },
     image: "/marketing.jpg",
     accent: "#E31B23",
+    cta: { en: "Grow with us", ne: "हामीसँगै बढ्नुहोस्" },
   },
   {
     id: "software-development",
@@ -114,14 +119,16 @@ const SERVICE_SOURCES: ServiceSource[] = [
     },
     image: "/cloud.jpg",
     accent: "#0A1F4D",
+    cta: { en: "Discuss your project", ne: "आफ्नो परियोजना छलफल गर्नुहोस्" },
   },
 ];
 
 export function getServices(language: ServiceLang): ServiceItem[] {
-  return SERVICE_SOURCES.map(({ name, description, bullets, ...rest }) => ({
+  return SERVICE_SOURCES.map(({ name, description, bullets, cta, ...rest }) => ({
     ...rest,
     name: name[language],
     description: description[language],
     bullets: bullets[language],
+    cta: cta[language],
   }));
 }

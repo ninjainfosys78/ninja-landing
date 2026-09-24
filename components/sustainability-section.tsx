@@ -3,10 +3,11 @@
 import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Landmark, HeartPulse, GraduationCap, Wallet, type LucideIcon } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
 import { CountUp } from "@/components/ui/count-up";
+import { useMounted } from "@/components/ui/reveal";
 
 // Directional entrance: the heading slides in from the right, the body copy
 // rises from below, and the image slides in from the left — each element
@@ -35,25 +36,18 @@ const slideFromLeft: Variants = {
 const staggerLine = slideFromBottom;
 
 interface SolutionArea {
-  icon: LucideIcon;
   label: string;
-}
-
-function SolutionAreaPill({ area }: { area: SolutionArea }) {
-  const Icon = area.icon;
-
-  return (
-    <div className="flex items-center gap-3 rounded-xl border border-[#d7e4fa] bg-white/80 px-4 py-3 shadow-[0_1px_2px_rgba(10,31,77,0.04),0_10px_24px_-14px_rgba(10,31,77,0.14)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2563EB]/35">
-      <span className="icon-tile h-9 w-9 flex-shrink-0 !rounded-lg">
-        <Icon size={17} />
-      </span>
-      <span className="text-sm font-semibold text-[#0b0d12]/80">{area.label}</span>
-    </div>
-  );
 }
 
 export default function SustainabilitySection() {
   const { language } = useLanguage();
+  // Framer Motion's SSR output bakes the already-visible "show" state instead
+  // of "hidden" for whileInView-driven elements, so on refresh anything
+  // already in view never visibly animates. Forcing "hidden" via an explicit
+  // `animate` prop until mount guarantees a genuine hidden first paint (see
+  // components/ui/reveal.tsx for the fuller explanation).
+  const mounted = useMounted();
+  const forceHidden = !mounted ? "hidden" : undefined;
   const imageWrapRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: imgProgress } = useScroll({
     target: imageWrapRef,
@@ -72,10 +66,10 @@ export default function SustainabilitySection() {
           statLabel1: "Uptime Goal",
           statLabel2: "Solution Areas",
           solutionAreas: [
-            { icon: Landmark, label: "E-Governance" },
-            { icon: HeartPulse, label: "Healthcare" },
-            { icon: GraduationCap, label: "Education" },
-            { icon: Wallet, label: "Fintech" },
+            { label: "E-Governance" },
+            { label: "Healthcare" },
+            { label: "Education" },
+            { label: "Fintech" },
           ],
         }
       : {
@@ -87,10 +81,10 @@ export default function SustainabilitySection() {
           statLabel1: "अपटाइम लक्ष्य",
           statLabel2: "समाधान क्षेत्रहरू",
           solutionAreas: [
-            { icon: Landmark, label: "इ-गभर्नेन्स" },
-            { icon: HeartPulse, label: "स्वास्थ्य" },
-            { icon: GraduationCap, label: "शिक्षा" },
-            { icon: Wallet, label: "फिनटेक" },
+            { label: "इ-गभर्नेन्स" },
+            { label: "स्वास्थ्य" },
+            { label: "शिक्षा" },
+            { label: "फिनटेक" },
           ],
         };
 
@@ -124,6 +118,7 @@ export default function SustainabilitySection() {
             className="order-2 lg:order-1"
             initial="hidden"
             whileInView="show"
+            animate={forceHidden}
             viewport={{ once: true, amount: 0.3, margin: "0px 0px -10% 0px" }}
             variants={staggerContainer}
           >
@@ -139,10 +134,11 @@ export default function SustainabilitySection() {
               {content.description}
             </motion.p>
 
-            <motion.div variants={staggerContainer} className="grid grid-cols-2 gap-3 mb-12 max-w-md">
+            <motion.div variants={staggerContainer} className="flex flex-col gap-4 mb-12 max-w-md">
               {content.solutionAreas.map((area, idx) => (
-                <motion.div key={idx} variants={staggerLine}>
-                  <SolutionAreaPill area={area} />
+                <motion.div key={idx} variants={staggerLine} className="flex items-center gap-3">
+                  <ChevronRight size={22} strokeWidth={3} className="flex-shrink-0 text-[#2563EB]" />
+                  <span className="text-xl font-normal text-[#0b0d12]/80">{area.label}</span>
                 </motion.div>
               ))}
             </motion.div>
@@ -150,9 +146,9 @@ export default function SustainabilitySection() {
             <motion.div variants={slideFromBottom}>
               <Link
                 href="/solutions"
-                className="inline-flex items-center px-10 py-5 bg-[#E31B23] text-white font-bold transition-all hover:brightness-110 hover:scale-[1.03] active:scale-95 group shadow-sm"
+                className="cta-flat inline-flex items-center px-8 py-5 bg-[#E31B23] text-white font-bold transition-all hover:brightness-110 hover:scale-[1.03] active:scale-95 group"
               >
-                <span className="mr-4 tracking-wider uppercase text-sm">
+                <span className="mr-4 tracking-wider text-sm">
                   {content.cta}
                 </span>
                 <ArrowRight className="transition-transform group-hover:translate-x-2" />
@@ -165,6 +161,7 @@ export default function SustainabilitySection() {
             className="order-1 lg:order-2 relative group"
             initial="hidden"
             whileInView="show"
+            animate={forceHidden}
             viewport={{ once: true, amount: 0.3, margin: "0px 0px -10% 0px" }}
             variants={slideFromLeft}
             transition={{ delay: 0.15 }}
@@ -188,6 +185,7 @@ export default function SustainabilitySection() {
                 className="absolute bottom-6 left-6 right-6 p-6 backdrop-blur-md bg-[#0b0d12]/50 border border-white/10 rounded-sm"
                 initial="hidden"
                 whileInView="show"
+                animate={forceHidden}
                 viewport={{ once: true, amount: 0.6 }}
                 variants={staggerContainer}
               >

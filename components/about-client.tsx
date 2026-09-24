@@ -20,7 +20,8 @@ import { getBannerByImgName } from "@/lib/banners";
 import { getAboutContent } from "@/lib/about-content";
 import type { StoryMilestone } from "@/lib/story/story-milestone";
 import type { TeamMember } from "@/lib/team";
-import { StaggerWords } from "@/components/ui/reveal";
+import { StaggerWords, useMounted } from "@/components/ui/reveal";
+import { PillarCardGrid } from "@/components/ui/pillar-card";
 
 interface AboutClientProps {
   teamMembers: TeamMember[];
@@ -34,6 +35,12 @@ export default function AboutClient({
   storyMilestones = [],
 }: AboutClientProps) {
   const { language } = useLanguage();
+  // Framer Motion's SSR output bakes the already-visible "show" state instead
+  // of "hidden" for whileInView-driven elements, so on refresh anything
+  // already in view never visibly animates. Forcing "hidden" via an explicit
+  // `animate` prop until mount guarantees a genuine hidden first paint (see
+  // components/ui/reveal.tsx for the fuller explanation).
+  const mounted = useMounted();
   const {
     officesOpen, openOffices, closeOffices,
     bookingOpen, openBooking, closeBooking,
@@ -147,6 +154,7 @@ export default function AboutClient({
               <motion.h3
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                animate={!mounted ? { opacity: 0, y: 20 } : undefined}
                 viewport={{ once: true }}
                 className="text-4xl lg:text-6xl font-heading font-bold text-foreground leading-[1.1] tracking-tight"
               >
@@ -154,24 +162,7 @@ export default function AboutClient({
               </motion.h3>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
-              {content.core.map(({ icon: Icon, title, body }) => (
-                <article
-                  key={title}
-                  className="card-premium group flex flex-col items-center p-8 py-12 text-center lg:p-10 lg:py-14"
-                >
-                  <span className="icon-tile mb-7 h-16 w-16">
-                    <Icon size={30} />
-                  </span>
-                  <h3 className="mb-3 text-xl font-heading font-bold text-foreground text-center">
-                    {title}
-                  </h3>
-                  <p className="text-[15px] leading-relaxed text-foreground/65 text-center">
-                    {body}
-                  </p>
-                </article>
-              ))}
-            </div>
+            <PillarCardGrid pillars={content.core.map(({ title, body }) => ({ title, text: body }))} />
           </div>
         </section>
 
@@ -181,6 +172,7 @@ export default function AboutClient({
               <motion.h3
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                animate={!mounted ? { opacity: 0, y: 20 } : undefined}
                 viewport={{ once: true }}
                 className="text-4xl lg:text-6xl font-heading font-bold text-foreground leading-[1.1] tracking-tight"
               >
@@ -191,13 +183,15 @@ export default function AboutClient({
             <div className="border-t border-foreground/10">
               {content.principles.map((p, idx) => {
                 const Icon = p.icon;
+                const fromLeft = idx % 2 === 0;
                 return (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: idx * 0.08 }}
+                    initial={{ opacity: 0, x: fromLeft ? -80 : 80 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    animate={!mounted ? { opacity: 0, x: fromLeft ? -80 : 80 } : undefined}
+                    viewport={{ once: true, amount: 0.5, margin: "0px 0px -15% 0px" }}
+                    transition={{ duration: 1.2, delay: idx * 0.18, ease: [0.16, 1, 0.3, 1] }}
                     className="group grid grid-cols-1 items-start gap-5 border-b border-foreground/10 py-10 transition-colors duration-300 lg:grid-cols-12 lg:items-center lg:gap-8 lg:py-12"
                   >
                     <span className="font-heading text-5xl font-bold text-foreground/10 transition-colors duration-300 group-hover:text-[#2563EB]/25 lg:col-span-2">

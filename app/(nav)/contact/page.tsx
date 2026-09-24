@@ -7,6 +7,9 @@ import { toast } from "sonner"
 
 import SearchOverlay from "@/components/search-overlay"
 import PageBanner from "@/components/ui/page-banner"
+import { Reveal, RevealGroup, RevealItem, StaggerWords } from "@/components/ui/reveal"
+
+const SLIDE_DISTANCE_PX = 90
 
 
 export default function ContactPage() {
@@ -150,11 +153,13 @@ export default function ContactPage() {
           className="max-w-[1600px] mx-auto px-6 sm:px-8"
           style={logoOffset !== null ? { paddingLeft: `${logoOffset}px` } : undefined}
         >
-          <div className="grid grid-cols-1 md:grid-cols-[560px_1fr] items-stretch gap-0">
-            <div className="pr-8 flex flex-col h-[620px]">
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-[560px_1fr] items-stretch gap-0" amount={0.3}>
+            <RevealItem className="pr-8 flex flex-col h-[620px]" duration={1.1} x={-SLIDE_DISTANCE_PX}>
               <div className="max-w-[560px] flex flex-col h-full pt-10">
                 <h2 className="font-heading text-[#0b0d12] leading-tight mb-8 font-source-serif">
-                  <span className="block text-[40px] md:text-[64px] leading-[0.95]">{t.formTitle}</span>
+                  <span className="block text-[40px] md:text-[64px] leading-[0.95]">
+                    <StaggerWords text={t.formTitle} amount={0.5} />
+                  </span>
                 </h2>
 
                 <div className="w-24 h-px bg-[#0b0d12]/15 mb-8" />
@@ -203,45 +208,47 @@ export default function ContactPage() {
                   </div>
                 </form>
               </div>
-            </div>
+            </RevealItem>
 
-            <div className="hidden md:block">
+            <RevealItem className="hidden md:block" duration={1.1} x={SLIDE_DISTANCE_PX}>
               <div className="h-[620px] w-full overflow-hidden" aria-hidden>
                 <div className="relative h-full w-full contact-clip">
                   <img src="/contact.png" alt="" className="w-full h-full object-cover object-right" />
                   <div className="absolute inset-0 bg-[#0A1F4D]/80 mix-blend-color" />
                 </div>
               </div>
-            </div>
-          </div>
+            </RevealItem>
+          </RevealGroup>
 
           <div className="mt-20 pt-16 pb-16 md:mt-28 md:pt-20 md:pb-20 border-t border-[#0b0d12]/10">
             <div className="mb-8">
               <h2 className="mb-3 text-xs font-medium uppercase tracking-[0.15em] text-[#0b0d12]/60">{t.locationEyebrow}</h2>
               <h3 className="font-heading text-4xl font-normal leading-tight tracking-tight text-[#0b0d12] lg:text-5xl">
-                {t.locationTitle}{" "}
+                <StaggerWords text={`${t.locationTitle} `} amount={0.5} />
                 <span className="font-bold text-[#E31B23]">{t.locationAccent}</span>
               </h3>
             </div>
-            <p className="text-sm text-[#0b0d12]/60 mb-6">{t.mapCaption || "Ninja Infosys, Anamnagar, Kathmandu, Nepal"}</p>
+            <Reveal amount={0.3}>
+              <p className="text-sm text-[#0b0d12]/60 mb-6">{t.mapCaption || "Ninja Infosys, Anamnagar, Kathmandu, Nepal"}</p>
 
-            <div className="mb-6">
-              <Link
-                href="https://www.google.com/maps?q=Anamnagar%20Kathmandu%20Nepal"
-                className="inline-flex items-center gap-2 text-sm text-[#2563EB] hover:underline"
-              >
-                <span>{t.getDirection}</span>
-              </Link>
-            </div>
+              <div className="mb-6">
+                <Link
+                  href="https://www.google.com/maps?q=Anamnagar%20Kathmandu%20Nepal"
+                  className="inline-flex items-center gap-2 text-sm text-[#2563EB] hover:underline"
+                >
+                  <span>{t.getDirection}</span>
+                </Link>
+              </div>
 
-            <div className="mt-6 w-full">
-              <iframe
-                title={t.mapTitle || "Anamnagar map"}
-                src={"https://www.google.com/maps?q=Anamnagar%20Kathmandu%20Nepal&output=embed"}
-                className="w-full h-[380px] md:h-[420px] block"
-                loading="lazy"
-              />
-            </div>
+              <div className="mt-6 w-full">
+                <iframe
+                  title={t.mapTitle || "Anamnagar map"}
+                  src={"https://www.google.com/maps?q=Anamnagar%20Kathmandu%20Nepal&output=embed"}
+                  className="w-full h-[380px] md:h-[420px] block"
+                  loading="lazy"
+                />
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>

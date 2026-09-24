@@ -3,6 +3,7 @@ import { forwardRef } from "react";
 import { motion, type Variants } from "framer-motion";
 import type { TimelineEntry } from "@/lib/about-content";
 import StoryYearMark from "./story-year-mark";
+import { useMounted } from "@/components/ui/reveal";
 
 interface StoryItemProps {
   entry: TimelineEntry;
@@ -26,6 +27,12 @@ const itemVariants: Variants = {
 
 const StoryItem = forwardRef<HTMLDivElement, StoryItemProps>(
   ({ entry, index, isActive }, ref) => {
+    // Framer Motion's SSR output bakes the already-visible "show" state instead
+    // of "hidden" for whileInView-driven elements, so on refresh anything
+    // already in view never visibly animates. Forcing "hidden" via an explicit
+    // `animate` prop until mount guarantees a genuine hidden first paint (see
+    // components/ui/reveal.tsx for the fuller explanation).
+    const mounted = useMounted();
     return (
       <div
         ref={ref}
@@ -46,6 +53,7 @@ const StoryItem = forwardRef<HTMLDivElement, StoryItemProps>(
         <motion.div
           initial="hidden"
           whileInView="visible"
+          animate={!mounted ? "hidden" : undefined}
           viewport={{ once: true, margin: "-50px" }}
           variants={containerVariants}
         >

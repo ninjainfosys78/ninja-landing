@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import { motion } from "framer-motion"
 import { useLanguage } from "@/components/LanguageProvider"
 import { fetchTestimonials, TestimonialRecord } from "@/lib/testimonials"
-import { StaggerWords } from "@/components/ui/reveal"
+import { StaggerWords, RevealGroup, RevealItem, useMounted } from "@/components/ui/reveal"
 
 interface Testimonial {
   name: string
@@ -14,6 +14,10 @@ interface Testimonial {
 
 export default function Testimonials() {
   const { language } = useLanguage()
+  // Framer Motion's SSR output bakes the already-visible "show" state instead
+  // of "hidden" for a mount-triggered `animate`, so on refresh the quote mark
+  // never visibly animates in — it's already finished before the first paint.
+  const mounted = useMounted()
 
   const [records, setRecords] = useState<TestimonialRecord[]>([])
   const [perView, setPerView] = useState<number>(1)
@@ -136,16 +140,16 @@ export default function Testimonials() {
                   style={{ width: `${100 / slides.length}%` }}
                   className="pr-4"
                 >
-                  <div
+                  <RevealGroup
                     className="grid gap-6"
-                    style={{
-                      gridTemplateColumns: `repeat(${perView}, 1fr)`,
-                      alignItems: "stretch",
-                    }}
+                    amount={0.3}
+                    once={false}
+                    stagger={0.15}
+                    style={{ gridTemplateColumns: `repeat(${perView}, 1fr)`, alignItems: "stretch" }}
                   >
                     {group.map((item, idx) => (
-                      <article
-                        key={`${slideIndex}-${idx}-${item.name}`}
+                      <RevealItem key={`${slideIndex}-${idx}-${item.name}`} duration={0.9}>
+                        <article
                         className="p-8 min-h-[200px] flex gap-5 items-start shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_24px_-16px_rgba(10,31,77,0.22)]"
                         style={{ backgroundColor: '#ffffff', border: '1px solid rgba(11,13,18,0.08)' }}
                         aria-label={item.name}
@@ -179,7 +183,7 @@ export default function Testimonials() {
                               className="text-[40px] leading-[1] select-none"
                               style={{ color: 'rgba(11,13,18,0.15)' }}
                               initial={{ opacity: 0, scale: 0.6 }}
-                              animate={{ opacity: 1, scale: 1 }}
+                              animate={mounted ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
                               transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                             >
                               "
@@ -193,10 +197,11 @@ export default function Testimonials() {
                             {item.quote}
                           </p>
                         </div>
-                      </article>
+                        </article>
+                      </RevealItem>
                     ))}
                     {group.length < perView && <div className="min-h-[1px]" />}
-                  </div>
+                  </RevealGroup>
                 </div>
               ))}
             </div>

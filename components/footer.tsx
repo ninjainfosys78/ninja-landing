@@ -95,7 +95,7 @@ export default function Footer() {
     >
       <div className="relative z-10 mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-12 2xl:px-16">
         <div className="h-16 sm:h-20" />
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-5 mt-8">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-24 mb-5 mt-8">
           <div>
             <Link
               href="/"

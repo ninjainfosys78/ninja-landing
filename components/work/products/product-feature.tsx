@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
 import ProductImageFrame from "./product-image-frame";
+import { useMounted } from "@/components/ui/reveal";
 import type { ProductItem, ProductLang } from "./product-items";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
@@ -33,13 +34,20 @@ interface ProductFeatureProps {
 export default function ProductFeature({ product, index, language }: ProductFeatureProps) {
   const isReversed = index % 2 === 1;
   const visitSiteLabel = language === "en" ? "Visit site" : "साइटमा हेर्नुहोस्";
+  // Framer Motion's SSR output bakes the already-visible "show" state instead
+  // of "hidden" for whileInView-driven elements, so on refresh anything
+  // already in view never visibly animates. Forcing "hidden" via an explicit
+  // `animate` prop until mount guarantees a genuine hidden first paint (see
+  // components/ui/reveal.tsx for the fuller explanation).
+  const mounted = useMounted();
 
   return (
-    <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+    <div id={product.id} className="grid scroll-mt-28 items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <motion.div
         className={isReversed ? "lg:order-2" : undefined}
         initial={{ opacity: 0, x: isReversed ? 60 : -60 }}
         whileInView={{ opacity: 1, x: 0 }}
+        animate={!mounted ? { opacity: 0, x: isReversed ? 60 : -60 } : undefined}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: IMAGE_DURATION_SECONDS, ease: EASE_OUT }}
       >
@@ -49,6 +57,7 @@ export default function ProductFeature({ product, index, language }: ProductFeat
       <motion.div
         initial="hidden"
         whileInView="show"
+        animate={!mounted ? "hidden" : undefined}
         viewport={{ once: true, amount: 0.4 }}
         variants={textContainerVariants}
       >
@@ -60,13 +69,13 @@ export default function ProductFeature({ product, index, language }: ProductFeat
         </motion.h3>
         <motion.p
           variants={textItemVariants}
-          className="mt-3 text-sm font-semibold uppercase tracking-[0.2em]"
+          className="mt-3 text-sm font-semibold normal-case tracking-[0.15em]"
           style={{ color: product.accent }}
         >
           {product.tagline}
         </motion.p>
         <motion.p variants={textItemVariants} className="mt-6 max-w-xl text-lg leading-relaxed text-[#5b6472]">
-          {product.description}
+          {product.overview}
         </motion.p>
 
         <motion.ul variants={textItemVariants} className="mt-8 flex flex-wrap gap-3">

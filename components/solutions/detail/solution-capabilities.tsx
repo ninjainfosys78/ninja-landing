@@ -3,6 +3,7 @@
 import { motion, type Variants } from "framer-motion";
 
 import SectionHeading from "@/components/ui/section-heading";
+import { useMounted } from "@/components/ui/reveal";
 
 import SolutionCapabilityRow from "./solution-capability-row";
 
@@ -23,12 +24,20 @@ interface SolutionCapabilitiesProps {
 }
 
 export default function SolutionCapabilities({ title, capabilities }: SolutionCapabilitiesProps) {
+  // Framer Motion's SSR output bakes the already-visible "show" state instead
+  // of "hidden" for whileInView-driven elements, so on refresh anything
+  // already in view never visibly animates. Forcing "hidden" via an explicit
+  // `animate` prop until mount guarantees a genuine hidden first paint (see
+  // components/ui/reveal.tsx for the fuller explanation).
+  const mounted = useMounted();
+
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
       <motion.div
         className="lg:sticky lg:top-32 lg:self-start"
         initial={{ opacity: 0, x: -HEADING_SLIDE_DISTANCE_PX, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+        animate={!mounted ? { opacity: 0, x: -HEADING_SLIDE_DISTANCE_PX, filter: "blur(6px)" } : undefined}
         viewport={VIEWPORT}
         transition={{ duration: 1.4, ease: EASE_OUT }}
       >
@@ -42,6 +51,7 @@ export default function SolutionCapabilities({ title, capabilities }: SolutionCa
         className="relative"
         initial="hidden"
         whileInView="show"
+        animate={!mounted ? "hidden" : undefined}
         viewport={VIEWPORT}
         variants={listVariants}
       >
