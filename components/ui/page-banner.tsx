@@ -23,7 +23,7 @@ export default function PageBanner({ bannerName, fallbackImage, homeLabel, title
   }, [bannerName])
 
   return (
-    <section className="relative isolate min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
+    <section id="hero" className="relative isolate min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
       <div
         className="absolute inset-0 -z-20 bg-cover bg-center bg-fixed blur-[8px] scale-110"
         style={{ backgroundImage: `url('${bannerUrl || fallbackImage}')` }}
