@@ -88,7 +88,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                 }}
               >
                 <motion.span
-                  className="block font-extrabold not-italic tracking-tight text-white overflow-hidden"
+                  className="block font-extrabold not-italic tracking-tight text-white"
                   style={{ fontSize: "clamp(40px, 5.6vw, 72px)" }}
                   variants={{
                     hidden: { opacity: 0, y: 40 },
@@ -98,7 +98,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                   {content.titleLine1} {content.titleLine2}
                 </motion.span>
                 <motion.span
-                  className="block font-extrabold not-italic tracking-tight overflow-hidden"
+                  className="block font-extrabold not-italic tracking-tight"
                   style={{
                     fontSize: "clamp(40px, 5.6vw, 72px)",
                     color: HERO_LOGO_BLUE,
