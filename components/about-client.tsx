@@ -1,14 +1,8 @@
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
 import BannerSubtitle from "@/components/ui/banner-subtitle";
-import dynamic from "next/dynamic";
-const Testimonials: React.ComponentType<any> = dynamic(
-  () => import("@/components/testimonials").then((m) => m.default ?? m),
-  { ssr: false }
-);
 import { motion } from "framer-motion";
 import Link from "next/link";
-import GlobalCTA from "@/components/global-cta";
 import ContactModals from "@/components/contact-modals";
 import OurStorySection from "@/components/about/our-story-section";
 import WhoWeAreSection from "@/components/about/who-we-are-section";
@@ -42,9 +36,9 @@ export default function AboutClient({
   // components/ui/reveal.tsx for the fuller explanation).
   const mounted = useMounted();
   const {
-    officesOpen, openOffices, closeOffices,
-    bookingOpen, openBooking, closeBooking,
-    quoteOpen, openQuote, closeQuote
+    officesOpen, closeOffices,
+    bookingOpen, closeBooking,
+    quoteOpen, closeQuote
   } = useContactModals();
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
   const [secondImageUrl, setSecondImageUrl] = useState<string | null>(null);
@@ -162,7 +156,7 @@ export default function AboutClient({
               </motion.h3>
             </div>
 
-            <PillarCardGrid pillars={content.core.map(({ title, body }) => ({ title, text: body }))} />
+            <PillarCardGrid pillars={content.core.map(({ icon, title, body }) => ({ icon, title, text: body }))} />
           </div>
         </section>
 
@@ -235,11 +229,6 @@ export default function AboutClient({
           language={language}
         />
 
-        <GlobalCTA
-          onOfficesOpen={openOffices}
-          onBookingOpen={openBooking}
-          onQuoteOpen={openQuote}
-        />
       </main>
 
       <ContactModals

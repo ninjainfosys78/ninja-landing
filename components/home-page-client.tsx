@@ -16,15 +16,6 @@ const InsightsRail = dynamic(() => import("@/components/insights-rail"), {
   loading: () => <div className="h-80 animate-pulse bg-white/5" />,
 });
 
-const Testimonials = dynamic(() => import("@/components/testimonials"), {
-  ssr: true,
-  loading: () => <div className="h-60 animate-pulse bg-white/5" />,
-});
-
-const GlobalCTA = dynamic(() => import("@/components/global-cta"), {
-  ssr: true,
-});
-
 const FeaturedCarousel = dynamic(() => import("@/components/featured-carousel"), {
   ssr: true,
   loading: () => <div className="h-[600px] animate-pulse bg-white/5" />,
@@ -53,9 +44,9 @@ interface HomePageClientProps {
 export default function HomePageClient({ insights }: HomePageClientProps) {
   const { language } = useLanguage();
   const { 
-    officesOpen, openOffices, closeOffices,
-    bookingOpen, openBooking, closeBooking,
-    quoteOpen, openQuote, closeQuote 
+    officesOpen, closeOffices,
+    bookingOpen, closeBooking,
+    quoteOpen, closeQuote 
   } = useContactModals();
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -136,12 +127,6 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
 
         {/* Global Insights */}
         <InsightsRail insights={safeInsights} />
-        <Testimonials />
-        <GlobalCTA
-          onOfficesOpen={openOffices} 
-          onBookingOpen={openBooking}
-          onQuoteOpen={openQuote}
-        />
       </main>
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
