@@ -141,7 +141,7 @@ export default function Hero({ showContent = true, backgroundOnly = false, child
                 }}
               >
                 <Link
-                  href="/work"
+                  href="/products"
                   className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-[15px] font-bold text-white transition-all hover:brightness-110 hover:scale-[1.03] active:scale-95"
                   style={{ backgroundColor: "#E31B23" }}
                 >

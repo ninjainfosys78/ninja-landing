@@ -30,13 +30,12 @@ export default function WorkPage() {
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
   const t = {
-    crumbSelf: language === "en" ? "Our work" : "हाम्रो काम",
-    heroTitle: language === "en" ? "Our work" : "हाम्रो काम",
+    crumbSelf: language === "en" ? "Products" : "उत्पादनहरू",
+    heroTitle: language === "en" ? "Products" : "उत्पादनहरू",
     heroLead:
       language === "en"
-        ? "A few projects and products we’re proud of—fast, accessible and built to last."
+        ? "A few projects and products we’re proud of fast, accessible and built to last."
         : "छिटो, पहुँचयोग्य र दीर्घकालीन समाधानहरू—हाम्रा केही प्रोजेक्ट र प्रोडक्टहरू।",
-    productsTitle: language === "en" ? "Products" : "उत्पादनहरू",
     projectsTitle: language === "en" ? "Projects" : "प्रोजेक्टहरू",
     featuredTitle:
       language === "en" ? "Featured case studies" : "मुख्य केस स्टडीहरू",
@@ -152,16 +151,9 @@ useEffect(() => {
           bannerUrl={bannerUrl || DEFAULT_BANNER}
         />
 
-        <ProductShowcase
-          language={language === "en" ? "en" : "ne"}
-          title={t.productsTitle}
-        />
+        <ProductShowcase language={language === "en" ? "en" : "ne"} />
 
-        <section className="py-20 sm:py-28" style={{ backgroundColor: "var(--page-bg)" }}>
-          <div className="mx-auto max-w-[1450px] px-6 sm:px-10">
-            <ProjectsGrid language={language === "en" ? "en" : "ne"} title={t.projectsTitle} />
-          </div>
-        </section>
+        <ProjectsGrid language={language === "en" ? "en" : "ne"} title={t.projectsTitle} />
 
         <FeaturedCaseStudies
           title={t.featuredTitle}

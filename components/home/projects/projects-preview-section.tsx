@@ -9,7 +9,7 @@ import SectionHeading from "@/components/ui/section-heading";
 import ProjectCard from "@/components/work/projects/project-card";
 import { fetchProjects, type ProjectItem } from "@/lib/projects";
 
-const WORK_PAGE_HREF = "/work";
+const WORK_PAGE_HREF = "/products";
 const PREVIEW_PROJECT_COUNT = 3;
 
 export default function ProjectsPreviewSection() {

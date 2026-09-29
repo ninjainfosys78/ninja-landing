@@ -12,8 +12,7 @@ import { ABOUT_MENU_ITEMS, SOLUTIONS_MENU_ITEMS } from "@/components/header/nav-
 import { hasHeroBanner, isActiveLink, navLinkClass } from "@/components/header/nav-styles";
 
 const HEADER_HEIGHT_PX = 88;
-const PRODUCTS_PATH = "/work";
-const PRODUCTS_HREF = `${PRODUCTS_PATH}#products`;
+const PRODUCTS_HREF = "/products";
 const HERO_SELECTOR = "#hero, main > section";
 
 // True while the page's top banner is still under the navbar, so the bar can
@@ -137,7 +136,6 @@ export default function Header() {
             { label: 'Products', labelNe: 'उत्पादनहरू', href: PRODUCTS_HREF },
             { label: 'Services', labelNe: 'सेवाहरू', href: '/services' },
             { label: 'Blogs', labelNe: 'ब्लगहरू', href: '/blogs' },
-            { label: 'Partners', labelNe: 'साझेदारहरू', href: '/partners' },
             { label: 'Contact', labelNe: 'सम्पर्क', href: '/contact' }
           ].map((item) => (
             <Link
@@ -214,7 +212,6 @@ export default function Header() {
                     { label: 'Products', href: PRODUCTS_HREF },
                     { label: 'Services', href: '/services' },
                     { label: 'Blogs', href: '/blogs' },
-                    { label: 'Partners', href: '/partners' },
                     { label: 'Contact', href: '/contact' }
                   ].map((item) => (
                     <motion.div

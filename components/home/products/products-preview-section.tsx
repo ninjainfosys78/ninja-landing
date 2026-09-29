@@ -9,7 +9,7 @@ import { getProducts } from "@/components/work/products/product-items";
 import ProductPreviewCard from "./product-preview-card";
 import SectionHeading from "@/components/ui/section-heading";
 
-const WORK_PAGE_HREF = "/work";
+const WORK_PAGE_HREF = "/products";
 
 export default function ProductsPreviewSection() {
   const { language } = useLanguage();

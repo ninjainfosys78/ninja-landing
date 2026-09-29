@@ -32,7 +32,7 @@ export default function ProductPreviewCard({ product, index }: ProductPreviewCar
       transition={{ duration: 1.3, delay: index * CARD_STAGGER_SECONDS, ease: EASE_OUT }}
     >
       <Link
-        href={`/work/${product.id}`}
+        href={`/products/${product.id}`}
         className="group relative block aspect-[16/10] overflow-hidden rounded-2xl border border-[#d7e4fa] shadow-[0_1px_2px_rgba(10,31,77,0.03),0_8px_18px_-14px_rgba(10,31,77,0.10)] transition-all duration-500 hover:-translate-y-1 hover:border-[#2563EB]/30 hover:shadow-[0_2px_4px_rgba(10,31,77,0.04),0_14px_26px_-16px_rgba(37,99,235,0.22)]"
       >
         <Image

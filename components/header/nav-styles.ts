@@ -1,7 +1,7 @@
 // Pages whose top section is a full-bleed banner/hero, so the navbar can sit
 // transparently on top of it. Every other page opens on a light background and
 // needs the solid navbar from the start.
-const HERO_ROUTE_PREFIXES = ["/about", "/solutions", "/blogs", "/careers", "/work", "/contact", "/partners"];
+const HERO_ROUTE_PREFIXES = ["/about", "/solutions", "/blogs", "/careers", "/products", "/contact", "/partners"];
 
 export function hasHeroBanner(pathname: string): boolean {
   if (pathname === "/") return true;
