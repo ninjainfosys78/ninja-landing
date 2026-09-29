@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getProducts } from "@/components/work/products/product-items";
 
-import ProductPreviewCard from "./product-preview-card";
+import ProductsCarousel from "./products-carousel";
 import SectionHeading from "@/components/ui/section-heading";
 
 const WORK_PAGE_HREF = "/products";
@@ -55,11 +55,7 @@ export default function ProductsPreviewSection() {
           </Link>
         </div>
 
-        <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((product, index) => (
-            <ProductPreviewCard key={product.id} product={product} index={index} />
-          ))}
-        </div>
+        <ProductsCarousel products={products} />
       </div>
     </section>
   );
