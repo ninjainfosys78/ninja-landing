@@ -1,7 +1,9 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
+
+import Link from "next/link";
 
 import ProductImageFrame from "./product-image-frame";
 import { useMounted } from "@/components/ui/reveal";
@@ -12,6 +14,7 @@ const IMAGE_DURATION_SECONDS = 1.8;
 const TEXT_STAGGER_SECONDS = 0.25;
 const TEXT_DELAY_CHILDREN_SECONDS = 0.6;
 const ITEM_DURATION_SECONDS = 1;
+const PREVIEW_HIGHLIGHT_COUNT = 3;
 
 const textContainerVariants: Variants = {
   hidden: {},
@@ -34,6 +37,7 @@ interface ProductFeatureProps {
 export default function ProductFeature({ product, index, language }: ProductFeatureProps) {
   const isReversed = index % 2 === 1;
   const visitSiteLabel = language === "en" ? "Visit site" : "साइटमा हेर्नुहोस्";
+  const detailsLabel = language === "en" ? "View details" : "विवरण हेर्नुहोस्";
   // Framer Motion's SSR output bakes the already-visible "show" state instead
   // of "hidden" for whileInView-driven elements, so on refresh anything
   // already in view never visibly animates. Forcing "hidden" via an explicit
@@ -51,7 +55,7 @@ export default function ProductFeature({ product, index, language }: ProductFeat
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: IMAGE_DURATION_SECONDS, ease: EASE_OUT }}
       >
-        <ProductImageFrame src={product.image} alt={product.name} accent={product.accent} />
+        <ProductImageFrame src={product.image} alt={product.name} accent={product.accent} fit={product.imageFit} />
       </motion.div>
 
       <motion.div
@@ -69,7 +73,7 @@ export default function ProductFeature({ product, index, language }: ProductFeat
         </motion.h3>
         <motion.p
           variants={textItemVariants}
-          className="mt-3 text-sm font-semibold normal-case tracking-[0.15em]"
+          className="mt-3 text-base font-semibold normal-case tracking-normal"
           style={{ color: product.accent }}
         >
           {product.tagline}
@@ -77,6 +81,15 @@ export default function ProductFeature({ product, index, language }: ProductFeat
         <motion.p variants={textItemVariants} className="mt-6 max-w-xl text-lg leading-relaxed text-[#5b6472]">
           {product.overview}
         </motion.p>
+
+        <motion.ul variants={textItemVariants} className="mt-8 space-y-3">
+          {product.highlights.slice(0, PREVIEW_HIGHLIGHT_COUNT).map((point) => (
+            <li key={point} className="flex items-start gap-3 text-[15px] leading-relaxed text-[#0b0d12]/75">
+              <CheckCircle2 size={18} className="mt-0.5 flex-shrink-0" style={{ color: product.accent }} />
+              {point}
+            </li>
+          ))}
+        </motion.ul>
 
         <motion.ul variants={textItemVariants} className="mt-8 flex flex-wrap gap-3">
           {product.tags.map((tag) => (
@@ -89,17 +102,25 @@ export default function ProductFeature({ product, index, language }: ProductFeat
           ))}
         </motion.ul>
 
-        <motion.a
-          variants={textItemVariants}
-          href={product.siteUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-          style={{ backgroundColor: product.accent }}
-        >
-          {visitSiteLabel}
-          <ExternalLink size={16} />
-        </motion.a>
+        <motion.div variants={textItemVariants} className="mt-8 flex flex-wrap items-center gap-4">
+          <Link
+            href={`/products/${product.id}`}
+            className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            style={{ backgroundColor: product.accent }}
+          >
+            {detailsLabel}
+            <ArrowRight size={16} />
+          </Link>
+          <a
+            href={product.siteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-[#0b0d12]/15 bg-white px-6 py-3 text-sm font-semibold text-[#0b0d12] transition-colors hover:border-[#0b0d12]/40"
+          >
+            {visitSiteLabel}
+            <ExternalLink size={16} />
+          </a>
+        </motion.div>
       </motion.div>
     </div>
   );

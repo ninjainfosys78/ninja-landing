@@ -11,7 +11,7 @@ import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import ProductImageFrame from "./product-image-frame";
 import { getProducts, type ProductSource } from "./product-items";
 
-const WORK_HREF = "/work";
+const WORK_HREF = "/products";
 
 interface ProductDetailClientProps {
   product: ProductSource;
@@ -90,7 +90,7 @@ export default function ProductDetailClient({ product: source }: ProductDetailCl
               </div>
             </div>
 
-            <ProductImageFrame src={product.image} alt={product.name} accent={product.accent} />
+            <ProductImageFrame src={product.image} alt={product.name} accent={product.accent} fit={product.imageFit} />
           </div>
 
           {/* Stat badges in one elevated panel, divided by thin lines centered in real

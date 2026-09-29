@@ -15,6 +15,8 @@ export interface ProductStat {
   label: LocalizedText;
 }
 
+export type ProductImageFit = "cover" | "contain";
+
 export interface ProductSource {
   id: string;
   name: string;
@@ -26,6 +28,7 @@ export interface ProductSource {
   stats: ProductStat[];
   tags: LocalizedList;
   image: string;
+  imageFit?: ProductImageFit;
   accent: string;
 }
 
@@ -40,5 +43,6 @@ export interface ProductItem {
   stats: { value: string; label: string }[];
   tags: string[];
   image: string;
+  imageFit?: ProductImageFit;
   accent: string;
 }
