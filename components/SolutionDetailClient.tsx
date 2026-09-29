@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import GlobalCTA from "@/components/global-cta";
 import ContactModals from "@/components/contact-modals";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import dynamic from "next/dynamic";
@@ -16,9 +15,9 @@ const OfficesModal = dynamic(() => import("@/components/offices-modal"), {
 
 export default function SolutionDetailClient({ solution, bannerUrl }: { solution: any, bannerUrl: string | null }) {
   const { 
-    officesOpen, openOffices, closeOffices,
-    bookingOpen, openBooking, closeBooking,
-    quoteOpen, openQuote, closeQuote 
+    officesOpen, closeOffices,
+    bookingOpen, closeBooking,
+    quoteOpen, closeQuote 
   } = useContactModals();
   const { language } = useLanguage();
 
@@ -125,12 +124,6 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
         </div>
       </section>
 
-      <GlobalCTA 
-        onOfficesOpen={openOffices} 
-        onBookingOpen={openBooking}
-        onQuoteOpen={openQuote}
-      />
-      
       <ContactModals 
         officesOpen={officesOpen}
         onOfficesClose={closeOffices}

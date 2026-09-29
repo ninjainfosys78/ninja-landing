@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-import GlobalCTA from "@/components/global-cta";
 import ContactModals from "@/components/contact-modals";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -197,9 +196,9 @@ const LEFT_NAV = [
 export default function SolutionsClient() {
   const { language } = useLanguage();
   const {
-    officesOpen, openOffices, closeOffices,
-    bookingOpen, openBooking, closeBooking,
-    quoteOpen, openQuote, closeQuote
+    officesOpen, closeOffices,
+    bookingOpen, closeBooking,
+    quoteOpen, closeQuote
   } = useContactModals();
   const [searchOpen, setSearchOpen] = useState(false);
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
@@ -311,11 +310,6 @@ export default function SolutionsClient() {
           );
         })}
 
-        <GlobalCTA
-          onOfficesOpen={openOffices} 
-          onBookingOpen={openBooking}
-          onQuoteOpen={openQuote}
-        />
       </main>
 
       <SearchOverlay

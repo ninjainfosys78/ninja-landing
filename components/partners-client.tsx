@@ -2,7 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import GlobalCTA from "@/components/global-cta";
 import ContactModals from "@/components/contact-modals";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -38,9 +37,9 @@ function PartnerCard({ name, description, logoUrl }: { name: string; description
 export default function PartnersClient({ partners }: PartnersClientProps) {
   const { language } = useLanguage();
   const {
-    officesOpen, openOffices, closeOffices,
-    bookingOpen, openBooking, closeBooking,
-    quoteOpen, openQuote, closeQuote
+    officesOpen, closeOffices,
+    bookingOpen, closeBooking,
+    quoteOpen, closeQuote
   } = useContactModals();
 
   const content = language === "en"
@@ -107,11 +106,6 @@ export default function PartnersClient({ partners }: PartnersClientProps) {
 
         </div>
       </main>
-      <GlobalCTA
-        onOfficesOpen={openOffices}
-        onBookingOpen={openBooking}
-        onQuoteOpen={openQuote}
-      />
       <ContactModals
         officesOpen={officesOpen}
         onOfficesClose={closeOffices}
