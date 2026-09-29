@@ -20,6 +20,7 @@ export default function ProjectsGrid({
 }: ProjectsGridProps) {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [projActive, setProjActive] = useState<Cat>("All");
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -29,6 +30,9 @@ export default function ProjectsGrid({
       })
       .catch((err) => {
         console.error("Error loading projects from PocketBase", err);
+      })
+      .finally(() => {
+        if (mounted) setLoaded(true);
       });
     return () => {
       mounted = false;
@@ -89,8 +93,11 @@ export default function ProjectsGrid({
 
   const filterOptions = filters.map((f) => ({ value: f, label: translateCat(f) }));
 
+  if (!loaded || projects.length === 0) return null;
+
   return (
-    <>
+    <section className="py-20 sm:py-28" style={{ backgroundColor: "var(--page-bg)" }}>
+      <div className="mx-auto max-w-[1450px] px-6 sm:px-10">
       <header className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <SectionHeading
           title={title}
@@ -114,6 +121,7 @@ export default function ProjectsGrid({
           />
         ))}
       </div>
-    </>
+      </div>
+    </section>
   );
 }
