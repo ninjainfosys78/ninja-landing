@@ -10,12 +10,12 @@ import { useMounted } from "@/components/ui/reveal";
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 const CARD_STAGGER_SECONDS = 0.22;
 
-interface ProjectPreviewCardProps {
+interface ProductPreviewCardProps {
   product: ProductItem;
   index: number;
 }
 
-export default function ProjectPreviewCard({ product, index }: ProjectPreviewCardProps) {
+export default function ProductPreviewCard({ product, index }: ProductPreviewCardProps) {
   // Framer Motion's SSR output bakes the already-visible "show" state instead
   // of "hidden" for whileInView-driven elements, so on refresh anything
   // already in view never visibly animates. Forcing "hidden" via an explicit

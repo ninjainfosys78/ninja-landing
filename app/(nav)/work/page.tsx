@@ -10,6 +10,7 @@ import SearchOverlay from "@/components/search-overlay";
 import ContactModals from "@/components/contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import ProductShowcase from "@/components/work/products/product-showcase";
+import ProjectsGrid from "@/components/projects-grid";
 import WorkHero from "@/components/work/hero/work-hero";
 import FeaturedCaseStudies from "@/components/work/case-studies/featured-case-studies";
 import ProcessSteps, { ProcessStep } from "@/components/work/process/process-steps";
@@ -35,7 +36,8 @@ export default function WorkPage() {
       language === "en"
         ? "A few projects and products we’re proud of—fast, accessible and built to last."
         : "छिटो, पहुँचयोग्य र दीर्घकालीन समाधानहरू—हाम्रा केही प्रोजेक्ट र प्रोडक्टहरू।",
-    productsTitle: language === "en" ? "Projects" : "प्रोजेक्टहरू",
+    productsTitle: language === "en" ? "Products" : "उत्पादनहरू",
+    projectsTitle: language === "en" ? "Projects" : "प्रोजेक्टहरू",
     featuredTitle:
       language === "en" ? "Featured case studies" : "मुख्य केस स्टडीहरू",
     processTitle: language === "en" ? "How we work" : "हामी कसरी काम गर्छौं",
@@ -154,6 +156,12 @@ useEffect(() => {
           language={language === "en" ? "en" : "ne"}
           title={t.productsTitle}
         />
+
+        <section className="py-20 sm:py-28" style={{ backgroundColor: "var(--page-bg)" }}>
+          <div className="mx-auto max-w-[1450px] px-6 sm:px-10">
+            <ProjectsGrid language={language === "en" ? "en" : "ne"} title={t.projectsTitle} />
+          </div>
+        </section>
 
         <FeaturedCaseStudies
           title={t.featuredTitle}

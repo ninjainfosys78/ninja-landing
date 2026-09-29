@@ -34,6 +34,10 @@ const SustainabilitySection = dynamic(() => import("@/components/sustainability-
   ssr: true,
 });
 
+const ProductsPreviewSection = dynamic(() => import("@/components/home/products/products-preview-section"), {
+  ssr: true,
+});
+
 const ProjectsPreviewSection = dynamic(() => import("@/components/home/projects/projects-preview-section"), {
   ssr: true,
 });
@@ -118,8 +122,11 @@ export default function HomePageClient({ insights }: HomePageClientProps) {
         {/* Core Identity: About Us */}
         <AboutUsSection />
 
-        {/* Brand Initiative: Sustainability */}
+        {/* Solutions */}
         <SustainabilitySection />
+
+        {/* Products */}
+        <ProductsPreviewSection />
 
         {/* Editorial Carousel */}
         <FeaturedCarousel key={language} />
