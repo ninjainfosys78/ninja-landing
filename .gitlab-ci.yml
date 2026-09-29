@@ -19,8 +19,8 @@ cache:
 build:
   stage: build
   image: node:${NODE_VERSION}-trixie
-  tags:
-    - numanode
+  # tags:
+  #   - numanode
   variables:
     NEXT_PUBLIC_PB_URL: $NEXT_PUBLIC_PB_URL
   before_script:
@@ -42,8 +42,8 @@ build:
 deploy:preview:
   stage: deploy
   image: node:${NODE_VERSION}-alpine
-  tags:
-    - numanode
+  # tags:
+  #   - numanode
   dependencies:
     - build
   before_script:
@@ -61,8 +61,8 @@ deploy:preview:
 deploy:production:
   stage: deploy
   image: node:${NODE_VERSION}-alpine
-  tags:
-    - numanode
+  # tags:
+  #   - numanode
   dependencies:
     - build
   before_script:
@@ -80,8 +80,8 @@ deploy:production:
 debug:env:
   stage: deploy
   image: alpine
-  tags:
-    - numanode
+  # tags:
+  #   - numanode
   script:
     - echo "Checking Cloudflare token visibility..."
     - if [ -z "$CLOUDFLARE_API_TOKEN" ]; then 
