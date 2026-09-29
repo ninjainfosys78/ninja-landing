@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink, CheckCircle2 } from "lucide-react";
 
 import { useLanguage } from "@/components/LanguageProvider";
-import GlobalCTA from "@/components/global-cta";
 import ContactModals from "@/components/contact-modals";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 
@@ -20,9 +19,9 @@ interface ProductDetailClientProps {
 export default function ProductDetailClient({ product: source }: ProductDetailClientProps) {
   const { language } = useLanguage();
   const {
-    officesOpen, openOffices, closeOffices,
-    bookingOpen, openBooking, closeBooking,
-    quoteOpen, openQuote, closeQuote,
+    officesOpen, closeOffices,
+    bookingOpen, closeBooking,
+    quoteOpen, closeQuote,
   } = useContactModals();
 
   const lang = language === "en" ? "en" : "ne";
@@ -136,8 +135,6 @@ export default function ProductDetailClient({ product: source }: ProductDetailCl
           </div>
         </div>
       </section>
-
-      <GlobalCTA onOfficesOpen={openOffices} onBookingOpen={openBooking} onQuoteOpen={openQuote} />
 
       <ContactModals
         officesOpen={officesOpen}

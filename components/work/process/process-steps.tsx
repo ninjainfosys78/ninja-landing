@@ -14,7 +14,7 @@ interface ProcessStepsProps {
 
 export default function ProcessSteps({ title, steps }: ProcessStepsProps) {
   return (
-    <section className="py-20 sm:py-28" style={{ backgroundColor: "var(--page-bg-alt)" }}>
+    <section data-no-reveal className="py-20 sm:py-28" style={{ backgroundColor: "var(--page-bg-alt)" }}>
       <div className="mx-auto max-w-[1450px] px-6 sm:px-10">
         <SectionHeading
           title={title}
