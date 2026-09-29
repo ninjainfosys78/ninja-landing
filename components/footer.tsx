@@ -95,7 +95,7 @@ export default function Footer() {
     >
       <div className="relative z-10 mx-auto w-full max-w-screen-2xl px-6 sm:px-8 lg:px-12 2xl:px-16">
         <div className="h-16 sm:h-20" />
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-24 mb-5 mt-8">
+        <div className="flex flex-col xl:flex-row items-start justify-between gap-8 xl:gap-24 mb-5 mt-8">
           <div>
             <Link
               href="/"
@@ -121,8 +121,8 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-12 mt-8 lg:mt-0">
-            <div className="w-max md:mr-40">
+          <div className="flex flex-col md:flex-row md:flex-wrap gap-x-16 gap-y-10 mt-8 xl:mt-0 min-w-0">
+            <div className="min-w-0">
               <div className="mb-5">
                 <h3 className="font-semibold text-lg text-white mb-3">{content.quickHeading}</h3>
                 <div className="h-[3px] w-10 bg-[#E31B23]" />
@@ -142,7 +142,7 @@ export default function Footer() {
               </ul>
             </div>
 
-            <div className="w-max md:mr-25">
+            <div className="min-w-0">
               <div className="mb-5">
                 <h3 className="font-semibold text-lg text-white mb-3">{content.connectHeading}</h3>
                 <div className="h-[3px] w-10 bg-[#E31B23]" />
@@ -189,7 +189,7 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="w-max">
+            <div className="min-w-0">
               <div className="mb-5">
                 <h3 className="font-semibold text-lg text-white mb-3">{content.socialLinks}</h3>
                 <div className="h-[3px] w-10 bg-[#E31B23]" />

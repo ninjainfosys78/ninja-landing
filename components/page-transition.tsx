@@ -23,12 +23,12 @@ export default function PageTransition({ children }: { children: React.ReactNode
   const pathname = usePathname();
 
   return (
-    <div className="grid">
+    <div className="grid grid-cols-[minmax(0,1fr)]">
       <AnimatePresence initial={false}>
         <motion.div
           key={pathname}
           data-reveal-root
-          className="[grid-area:1/1]"
+          className="[grid-area:1/1] min-w-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

@@ -101,6 +101,9 @@ html {
   font-family: var(--font-body);
 }
 
+/* Slide-in reveals start offset sideways; clip (unlike hidden) keeps sticky working. */
+body { overflow-x: clip; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
