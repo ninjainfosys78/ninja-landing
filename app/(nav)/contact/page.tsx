@@ -2,14 +2,16 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useLanguage } from "@/components/LanguageProvider"
-import Link from "next/link"
 import { toast } from "sonner"
 
+import OfficeMap from "@/components/contact/OfficeMap"
 import SearchOverlay from "@/components/search-overlay"
 import PageBanner from "@/components/ui/page-banner"
 import { Reveal, RevealGroup, RevealItem, StaggerWords } from "@/components/ui/reveal"
 
 const SLIDE_DISTANCE_PX = 90
+const KATHMANDU_MAP_QUERY = "Anamnagar Kathmandu Nepal"
+const DENVER_MAP_QUERY = "1500 N Grant St, Ste R, Denver, CO 80203, US"
 
 
 export default function ContactPage() {
@@ -38,6 +40,9 @@ export default function ContactPage() {
           getDirection: "Get Direction →",
           mapTitle: "Where to find us",
           mapCaption: "Ninja Infosys, Anamnagar, Kathmandu, Nepal",
+          usCity: "Denver",
+          usMapTitle: "Ninja Infosys LLC in Denver",
+          usMapCaption: "Ninja Infosys LLC, 1500 N Grant St, Ste R, Denver, CO 80203, US",
         }
       : {
           formTitle: "थप जानकारी चाहनुहुन्छ?",
@@ -57,6 +62,9 @@ export default function ContactPage() {
           getDirection: "दिशा प्राप्त गर्नुहोस् →",
           mapTitle: "हामी कहाँ छौं",
           mapCaption: "निन्जा इन्फोसिस, अनामनगर, काठमाडौं, नेपाल",
+          usCity: "डेनभर",
+          usMapTitle: "डेनभरमा निन्जा इन्फोसिस एलएलसी",
+          usMapCaption: "Ninja Infosys LLC, 1500 N Grant St, Ste R, Denver, CO 80203, US",
         }
 
   useEffect(() => {
@@ -229,23 +237,20 @@ export default function ContactPage() {
               </h3>
             </div>
             <Reveal amount={0.3}>
-              <p className="text-sm text-[#0b0d12]/60 mb-6">{t.mapCaption || "Ninja Infosys, Anamnagar, Kathmandu, Nepal"}</p>
-
-              <div className="mb-6">
-                <Link
-                  href="https://www.google.com/maps?q=Anamnagar%20Kathmandu%20Nepal"
-                  className="inline-flex items-center gap-2 text-sm text-[#2563EB] hover:underline"
-                >
-                  <span>{t.getDirection}</span>
-                </Link>
-              </div>
-
-              <div className="mt-6 w-full">
-                <iframe
-                  title={t.mapTitle || "Anamnagar map"}
-                  src={"https://www.google.com/maps?q=Anamnagar%20Kathmandu%20Nepal&output=embed"}
-                  className="w-full h-[380px] md:h-[420px] block"
-                  loading="lazy"
+              <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+                <OfficeMap
+                  city={t.city}
+                  caption={t.mapCaption}
+                  mapQuery={KATHMANDU_MAP_QUERY}
+                  getDirection={t.getDirection}
+                  mapTitle={t.mapTitle}
+                />
+                <OfficeMap
+                  city={t.usCity}
+                  caption={t.usMapCaption}
+                  mapQuery={DENVER_MAP_QUERY}
+                  getDirection={t.getDirection}
+                  mapTitle={t.usMapTitle}
                 />
               </div>
             </Reveal>

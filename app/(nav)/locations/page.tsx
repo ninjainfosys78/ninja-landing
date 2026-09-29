@@ -5,6 +5,8 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
 import SectionHeading from "@/components/ui/section-heading";
 
+const DENVER_MAP_URL = "https://www.google.com/maps?q=1500%20N%20Grant%20St%2C%20Ste%20R%2C%20Denver%2C%20CO%2080203%2C%20US&output=embed";
+
 const OFFICES = {
   en: [
     {
@@ -13,6 +15,13 @@ const OFFICES = {
       phone: "+977-9851343348",
       email: "info@ninjainfosys.com",
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.5085889754915!2d85.32286631506188!3d27.70587948279337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb198db7c6a1b7%3A0x4ea343ea75b2b439!2sAnamnagar%2C%20Kathmandu%2044600!5e0!3m2!1sen!2snp!4v1682260000000!5m2!1sen!2snp"
+    },
+    {
+      city: "Denver",
+      address: "Ninja Infosys LLC, 1500 N Grant St, Ste R, Denver, CO 80203, US",
+      phone: "+977-9851343348",
+      email: "info@ninjainfosys.com",
+      mapUrl: DENVER_MAP_URL
     }
   ],
   ne: [
@@ -22,6 +31,13 @@ const OFFICES = {
       phone: "+977-9851343348",
       email: "info@ninjainfosys.com",
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.5085889754915!2d85.32286631506188!3d27.70587948279337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb198db7c6a1b7%3A0x4ea343ea75b2b439!2sAnamnagar%2C%20Kathmandu%2044600!5e0!3m2!1sen!2snp!4v1682260000000!5m2!1sen!2snp"
+    },
+    {
+      city: "डेनभर",
+      address: "Ninja Infosys LLC, 1500 N Grant St, Ste R, Denver, CO 80203, US",
+      phone: "+977-9851343348",
+      email: "info@ninjainfosys.com",
+      mapUrl: DENVER_MAP_URL
     }
   ]
 };
@@ -56,7 +72,7 @@ export default function LocationsPage() {
             descriptionClassName="text-xl text-[#0b0d12]/60 max-w-2xl"
           />
 
-          <div className="grid grid-cols-1 max-w-2xl gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {offices.map((office, idx) => (
               <div key={idx} className="bg-white border border-[#0b0d12]/10 rounded-lg overflow-hidden group transition-all duration-300">
                 <div className="h-64 transition-all duration-500">
