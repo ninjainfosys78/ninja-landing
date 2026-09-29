@@ -36,7 +36,7 @@ const FALLBACK_TEAM: TeamMember[] = [
     role: "Founder & CEO",
     name_ne: "रमेश क्षेत्री",
     role_ne: "संस्थापक र सीईओ",
-    imageUrl: "/ceo.jpg",
+    imageUrl: "/ramesh-chhetri.png",
     linkedinUrl: "https://www.linkedin.com/in/rameshchhetriofficial/",
     bio_en: "Ramesh drives Ninja Infosys's vision for what government technology can be — not just functional, but genuinely trustworthy. Under his leadership, the company has taken on e-governance systems that now touch hundreds of thousands of citizens, always closing the gap between deep technical craft and the practical realities institutions face on the ground. He believes the best technology disappears into the background, and every product he ships is measured against one question: does it make people's lives easier?",
     bio_ne: "रमेशले निन्जा इन्फोसिसलाई सरकारी प्रविधि कस्तो हुनुपर्छ भन्ने दृष्टिकोण अगाडि बढाउनुहुन्छ — कार्यात्मक मात्र होइन, साँच्चिकै भरपर्दो। उहाँको नेतृत्वमा, कम्पनीले लाखौं नागरिकसम्म पुग्ने ई-सुशासन प्रणालीहरू निर्माण गरेको छ, जहाँ गहिरो प्राविधिक सीप र संस्थाहरूको व्यावहारिक आवश्यकताबीचको खाडललाई सधैं कम गरिन्छ। उहाँको विश्वास छ — उत्कृष्ट प्रविधि पृष्ठभूमिमा हराएर जान्छ, र उहाँले बनाउने हरेक उत्पादनलाई एउटै प्रश्नले जाँचिन्छ: के यसले मानिसको जीवन सहज बनाउँछ?",

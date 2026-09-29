@@ -22,7 +22,6 @@ export default function StoryBackground() {
         style={{ animation: "ambient-drift-b 32s ease-in-out infinite" }}
       />
 
-      <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[#E31B23] via-[#2563EB] to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-white to-transparent" />
     </div>
   );
