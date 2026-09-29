@@ -9,7 +9,7 @@ The marketing site for Ninja Infosys, a global consulting company. Built with Ne
 - **Language**: TypeScript
 - **Icons**: Lucide React
 - **Animation**: Framer Motion
-- **Content**: Live content (team, partners, insights/blogs, trusted-by logos, contact form submissions) comes from an external DCM (content management) API and a PocketBase instance for banners/testimonials — not embedded JSON.
+- **Content**: Live content (team, partners, insights/blogs, contact form submissions) comes from an external DCM (content management) API and a PocketBase instance for banners/testimonials — not embedded JSON.
 
 ## Getting Started
 
@@ -28,7 +28,7 @@ None of these are strictly required to run the site locally — every integratio
 
 | Variable | Used for | If missing |
 |---|---|---|
-| `DCM_API_URL` | Base URL of the DCM content API (team, partners, insights, contact submissions, trusted-by logos) | DCM-backed sections fall back to hardcoded dummy content; contact form submissions to DCM fail silently |
+| `DCM_API_URL` | Base URL of the DCM content API (team, partners, insights, contact submissions) | DCM-backed sections fall back to hardcoded dummy content; contact form submissions to DCM fail silently |
 | `DCM_TENANT_SLUG` | DCM tenant identifier | Same as above |
 | `DCM_CATEGORY_SLUG` | DCM content category (defaults to `"ninjainfosys"`) | Uses the default; only needs overriding for a different tenant setup |
 | `NEXT_PUBLIC_PB_URL` | Base URL of the PocketBase instance (banners, testimonials) | Defaults to `https://cms.ninjainfosys.com` |

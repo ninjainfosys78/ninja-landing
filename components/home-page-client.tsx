@@ -10,12 +10,6 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import ContactModals from "@/components/contact-modals";
 import type { InsightCard } from "@/components/insights-rail";
-import type { TrustedLogoRecord } from "@/lib/trustedby";
-
-const TrustedBy = dynamic(() => import("@/components/trusted-by"), {
-  ssr: true,
-  loading: () => <div className="h-40 animate-pulse bg-white/5" />,
-});
 
 const InsightsRail = dynamic(() => import("@/components/insights-rail"), {
   ssr: true,
@@ -50,10 +44,9 @@ const AboutUsSection = dynamic(() => import("@/components/about-us-section"), {
 
 interface HomePageClientProps {
   insights: InsightCard[];
-  trustedLogos: TrustedLogoRecord[];
 }
 
-export default function HomePageClient({ insights, trustedLogos }: HomePageClientProps) {
+export default function HomePageClient({ insights }: HomePageClientProps) {
   const { language } = useLanguage();
   const { 
     officesOpen, openOffices, closeOffices,
@@ -127,9 +120,6 @@ export default function HomePageClient({ insights, trustedLogos }: HomePageClien
 
         {/* Brand Initiative: Sustainability */}
         <SustainabilitySection />
-
-        {/* Partner Ecosystem */}
-        <TrustedBy initialLogos={trustedLogos} />
 
         {/* Editorial Carousel */}
         <FeaturedCarousel key={language} />

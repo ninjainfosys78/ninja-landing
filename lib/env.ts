@@ -4,7 +4,7 @@ export const env = {
   EMAIL_TO: process.env.EMAIL_TO || "technical.ninjainfosys@gmail.com",
   DCM_API_URL: process.env.DCM_API_URL || "",
   DCM_TENANT_SLUG: process.env.DCM_TENANT_SLUG || "",
-  // The single DCM category this tenant's content (contact form, published
-  // content lists like the trusted-by logos) lives under.
+  // The single DCM category this tenant's content (contact form and published
+  // content lists) lives under.
   DCM_CATEGORY_SLUG: process.env.DCM_CATEGORY_SLUG || "ninjainfosys",
 };
