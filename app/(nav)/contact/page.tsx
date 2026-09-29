@@ -239,18 +239,18 @@ export default function ContactPage() {
             <Reveal amount={0.3}>
               <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
                 <OfficeMap
-                  city={t.city}
-                  caption={t.mapCaption}
-                  mapQuery={KATHMANDU_MAP_QUERY}
-                  getDirection={t.getDirection}
-                  mapTitle={t.mapTitle}
-                />
-                <OfficeMap
                   city={t.usCity}
                   caption={t.usMapCaption}
                   mapQuery={DENVER_MAP_QUERY}
                   getDirection={t.getDirection}
                   mapTitle={t.usMapTitle}
+                />
+                <OfficeMap
+                  city={t.city}
+                  caption={t.mapCaption}
+                  mapQuery={KATHMANDU_MAP_QUERY}
+                  getDirection={t.getDirection}
+                  mapTitle={t.mapTitle}
                 />
               </div>
             </Reveal>
