@@ -21,6 +21,12 @@ export function useMounted(): boolean {
   return mounted;
 }
 
+// Curtain-style wipe: content is unmasked from the top down while rising
+// slightly. The final inset is negative so shadows and glows are never clipped.
+const WIPE_OVERSCAN_PX = 60;
+const WIPE_CLOSED = `inset(-${WIPE_OVERSCAN_PX}px -${WIPE_OVERSCAN_PX}px 100% -${WIPE_OVERSCAN_PX}px)`;
+const WIPE_OPEN = `inset(-${WIPE_OVERSCAN_PX}px -${WIPE_OVERSCAN_PX}px -${WIPE_OVERSCAN_PX}px -${WIPE_OVERSCAN_PX}px)`;
+
 type RevealProps = {
   children: React.ReactNode;
   className?: string;
@@ -46,13 +52,13 @@ export function Reveal({
   amount = 0.2,
 }: RevealProps) {
   const mounted = useMounted();
-  const hidden = { opacity: 0, y, scale: 0.96, filter: "blur(8px)" };
+  const hidden = { clipPath: WIPE_CLOSED, y };
 
   return (
     <motion.div
       className={className}
       initial={hidden}
-      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      whileInView={{ clipPath: WIPE_OPEN, y: 0 }}
       animate={!mounted ? hidden : undefined}
       viewport={{ once, amount, margin: "0px 0px -10% 0px" }}
       transition={{ duration, delay, ease: [0.16, 1, 0.3, 1] }}
@@ -61,6 +67,9 @@ export function Reveal({
     </motion.div>
   );
 }
+
+const WORD_CLOSED = "inset(0 0 100% 0)";
+const WORD_OPEN = "inset(-0.3em -0.1em -0.3em -0.1em)";
 
 const DEFAULT_STAGGER_SECONDS = 0.12;
 const DEFAULT_ITEM_DURATION_SECONDS = 0.65;
@@ -74,12 +83,10 @@ const staggerContainer = (stagger: number): Variants => ({
 // horizontal one (negative = from the left, positive = from the right) —
 // used to bring two side-by-side items in from opposite directions.
 const staggerItem = (duration: number, x?: number): Variants => ({
-  hidden: x !== undefined ? { opacity: 0, x, scale: 0.96, filter: "blur(5px)" } : { opacity: 0, y: 32, scale: 0.96, filter: "blur(5px)" },
+  hidden: x !== undefined ? { clipPath: WIPE_CLOSED, x } : { clipPath: WIPE_CLOSED, y: 32 },
   show: {
-    opacity: 1,
+    clipPath: WIPE_OPEN,
     ...(x !== undefined ? { x: 0 } : { y: 0 }),
-    scale: 1,
-    filter: "blur(0px)",
     transition: { duration, ease: [0.16, 1, 0.3, 1] },
   },
 });
@@ -139,7 +146,7 @@ export function RevealItem({
   );
 }
 
-// Word-by-word staggered fade-in for headings — each word animates in
+// Word-by-word staggered wipe-up for headings — each word animates in
 // with a small delay after the previous one, instead of the whole
 // heading fading in as a single block. Words stay inline so the
 // heading still wraps naturally at any viewport width.
@@ -176,11 +183,10 @@ export function StaggerWords({
           <motion.span
             className={`inline-block ${wordClassName ?? ""}`}
             variants={{
-              hidden: { opacity: 0, y: 18, filter: "blur(4px)" },
+              hidden: { clipPath: WORD_CLOSED, y: "0.6em" },
               show: {
-                opacity: 1,
+                clipPath: WORD_OPEN,
                 y: 0,
-                filter: "blur(0px)",
                 transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
               },
             }}

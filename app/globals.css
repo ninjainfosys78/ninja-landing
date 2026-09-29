@@ -427,19 +427,19 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
 /* Scroll reveal (see components/ui/auto-reveal.tsx). Uses the individual
    `translate` property so it never fights framer-motion's `transform`. */
 .auto-reveal {
-  opacity: 0;
-  translate: 0 28px;
+  clip-path: inset(-60px -60px 100% -60px);
+  translate: 0 20px;
   transition:
-    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
-    translate 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+    clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    translate 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
 }
 .auto-reveal.is-visible {
-  opacity: 1;
+  clip-path: inset(-60px);
   translate: 0 0;
 }
 @media (prefers-reduced-motion: reduce) {
   .auto-reveal {
-    opacity: 1;
+    clip-path: none;
     translate: none;
     transition: none;
   }
