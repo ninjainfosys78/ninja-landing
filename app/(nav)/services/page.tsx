@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { getBannerByImgName } from "@/lib/banners";
 
-import GlobalCTA from "@/components/global-cta";
 import SearchOverlay from "@/components/search-overlay";
 import ContactModals from "@/components/contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -11,6 +10,8 @@ import { useContactModals } from "@/lib/hooks/use-contact-modals";
 import WorkHero from "@/components/work/hero/work-hero";
 import ServicesList from "@/components/services/services-list";
 import { getServices } from "@/components/services/service-items";
+import { getServiceProcessSteps } from "@/components/services/service-process-steps";
+import ProcessSteps from "@/components/work/process/process-steps";
 
 const DEFAULT_BANNER = "/services.jpg";
 
@@ -19,9 +20,9 @@ export default function ServicesPage() {
   const lang = language === "en" ? "en" : "ne";
   const [searchOpen, setSearchOpen] = useState(false);
   const {
-    officesOpen, openOffices, closeOffices,
-    bookingOpen, openBooking, closeBooking,
-    quoteOpen, openQuote, closeQuote,
+    officesOpen, closeOffices,
+    bookingOpen, closeBooking,
+    quoteOpen, closeQuote,
   } = useContactModals();
 
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
@@ -38,6 +39,7 @@ export default function ServicesPage() {
       lang === "en"
         ? "We don't just build software — we craft experiences. Every engagement pairs thoughtful design with reliable engineering."
         : "हामी सफ्टवेयर मात्र बनाउँदैनौं — अनुभव सिर्जना गर्छौं। हरेक कामले सोचविचारपूर्ण डिजाइनलाई भरपर्दो इन्जिनियरिङसँग जोड्छ।",
+    processTitle: lang === "en" ? "How we work" : "हामी कसरी काम गर्छौं",
   };
 
   useEffect(() => {
@@ -86,7 +88,8 @@ export default function ServicesPage() {
           services={services}
         />
 
-        <GlobalCTA onOfficesOpen={openOffices} onBookingOpen={openBooking} onQuoteOpen={openQuote} />
+        <ProcessSteps title={t.processTitle} steps={getServiceProcessSteps(lang)} />
+
       </main>
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />

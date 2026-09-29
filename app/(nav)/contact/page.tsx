@@ -7,7 +7,7 @@ import { toast } from "sonner"
 import OfficeMap from "@/components/contact/OfficeMap"
 import SearchOverlay from "@/components/search-overlay"
 import PageBanner from "@/components/ui/page-banner"
-import { Reveal, RevealGroup, RevealItem, StaggerWords } from "@/components/ui/reveal"
+import { RevealGroup, RevealItem, StaggerWords } from "@/components/ui/reveal"
 
 const SLIDE_DISTANCE_PX = 90
 const KATHMANDU_MAP_QUERY = "Anamnagar Kathmandu Nepal"
@@ -236,24 +236,22 @@ export default function ContactPage() {
                 <span className="font-bold text-[#E31B23]">{t.locationAccent}</span>
               </h3>
             </div>
-            <Reveal amount={0.3}>
-              <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-                <OfficeMap
-                  city={t.usCity}
-                  caption={t.usMapCaption}
-                  mapQuery={DENVER_MAP_QUERY}
-                  getDirection={t.getDirection}
-                  mapTitle={t.usMapTitle}
-                />
-                <OfficeMap
-                  city={t.city}
-                  caption={t.mapCaption}
-                  mapQuery={KATHMANDU_MAP_QUERY}
-                  getDirection={t.getDirection}
-                  mapTitle={t.mapTitle}
-                />
-              </div>
-            </Reveal>
+            <div data-no-reveal className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+              <OfficeMap
+                city={t.usCity}
+                caption={t.usMapCaption}
+                mapQuery={DENVER_MAP_QUERY}
+                getDirection={t.getDirection}
+                mapTitle={t.usMapTitle}
+              />
+              <OfficeMap
+                city={t.city}
+                caption={t.mapCaption}
+                mapQuery={KATHMANDU_MAP_QUERY}
+                getDirection={t.getDirection}
+                mapTitle={t.mapTitle}
+              />
+            </div>
           </div>
         </div>
       </section>

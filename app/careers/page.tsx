@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import BannerSubtitle from "@/components/ui/banner-subtitle";
 import SearchOverlay from "@/components/search-overlay";
 import Link from "next/link";
-import GlobalCTA from "@/components/global-cta";
 import ContactModals from "@/components/contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import { getBannerByImgName } from "@/lib/banners";
@@ -15,9 +14,9 @@ export default function CareersPage() {
   const { language } = useLanguage();
   const [searchOpen, setSearchOpen] = useState(false);
   const {
-    officesOpen, openOffices, closeOffices,
-    bookingOpen, openBooking, closeBooking,
-    quoteOpen, openQuote, closeQuote,
+    officesOpen, closeOffices,
+    bookingOpen, closeBooking,
+    quoteOpen, closeQuote,
   } = useContactModals();
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
 
@@ -138,7 +137,6 @@ export default function CareersPage() {
         </section>
       </main>
 
-      <GlobalCTA onOfficesOpen={openOffices} onBookingOpen={openBooking} onQuoteOpen={openQuote} />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
       <ContactModals
         officesOpen={officesOpen}

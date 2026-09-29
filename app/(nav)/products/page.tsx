@@ -5,14 +5,12 @@ import { Search, PenTool, Code, RefreshCw } from "lucide-react";
 import { getBannerByImgName } from "@/lib/banners";
 
 
-import GlobalCTA from "@/components/global-cta";
 import SearchOverlay from "@/components/search-overlay";
 import ContactModals from "@/components/contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
 import ProductShowcase from "@/components/work/products/product-showcase";
 import ProjectsGrid from "@/components/projects-grid";
 import WorkHero from "@/components/work/hero/work-hero";
-import FeaturedCaseStudies from "@/components/work/case-studies/featured-case-studies";
 import ProcessSteps, { ProcessStep } from "@/components/work/process/process-steps";
 import { useContactModals } from "@/lib/hooks/use-contact-modals";
 
@@ -22,9 +20,9 @@ export default function WorkPage() {
   const { language } = useLanguage();
   const [searchOpen, setSearchOpen] = useState(false);
   const {
-    officesOpen, openOffices, closeOffices,
-    bookingOpen, openBooking, closeBooking,
-    quoteOpen, openQuote, closeQuote,
+    officesOpen, closeOffices,
+    bookingOpen, closeBooking,
+    quoteOpen, closeQuote,
   } = useContactModals();
 
   const [bannerUrl, setBannerUrl] = useState<string | null>(null);
@@ -37,8 +35,6 @@ export default function WorkPage() {
         ? "A few projects and products we’re proud of fast, accessible and built to last."
         : "छिटो, पहुँचयोग्य र दीर्घकालीन समाधानहरू—हाम्रा केही प्रोजेक्ट र प्रोडक्टहरू।",
     projectsTitle: language === "en" ? "Projects" : "प्रोजेक्टहरू",
-    featuredTitle:
-      language === "en" ? "Featured case studies" : "मुख्य केस स्टडीहरू",
     processTitle: language === "en" ? "How we work" : "हामी कसरी काम गर्छौं",
     discover: language === "en" ? "Discover" : "पत्ता लगाउनुहोस्",
     discoverDesc:
@@ -61,51 +57,6 @@ export default function WorkPage() {
         ? "A/B tests, analytics, and roadmaps—no drama launches."
         : "A/B परीक्षण, विश्लेषण, रोडम्याप—साधारण लन्च।",
   };
-
-  const featured = [
-    {
-      eyebrow: language === "en" ? "Municipality" : "नगरपालिका",
-      title:
-        language === "en"
-          ? "E-Palika roll-out across 12 wards"
-          : "१२ वडामा ई-पालिका विस्तार",
-      problem:
-        language === "en"
-          ? "Fragmented counters, manual files, citizens waiting hours for simple services."
-          : "छरिएको काउन्टर, म्यानुअल फाइल, नागरिकहरू साधारण सेवाका लागि घण्टौं कुर्दै।",
-      approach:
-        language === "en"
-          ? "Citizen portal (Next.js + Carbon), role-based e-Office, payments, SMS/email alerts, dashboards."
-          : "नागरिक पोर्टल (Next.js + Carbon), भूमिका-आधारित ई-कार्यालय, भुक्तानी, SMS/इमेल सूचना, ड्यासबोर्ड।",
-      result:
-        language === "en"
-          ? [
-              "-68% average queue time",
-              "95% services online",
-              "Full auditability",
-            ]
-          : ["-६८% औसत पंक्ति समय", "९५% सेवा अनलाइन", "पूर्ण अडिट क्षमता"],
-    },
-    {
-      eyebrow: language === "en" ? "Education" : "शिक्षा",
-      title:
-        language === "en"
-          ? "Admissions funnel for Greenfield School"
-          : "ग्रीनफिल्ड विद्यालयका लागि भर्ना प्रक्रिया",
-      problem:
-        language === "en"
-          ? "Admissions handled on paper; poor visibility on inquiries and conversions."
-          : "कागजमा भर्ना प्रक्रिया; जिज्ञासा र रूपान्तरणमा कम दृश्यता।",
-      approach:
-        language === "en"
-          ? "Accessible site, program pages, online applications, fee gateway, CRM export."
-          : "पहुँचयोग्य साइट, कार्यक्रम पृष्ठ, अनलाइन आवेदन, शुल्क गेटवे, CRM निर्यात।",
-      result:
-        language === "en"
-          ? ["+55% inquiries", "Application completion +31%", "LCP < 1.2s"]
-          : ["+५५% जिज्ञासा", "आवेदन पूरा +३१%", "LCP < १.२s"],
-    },
-  ];
 
 useEffect(() => {
     let mounted = true;
@@ -155,16 +106,8 @@ useEffect(() => {
 
         <ProjectsGrid language={language === "en" ? "en" : "ne"} title={t.projectsTitle} />
 
-        <FeaturedCaseStudies
-          title={t.featuredTitle}
-          problemLabel={language === "en" ? "Problem" : "समस्या"}
-          approachLabel={language === "en" ? "Approach" : "दृष्टिकोण"}
-          studies={featured}
-        />
-
         <ProcessSteps title={t.processTitle} steps={processSteps} />
 
-        <GlobalCTA onOfficesOpen={openOffices} onBookingOpen={openBooking} onQuoteOpen={openQuote} />
       </main>
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
