@@ -31,6 +31,7 @@ export default function Footer() {
         connectHeading: "Get in Touch",
         connect: [
           { type: "address", value: "Anamnagar, Kathmandu, Nepal" },
+          { type: "address", value: "Ninja Infosys LLC, 1500 N Grant St, Ste R, Denver, CO 80203, US" },
           { type: "email", value: "info@ninjainfosys.com" },
           { type: "mobile", value: "+977-9851343348, +977-9858042433, +977-9858042647, 01-5922361" },
         ],
@@ -60,6 +61,7 @@ export default function Footer() {
         connectHeading: "हामीसँग जडान हुनुहोस्",
         connect: [
           { type: "address", value: "अनामनगर, काठमाडौं, नेपाल" },
+          { type: "address", value: "Ninja Infosys LLC, 1500 N Grant St, Ste R, Denver, CO 80203, US" },
           { type: "email", value: "info@ninjainfosys.com" },
           { type: "mobile", value: "+९७७-९८५१३४३३४८, +९७७-९८५८०४२४३३, +९७७-९८५८०४२६४७, ०१-५९२२३६१" },
         ],
