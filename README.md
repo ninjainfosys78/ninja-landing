@@ -28,8 +28,8 @@ None of these are strictly required to run the site locally — every integratio
 
 | Variable | Used for | If missing |
 |---|---|---|
-| `DCM_API_URL` | Base URL of the DCM content API (team, partners, insights, contact submissions) | DCM-backed sections fall back to hardcoded dummy content; contact form submissions to DCM fail silently |
-| `DCM_TENANT_SLUG` | DCM tenant identifier | Same as above |
+| `DCM_API_URL` | Base URL of the DCM content API (team, partners, insights, contact submissions) | Defaults to `https://ninjainfosys.app.eshasan.com` |
+| `DCM_TENANT_SLUG` | DCM tenant identifier | Defaults to `"ninjainfosys"` |
 | `DCM_CATEGORY_SLUG` | DCM content category (defaults to `"ninjainfosys"`) | Uses the default; only needs overriding for a different tenant setup |
 | `NEXT_PUBLIC_PB_URL` | Base URL of the PocketBase instance (banners, testimonials) | Defaults to `https://cms.ninjainfosys.com` |
 | `EMAIL_SMTP_USER` | SMTP account used to send contact-form notification emails | Defaults to a hardcoded Ninja Infosys address |
