@@ -19,7 +19,7 @@ export default function WorkHero({
   return (
     <section className="relative isolate overflow-hidden">
       <div
-        className="absolute inset-0 -z-20 bg-cover bg-center bg-fixed blur-[8px] scale-110"
+        className="absolute inset-0 -z-20 bg-cover bg-center bg-fixed"
         style={{ backgroundImage: `url('${bannerUrl}')` }}
       />
       <div className="hero-dark-overlay absolute inset-0 -z-10" />

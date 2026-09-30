@@ -31,9 +31,8 @@ export const DIGITAL_PALIKA_SOURCE: ProductSource = {
     { value: "70+", label: { en: "Local levels served", ne: "सेवा पाएका स्थानीय तह" } },
     { value: "800,000+", label: { en: "Beneficiary citizens", ne: "लाभान्वित नागरिक" } },
     { value: "2,500+", label: { en: "Beneficiary representatives", ne: "लाभान्वित प्रतिनिधि" } },
-    { value: "300+", label: { en: "Happy service recipients", ne: "सन्तुष्ट सेवाग्राही" } },
   ],
   tags: { en: ["Citizen portal", "Cloud", "Mobile + Web"], ne: ["नागरिक पोर्टल", "क्लाउड", "मोबाइल + वेब"] },
   image: "/palika-herosection.png",
-  accent: "#E31B23",
+  accent: "#2563EB",
 };

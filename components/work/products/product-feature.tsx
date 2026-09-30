@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
+import { ArrowRight, Check, ExternalLink } from "lucide-react";
 
 import Link from "next/link";
 
@@ -48,14 +48,20 @@ export default function ProductFeature({ product, index, language }: ProductFeat
   return (
     <div id={product.id} className="grid scroll-mt-28 items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <motion.div
-        className={isReversed ? "lg:order-2" : undefined}
+        className={`flex justify-center ${isReversed ? "lg:order-2 lg:justify-end" : "lg:justify-start"}`}
         initial={{ opacity: 0, x: isReversed ? 60 : -60 }}
         whileInView={{ opacity: 1, x: 0 }}
         animate={!mounted ? { opacity: 0, x: isReversed ? 60 : -60 } : undefined}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: IMAGE_DURATION_SECONDS, ease: EASE_OUT }}
       >
-        <ProductImageFrame src={product.image} alt={product.name} accent={product.accent} fit={product.imageFit} />
+        <ProductImageFrame
+          src={product.image}
+          alt={product.name}
+          accent={product.accent}
+          fit={product.imageFit}
+          heightClassName="sm:h-[420px] lg:h-[390px]"
+        />
       </motion.div>
 
       <motion.div
@@ -85,7 +91,12 @@ export default function ProductFeature({ product, index, language }: ProductFeat
         <motion.ul variants={textItemVariants} className="mt-8 space-y-3">
           {product.highlights.slice(0, PREVIEW_HIGHLIGHT_COUNT).map((point) => (
             <li key={point} className="flex items-start gap-3 text-[15px] leading-relaxed text-[#0b0d12]/75">
-              <CheckCircle2 size={18} className="mt-0.5 flex-shrink-0" style={{ color: product.accent }} />
+              <span
+                className="mt-0.5 grid h-5 w-5 flex-shrink-0 place-items-center rounded-full text-white"
+                style={{ backgroundColor: product.accent }}
+              >
+                <Check size={12} strokeWidth={3} />
+              </span>
               {point}
             </li>
           ))}
