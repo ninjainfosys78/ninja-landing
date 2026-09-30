@@ -82,7 +82,7 @@ export default function AboutClient({
         <section className="relative z-10">
           <div className="relative min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
             <div
-              className="absolute inset-0 bg-center bg-fixed filter blur-[8px] scale-110"
+              className="absolute inset-0 bg-center bg-fixed"
               style={{
                 backgroundImage: `url('${bannerUrl || "/about.jpg"}')`,
                 backgroundSize: "cover",

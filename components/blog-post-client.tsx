@@ -31,7 +31,7 @@ export default function BlogPostClient({ meta, content, content_ne }: BlogPostCl
       <section className="relative z-10 bg-background text-foreground">
         <div className="relative min-h-[44vh] overflow-hidden pt-24 lg:pt-28">
           <div
-            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60 blur-[8px] scale-110"
+            className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60"
             style={{ backgroundImage: "url('/insights.jpg')" }}
           />
           <div className="absolute inset-0 hero-dark-overlay" />

@@ -65,7 +65,7 @@ export default function CareersPage() {
         <section className="relative z-10">
           <div className="relative min-h-[70vh] overflow-hidden">
             <div
-              className="absolute inset-0 bg-center bg-fixed blur-[8px] scale-110"
+              className="absolute inset-0 bg-center bg-fixed"
               style={{
                 backgroundImage: `url('${bannerUrl || "/careers.png"}')`,
                 backgroundSize: "cover",

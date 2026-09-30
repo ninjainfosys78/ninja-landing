@@ -79,7 +79,7 @@ export default function BlogsClient({ initialPosts = [] }: BlogsClientProps) {
       <section className="relative z-10">
         <div className="relative min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
           <div
-            className="absolute inset-0 bg-cover bg-center bg-fixed blur-[8px] scale-110"
+            className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${bannerUrl || "/futuristic-travel-technology-interface.jpg"}')`,
             }}
