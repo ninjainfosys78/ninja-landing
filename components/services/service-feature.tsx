@@ -41,7 +41,7 @@ export default function ServiceFeature({ service, index }: ServiceFeatureProps) 
   const mounted = useMounted();
 
   return (
-    <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+    <div id={service.id} className="grid scroll-mt-28 items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <motion.div
         className={isReversed ? "lg:order-2" : undefined}
         initial={{ opacity: 0, x: isReversed ? 60 : -60 }}
