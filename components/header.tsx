@@ -7,12 +7,22 @@ import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
-import NavDropdown from "@/components/header/nav-dropdown";
-import { ABOUT_MENU_ITEMS, SOLUTIONS_MENU_ITEMS } from "@/components/header/nav-menu-items";
+import NavMegaMenu from "@/components/header/nav-mega-menu";
+import {
+  ABOUT_COLUMNS,
+  ABOUT_PROMO,
+  PRODUCTS_COLUMNS,
+  PRODUCTS_PROMO,
+  SERVICES_COLUMNS,
+  SERVICES_PROMO,
+  SOLUTIONS_COLUMNS,
+  SOLUTIONS_PROMO,
+} from "@/components/header/nav-mega-menu-items";
 import { hasHeroBanner, isActiveLink, navLinkClass } from "@/components/header/nav-styles";
 
 const HEADER_HEIGHT_PX = 88;
 const PRODUCTS_HREF = "/products";
+const SERVICES_HREF = "/services";
 const HERO_SELECTOR = "#hero, main > section";
 
 // True while the page's top banner is still under the navbar, so the bar can
@@ -73,12 +83,10 @@ export default function Header() {
     <>
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 w-full z-50 border-b ${
-        overHero ? "border-transparent bg-transparent" : "border-white/10 bg-[#0A1F4D]/95 backdrop-blur-md"
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-[#111111]`}
       style={{
-        boxShadow: isScrolled && !overHero ? '0 12px 28px -18px rgba(4,10,28,0.6)' : 'none',
-        transition: 'all 0.5s cubic-bezier(0.16,1,0.3,1)',
+        boxShadow: isScrolled ? '0 12px 28px -18px rgba(0,0,0,0.7)' : 'none',
+        transition: 'box-shadow 0.4s ease',
       }}
       role="banner"
     >
@@ -111,30 +119,46 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav
-          className="hidden lg:flex items-center gap-1 whitespace-nowrap rounded-full border border-white/15 bg-white/10 backdrop-blur-md p-1.5 transition-all duration-500"
+          className="hidden lg:flex items-center gap-1 whitespace-nowrap"
           aria-label="Main navigation"
         >
-          <NavDropdown
+          <NavMegaMenu
             label={language === 'en' ? 'About Us' : 'हाम्रो बारेमा'}
             href="/about"
             active={isActiveLink(pathname, "/about")}
-            language={language}
-            panelWidthClass="min-w-[240px]"
-            items={ABOUT_MENU_ITEMS}
+            columns={ABOUT_COLUMNS}
+            promo={ABOUT_PROMO}
+            flatGrid
           />
 
-          <NavDropdown
+          <NavMegaMenu
             label={language === 'en' ? 'Solutions' : 'समाधानहरू'}
             href="/solutions"
             active={isActiveLink(pathname, "/solutions")}
-            language={language}
-            panelWidthClass="min-w-[280px]"
-            items={SOLUTIONS_MENU_ITEMS}
+            columns={SOLUTIONS_COLUMNS}
+            promo={SOLUTIONS_PROMO}
+            flatGrid
+          />
+
+          <NavMegaMenu
+            label={language === 'en' ? 'Products' : 'उत्पादनहरू'}
+            href={PRODUCTS_HREF}
+            active={isActiveLink(pathname, PRODUCTS_HREF)}
+            columns={PRODUCTS_COLUMNS}
+            promo={PRODUCTS_PROMO}
+            flatGrid
+          />
+
+          <NavMegaMenu
+            label={language === 'en' ? 'Services' : 'सेवाहरू'}
+            href={SERVICES_HREF}
+            active={isActiveLink(pathname, SERVICES_HREF)}
+            columns={SERVICES_COLUMNS}
+            promo={SERVICES_PROMO}
+            flatGrid
           />
 
           {[
-            { label: 'Products', labelNe: 'उत्पादनहरू', href: PRODUCTS_HREF },
-            { label: 'Services', labelNe: 'सेवाहरू', href: '/services' },
             { label: 'Blogs', labelNe: 'ब्लगहरू', href: '/blogs' },
             { label: 'Contact', labelNe: 'सम्पर्क', href: '/contact' }
           ].map((item) => (

@@ -12,9 +12,9 @@ export function isActiveLink(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-const LINK_BASE = "rounded-full px-4 py-2 text-[15px] font-semibold transition-all duration-300";
+const LINK_BASE = "relative px-4 py-2 text-[15px] font-semibold transition-colors duration-300";
 
 export function navLinkClass(active: boolean): string {
-  const state = active ? "bg-white/20 text-white" : "text-white/80 hover:bg-white/10 hover:text-white";
+  const state = active ? "text-white" : "text-white/75 hover:text-white";
   return `${LINK_BASE} ${state}`;
 }
