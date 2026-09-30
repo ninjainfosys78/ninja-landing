@@ -34,11 +34,6 @@ export default function ServicesPage() {
       lang === "en"
         ? "From websites to government systems — the services we build for organizations and municipalities."
         : "वेबसाइटदेखि सरकारी प्रणालीसम्म — हामीले संस्था र नगरपालिकाहरूका लागि निर्माण गर्ने सेवाहरू।",
-    listTitle: lang === "en" ? "What we do" : "हामी के गर्छौं",
-    listDescription:
-      lang === "en"
-        ? "We don't just build software — we craft experiences. Every engagement pairs thoughtful design with reliable engineering."
-        : "हामी सफ्टवेयर मात्र बनाउँदैनौं — अनुभव सिर्जना गर्छौं। हरेक कामले सोचविचारपूर्ण डिजाइनलाई भरपर्दो इन्जिनियरिङसँग जोड्छ।",
     processTitle: lang === "en" ? "How we work" : "हामी कसरी काम गर्छौं",
   };
 
@@ -82,11 +77,7 @@ export default function ServicesPage() {
           bannerUrl={bannerUrl || DEFAULT_BANNER}
         />
 
-        <ServicesList
-          title={t.listTitle}
-          description={t.listDescription}
-          services={services}
-        />
+        <ServicesList services={services} />
 
         <ProcessSteps title={t.processTitle} steps={getServiceProcessSteps(lang)} />
 

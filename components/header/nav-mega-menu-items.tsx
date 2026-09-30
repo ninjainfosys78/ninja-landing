@@ -72,24 +72,44 @@ export const SERVICES_COLUMNS: MegaMenuColumn[] = [
   {
     items: [
       {
-        label: "Web Development",
-        description: "Custom websites and web applications, from marketing sites to internal platforms.",
-        href: "/services#web-development",
+        label: "E-Governance & Public Administration",
+        description: "Core administrative functions on a single, secure system for government offices.",
+        href: "/services#eshasan",
       },
       {
-        label: "Mobile App Development",
-        description: "Native and cross-platform apps built for reliability and smooth performance.",
-        href: "/services#mobile-app-development",
+        label: "Digital Signature & Document Security",
+        description: "Legally valid, tamper-evident electronic signing and verification of documents.",
+        href: "/services#epahichan",
       },
       {
-        label: "Marketing",
-        description: "Data-driven digital marketing that grows your reach and converts visitors.",
-        href: "/services#marketing",
+        label: "Government & Office Websites",
+        description: "Self-managed websites for offices to publish notices, records and services.",
+        href: "/services#icms",
       },
       {
-        label: "Software Development & Engineering",
-        description: "Custom software engineering for complex, business-critical systems.",
-        href: "/services#software-development",
+        label: "AI-Powered Call Handling",
+        description: "Automatic call answering so no customer is left waiting.",
+        href: "/services#airfone",
+      },
+      {
+        label: "Vehicle Tracking & Fleet Management",
+        description: "Real-time vehicle location and usage tracking for organizations and fleets.",
+        href: "/services#luna-iot",
+      },
+      {
+        label: "Centralized Organization Monitoring",
+        description: "Visibility into every branch and department's activity from one platform.",
+        href: "/services#one-door-system",
+      },
+      {
+        label: "Secure Data Storage & Management",
+        description: "Access-controlled file storage with safe backups and activity logs.",
+        href: "/services#drive",
+      },
+      {
+        label: "Public Display & Notice Screens",
+        description: "Live notices and announcements shown on smart TVs and displays, updated remotely.",
+        href: "/services#citizen-charter",
       },
     ],
   },
