@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Search, PenTool, Code, RefreshCw } from "lucide-react";
 import { getBannerByImgName } from "@/lib/banners";
 
-
 import SearchOverlay from "@/components/search-overlay";
 import ContactModals from "@/components/contact-modals";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -60,13 +59,13 @@ export default function WorkPage() {
 
 useEffect(() => {
     let mounted = true;
-    getBannerByImgName("work") 
+    getBannerByImgName("work")
       .then((url) => {
-        if (mounted) setBannerUrl(url || DEFAULT_BANNER); 
+        if (mounted) setBannerUrl(url || DEFAULT_BANNER);
       })
       .catch((err) => {
         console.error("Failed to load work banner:", err);
-        if (mounted) setBannerUrl(DEFAULT_BANNER); 
+        if (mounted) setBannerUrl(DEFAULT_BANNER);
       });
     return () => {
       mounted = false;
