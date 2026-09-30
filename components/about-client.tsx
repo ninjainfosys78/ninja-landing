@@ -80,7 +80,7 @@ export default function AboutClient({
     <>
       <main className="relative bg-background text-foreground transition-colors duration-300">
         <section className="relative z-10">
-          <div className="relative min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
+          <div className="relative min-h-[34vh] overflow-hidden pb-12 pt-28 lg:pb-14 lg:pt-32">
             <div
               className="absolute inset-0 bg-center bg-fixed"
               style={{

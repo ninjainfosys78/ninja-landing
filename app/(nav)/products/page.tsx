@@ -32,7 +32,7 @@ export default function WorkPage() {
     heroTitle: language === "en" ? "Products" : "उत्पादनहरू",
     heroLead:
       language === "en"
-        ? "A few projects and products we’re proud of fast, accessible and built to last."
+        ? "Products we've built and shipped — fast, accessible and built to last."
         : "छिटो, पहुँचयोग्य र दीर्घकालीन समाधानहरू—हाम्रा केही प्रोजेक्ट र प्रोडक्टहरू।",
     projectsTitle: language === "en" ? "Projects" : "प्रोजेक्टहरू",
     processTitle: language === "en" ? "How we work" : "हामी कसरी काम गर्छौं",

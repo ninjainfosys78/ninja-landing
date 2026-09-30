@@ -23,14 +23,14 @@ export default function PageBanner({ bannerName, fallbackImage, homeLabel, title
   }, [bannerName])
 
   return (
-    <section id="hero" className="relative isolate min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
+    <section id="hero" className="relative isolate min-h-[34vh] overflow-hidden pt-28 lg:pt-32">
       <div
         className="absolute inset-0 -z-20 bg-cover bg-center bg-fixed"
         style={{ backgroundImage: `url('${bannerUrl || fallbackImage}')` }}
       />
       <div className="hero-dark-overlay absolute inset-0 -z-10" />
 
-      <div className="mx-auto max-w-[1600px] px-6 pb-16 lg:px-16">
+      <div className="mx-auto max-w-[1600px] px-6 pb-12 lg:px-16">
         <div className="mx-auto max-w-[1200px] text-center">
           <nav aria-label="Breadcrumb" className="mt-4 text-sm text-white/70">
             <ol className="flex items-center justify-center gap-3">

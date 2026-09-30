@@ -233,8 +233,8 @@ export default function Header() {
                   {[
                     { label: 'About Us', href: '/about' },
                     { label: 'Solutions', href: '/solutions' },
-                    { label: 'Products', href: PRODUCTS_HREF },
-                    { label: 'Services', href: '/services' },
+                    { label: 'Products', href: PRODUCTS_HREF, description: 'Real products running for institutions and citizens across Nepal.' },
+                    { label: 'Services', href: '/services', description: 'Web, mobile and software engineering, built end to end.' },
                     { label: 'Blogs', href: '/blogs' },
                     { label: 'Contact', href: '/contact' }
                   ].map((item) => (
@@ -248,6 +248,9 @@ export default function Header() {
                       <Link href={item.href} onClick={closeAllMenus} className="text-white hover:text-[#7FA8FF] transition-colors">
                         {item.label}
                       </Link>
+                      {item.description && (
+                        <p className="mt-1 text-sm font-normal text-white/50">{item.description}</p>
+                      )}
                     </motion.div>
                   ))}
                </nav>

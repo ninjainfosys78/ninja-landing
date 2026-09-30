@@ -231,7 +231,7 @@ export default function SolutionsClient() {
     <>
       <main className="relative bg-background text-foreground">
         <section className="relative z-10">
-          <div className="relative min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
+          <div className="relative min-h-[34vh] overflow-hidden pb-14 pt-28 lg:pb-16 lg:pt-32">
             <div className="absolute inset-0">
               <Image
                 src={bannerUrl || "/digital-infrastructure-network-city.jpg"}
