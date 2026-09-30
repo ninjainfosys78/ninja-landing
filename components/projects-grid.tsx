@@ -29,7 +29,7 @@ export default function ProjectsGrid({
         if (mounted) setProjects(data);
       })
       .catch((err) => {
-        console.error("Error loading projects from PocketBase", err);
+        console.warn("Error loading projects from PocketBase", err);
       })
       .finally(() => {
         if (mounted) setLoaded(true);

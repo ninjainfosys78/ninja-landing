@@ -34,7 +34,7 @@ export async function fetchProjects(): Promise<ProjectItem[]> {
       image: r.Image ? pb.files.getURL(r, r.Image) : "",
     }));
   } catch (error) {
-    console.error("Error fetching projects:", error);
+    console.warn("Error fetching projects:", error);
     return [];
   }
 }
