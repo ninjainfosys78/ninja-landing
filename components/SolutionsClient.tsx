@@ -11,8 +11,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { getBannerByImgName } from "@/lib/banners";
 import { StaggerWords } from "@/components/ui/reveal";
 import BannerSubtitle from "@/components/ui/banner-subtitle";
-import SolutionOverview from "@/components/solutions/detail/solution-overview";
-import SolutionCapabilities from "@/components/solutions/detail/solution-capabilities";
+import SolutionCard from "@/components/solutions/detail/solution-card";
 import { getSolutionDetailCopy } from "@/components/solutions/detail/solution-detail-copy";
 
 type Lang = "en" | "ne";
@@ -233,7 +232,7 @@ export default function SolutionsClient() {
       <main className="relative bg-background text-foreground">
         <section className="relative z-10">
           <div className="relative min-h-[50vh] overflow-hidden pt-28 lg:pt-32">
-            <div className="absolute inset-0 blur-[8px] scale-110">
+            <div className="absolute inset-0">
               <Image
                 src={bannerUrl || "/digital-infrastructure-network-city.jpg"}
                 alt="Banner"
@@ -287,29 +286,26 @@ export default function SolutionsClient() {
           </div>
         </section>
 
-        {LEFT_NAV.map((item) => {
-          const detail = content[item.key][language as Lang];
-          return (
-            <div id={item.key} key={item.key} className="scroll-mt-28">
-              <section className="relative overflow-hidden bg-white py-16 sm:py-24">
-                <div aria-hidden className="pointer-events-none absolute -right-40 top-10 h-[28rem] w-[28rem] rounded-full bg-[#2563EB]/[0.08] blur-3xl" />
-                <div className="relative mx-auto max-w-[1450px] px-6 sm:px-10">
-                  <SolutionOverview solution={item.key} label={detail.pageTitle} lead={detail.lead} />
-                </div>
-              </section>
-
-              <section className="py-16 sm:py-24" style={{ backgroundColor: "var(--page-bg-alt)" }}>
-                <div className="mx-auto max-w-[1450px] px-6 sm:px-10">
-                  <SolutionCapabilities
-                    title={copy.capabilitiesTitle}
+        <section className="relative overflow-hidden py-16 sm:py-24" style={{ backgroundColor: "var(--page-bg-alt)" }}>
+          <div aria-hidden className="pointer-events-none absolute -right-40 top-10 h-[28rem] w-[28rem] rounded-full bg-[#2563EB]/[0.08] blur-3xl" />
+          <div className="relative mx-auto max-w-[1450px] px-6 sm:px-10">
+            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+              {LEFT_NAV.map((item) => {
+                const detail = content[item.key][language as Lang];
+                return (
+                  <SolutionCard
+                    key={item.key}
+                    solution={item.key}
+                    title={detail.pageTitle}
+                    lead={detail.lead}
+                    capabilitiesTitle={copy.capabilitiesTitle}
                     capabilities={[...detail.bulletsCol1, ...detail.bulletsCol2]}
                   />
-                </div>
-              </section>
+                );
+              })}
             </div>
-          );
-        })}
-
+          </div>
+        </section>
       </main>
 
       <SearchOverlay

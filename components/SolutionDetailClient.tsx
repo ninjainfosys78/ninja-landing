@@ -52,7 +52,7 @@ export default function SolutionDetailClient({ solution, bannerUrl }: { solution
     <main className="bg-background text-foreground min-h-screen">
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 blur-[8px] scale-110">
+        <div className="absolute inset-0">
            <Image
              src={bannerUrl || "/digital-infrastructure-network-city.jpg"}
              alt="Banner"
