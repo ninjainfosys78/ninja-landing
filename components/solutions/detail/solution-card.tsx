@@ -17,6 +17,7 @@ export default function SolutionCard({ solution, title, lead, capabilitiesTitle,
   return (
     <article
       id={solution}
+      data-no-reveal
       className="group flex h-full scroll-mt-28 flex-col overflow-hidden rounded-2xl border border-[#D7E4FA] bg-white shadow-[0_1px_2px_rgba(10,31,77,0.04)] transition-shadow duration-500 hover:shadow-[0_16px_32px_-18px_rgba(10,31,77,0.25)]"
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-[#F6F9FE]">
