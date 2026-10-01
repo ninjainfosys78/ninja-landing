@@ -165,7 +165,7 @@ export default function ProductDetailClient({ product: source }: ProductDetailCl
             </h2>
           </div>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div data-no-reveal className="mt-8 grid gap-4 sm:grid-cols-2">
             {capabilities.map((capability, idx) => {
               const Icon = CAPABILITY_ICONS[idx % CAPABILITY_ICONS.length];
               return (
