@@ -195,6 +195,7 @@ export default function ProductDetailClient({ product: source }: ProductDetailCl
       <section className="pb-14 sm:pb-20" style={{ backgroundColor: "var(--page-bg-alt)" }}>
         <div className="mx-auto max-w-[1600px] px-6 sm:px-8 lg:px-12">
           <div
+            data-no-reveal
             className="flex flex-col gap-8 rounded-3xl px-8 py-14 sm:px-12 lg:flex-row lg:items-center lg:justify-between"
             style={{ backgroundColor: "#0A1F4D" }}
           >
