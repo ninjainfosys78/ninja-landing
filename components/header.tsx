@@ -8,6 +8,7 @@ import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
 import NavMegaMenu from "@/components/header/nav-mega-menu";
+import MobileNavList from "@/components/header/mobile-nav-list";
 import {
   ABOUT_COLUMNS,
   ABOUT_PROMO,
@@ -39,6 +40,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [heroBehind, setHeroBehind] = useState(true);
   const headerRef = useRef<HTMLElement | null>(null);
+  const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -58,7 +60,10 @@ export default function Header() {
 
   useEffect(() => {
     const onDocPointerDown = (e: PointerEvent) => {
-      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      const insideHeader = headerRef.current?.contains(target);
+      const insideMobileMenu = mobileMenuRef.current?.contains(target);
+      if (!insideHeader && !insideMobileMenu) {
         closeAllMenus();
       }
     };
@@ -212,6 +217,7 @@ export default function Header() {
     <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            ref={mobileMenuRef}
             className="lg:hidden fixed inset-0 top-[88px] z-40 overflow-y-auto pt-10"
             style={{ backgroundColor: '#0A1F4D' }}
             initial={{ opacity: 0, y: -12 }}
@@ -229,31 +235,7 @@ export default function Header() {
                  show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
                }}
              >
-               <nav className="flex flex-col gap-8 text-2xl font-bold font-heading">
-                  {[
-                    { label: 'About Us', href: '/about' },
-                    { label: 'Solutions', href: '/solutions' },
-                    { label: 'Products', href: PRODUCTS_HREF, description: 'Real products running for institutions and citizens across Nepal.' },
-                    { label: 'Services', href: '/services', description: 'Web, mobile and software engineering, built end to end.' },
-                    { label: 'Blogs', href: '/blogs' },
-                    { label: 'Contact', href: '/contact' }
-                  ].map((item) => (
-                    <motion.div
-                      key={item.label}
-                      variants={{
-                        hidden: { opacity: 0, y: 16 },
-                        show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
-                      }}
-                    >
-                      <Link href={item.href} onClick={closeAllMenus} className="text-white hover:text-[#7FA8FF] transition-colors">
-                        {item.label}
-                      </Link>
-                      {item.description && (
-                        <p className="mt-1 text-sm font-normal text-white/50">{item.description}</p>
-                      )}
-                    </motion.div>
-                  ))}
-               </nav>
+               <MobileNavList onNavigate={closeAllMenus} />
              </motion.div>
           </motion.div>
         )}
